@@ -1,0 +1,146 @@
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+
+  transition: 0.35s ease;
+
+  padding: 18px 0;
+}
+
+.navbar.scrolled {
+  padding: 12px 0;
+
+  backdrop-filter: blur(18px);
+
+  background: rgba(9, 9, 11, 0.72);
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.navbar-container {
+  width: min(1200px, 92%);
+
+  margin: auto;
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+}
+
+.logo {
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  color: white;
+
+  text-decoration: none;
+
+  font-size: 1.2rem;
+
+  font-weight: 700;
+}
+
+.logo img {
+  width: 48px;
+
+  height: 48px;
+
+  border-radius: 50%;
+
+  object-fit: cover;
+}
+
+.nav-links {
+  display: flex;
+
+  gap: 0.5rem;
+
+  align-items: center;
+}
+
+.nav-item {
+  position: relative;
+
+  padding: 0.75rem 1.25rem;
+
+  border-radius: 999px;
+
+  cursor: pointer;
+}
+
+.nav-item a {
+  color: white;
+
+  text-decoration: none;
+
+  position: relative;
+
+  z-index: 2;
+}
+
+.active-pill {
+  position: absolute;
+
+  inset: 0;
+
+  background: white;
+
+  border-radius: 999px;
+
+  z-index: 1;
+}
+
+.active-pill + a {
+  color: black;
+}
+
+.menu-btn {
+  display: none;
+
+  border: none;
+
+  background: none;
+
+  color: white;
+
+  font-size: 1.5rem;
+
+  cursor: pointer;
+}
+
+@media (max-width: 900px) {
+  .menu-btn {
+    display: block;
+  }
+
+  .nav-links {
+    position: fixed;
+
+    right: -100%;
+
+    top: 0;
+
+    width: 280px;
+
+    height: 100vh;
+
+    background: #111114;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    transition: 0.35s;
+  }
+
+  .nav-links.open {
+    right: 0;
+  }
+}
