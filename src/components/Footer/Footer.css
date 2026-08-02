@@ -1,0 +1,196 @@
+.footer {
+  /* Set background to pure black to blend the dark logo backgrounds seamlessly */
+  background: #000000;
+  color: #d6d6d6;
+  padding: 4rem 7% 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.footer-grid {
+  max-width: 1350px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 1.3fr 1.1fr 1fr 0.8fr;
+  gap: 2.8rem;
+  align-items: start;
+}
+
+/* =========================
+   Columns & Headings
+   ========================= */
+
+.footer-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.footer-column h3 {
+  color: #ffffff;
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-top: 0;
+  margin-bottom: 2rem;
+  height: 120px; /* Matched to adjusted logo height */
+  display: flex;
+  align-items: center;
+}
+
+.footer-logo-container {
+  height: 160px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+/* Base logo style */
+.footer-logo {
+  max-width: 240px;
+  max-height: 130px;
+  object-fit: contain;
+  transition: transform 0.35s ease;
+}
+
+.footer-logo:hover,
+.footer-logo-large:hover {
+  transform: scale(1.07);
+}
+
+/* =========================
+   Icon & Text Alignment
+   ========================= */
+
+.footer-column p {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  color: #a1a1a1;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 0.9rem;
+}
+
+.footer-column svg {
+  color: #a1a1a1;
+  margin-top: 0;
+  flex-shrink: 0;
+  font-size: 1rem;
+}
+
+/* =========================
+   Social Buttons
+   ========================= */
+
+.socials {
+  display: flex;
+  gap: 0.6rem;
+  margin-top: 1rem;
+}
+
+.socials a {
+  width: 42px;
+  height: 42px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  text-decoration: none;
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  transition: all 0.3s ease;
+}
+
+.socials a:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+/* =========================
+   Partner Column
+   ========================= */
+
+.partner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 2.2rem;
+}
+
+.partner-logo {
+  width: 230px;
+  object-fit: contain;
+  transition: transform 0.35s ease;
+}
+
+.partner-logo.small {
+  width: 350px;
+}
+
+.partner-logo:hover {
+  transform: scale(1.05);
+}
+
+/* =========================
+   Footer Bottom
+   ========================= */
+
+.footer-bottom {
+  max-width: 1350px;
+  margin: 3rem auto 0;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  text-align: center;
+  color: #666;
+  font-size: 0.88rem;
+  letter-spacing: 0.3px;
+}
+
+/* =========================
+   Responsive Breakpoints
+   ========================= */
+
+@media (max-width: 1200px) {
+  .footer-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 3rem;
+  }
+
+  .footer-column h3 {
+    height: auto;
+    margin-top: 1rem;
+  }
+
+  .partner {
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 768px) {
+  .footer {
+    padding: 3rem 6% 1.5rem;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .footer-column h3 {
+    height: auto;
+    margin-top: 0;
+  }
+
+  .footer-logo-container {
+    height: auto;
+    margin-bottom: 1rem;
+  }
+
+  .partner {
+    align-items: flex-start;
+    gap: 1.8rem;
+  }
+}
