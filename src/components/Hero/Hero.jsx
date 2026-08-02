@@ -16,9 +16,9 @@ export default function Hero() {
 
       <motion.div
         className="hero-content"
-        initial={{ opacity: 0, y: 20 }} // Reduced y offset for smoother load
+        initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }} // Disables continuous tracking after enter
+        viewport={{ once: true }}
         transition={{ duration: 0.6, ease: "easeOut" }}
       >
         <div className="hero-section">
@@ -32,8 +32,7 @@ export default function Hero() {
           <h1>Think | Innovate | Inspire</h1>
 
           <p>
-            We are RSET IEDC and IIC RSET, Rajagiri School of Engineering &
-            Technology.
+            We are RSET IEDC and IIC RSET
           </p>
 
           <div className="hero-buttons">
