@@ -48,13 +48,13 @@
 }
 
 .logo img {
-  width: 48px;
+  width: 80px;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
 
-  height: 48px;
-
-  border-radius: 50%;
-
-  object-fit: cover;
+.logo:hover img {
+  transform: scale(1.05);
 }
 
 .nav-links {
@@ -143,4 +143,53 @@
   .nav-links.open {
     right: 0;
   }
+}
+
+.nav-item {
+  position: relative;
+  padding: 0.8rem 1.4rem;
+}
+
+.nav-item a {
+  position: relative;
+  color: rgba(255,255,255,.85);
+  text-decoration: none;
+  transition: color .25s ease;
+}
+
+/* Underline */
+.nav-item a::after {
+  content: "";
+
+  position: absolute;
+  left: 50%;
+  bottom: -8px;
+
+  width: 0;
+  height: 2px;
+
+  background: #F59E0B;
+
+  border-radius: 999px;
+
+  transform: translateX(-50%);
+  transition: width .3s ease;
+}
+
+/* Hover */
+.nav-item:hover a {
+  color: white;
+}
+
+.nav-item:hover a::after {
+  width: 75%;
+}
+
+/* Active tab */
+.nav-item.active a {
+  color: #111;
+}
+
+.nav-item.active a::after {
+  width: 0;
 }

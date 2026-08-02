@@ -9,7 +9,6 @@ import logo from "../../assets/logos/iic-logo.jpg";
 const navItems = [
   "Home",
   "About",
-  "Domains",
   "Events",
   "Team",
   "Gallery",
@@ -42,7 +41,7 @@ export default function Navbar() {
           {navItems.map((item) => (
             <div
               key={item}
-              className="nav-item"
+              className={`nav-item ${active === item ? "active" : ""}`}
               onClick={() => {
                 setActive(item);
                 setMenuOpen(false);
