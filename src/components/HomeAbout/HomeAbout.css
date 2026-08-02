@@ -1,0 +1,147 @@
+.home-about {
+  background: #ffffff;
+  padding: 6rem 8%;
+}
+
+.home-about-container {
+  max-width: 1350px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.section-tag {
+  display: inline-block;
+  padding: 0.5rem 1.2rem;
+  background: #fff1e8;
+  color: #ff7a1a;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 1.2rem;
+}
+
+.home-about-content h2 {
+  font-size: clamp(2.2rem, 4vw, 3.2rem);
+  line-height: 1.15;
+  color: #07181d;
+  font-weight: 800;
+  margin-bottom: 2rem;
+}
+
+/* =========================
+   Paragraph Card Styling
+   ========================= */
+
+.about-text-card {
+  background: #f8f9fa;
+  border-radius: 12px;
+  border-bottom: 4px solid #ff7a1a;
+  padding: 2rem;
+  margin-bottom: 2.5rem;
+}
+
+.about-text-card p {
+  color: #4a5568;
+  line-height: 1.8;
+  font-size: 1.02rem;
+  margin: 0;
+}
+
+/* =========================
+   Button Group & Variations
+   ========================= */
+
+.about-btn-group {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+.about-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.85rem 1.6rem;
+  border-radius: 12px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+/* Primary Button */
+.about-btn.primary {
+  background: #ff7a1a;
+  color: #ffffff;
+}
+
+.about-btn.primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(255, 122, 26, 0.3);
+}
+
+/* Secondary Button */
+.about-btn.secondary {
+  background: transparent;
+  color: #ff7a1a;
+  border: 1.5px solid #ff7a1a;
+}
+
+.about-btn.secondary:hover {
+  background: #fff1e8;
+  transform: translateY(-2px);
+}
+
+/* Button Circle Icon Wrapper */
+.btn-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  font-size: 0.75rem;
+}
+
+.about-btn.secondary .btn-icon {
+  background: #ff7a1a;
+  color: #ffffff;
+}
+
+/* =========================
+   Image Column
+   ========================= */
+
+.home-about-image {
+  overflow: hidden;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+.home-about-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.home-about-image:hover img {
+  transform: scale(1.03);
+}
+
+/* Responsive Styles */
+@media (max-width: 992px) {
+  .home-about-container {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  .home-about-image {
+    order: -1;
+  }
+}
