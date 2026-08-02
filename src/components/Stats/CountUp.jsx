@@ -1,35 +1,34 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 
-export default function AnimatedCounter({ end, suffix = "", duration = 2000 }) {
+export default function AnimatedCounter({ end, suffix = "", duration = 1500 }) {
   const { ref, inView } = useInView({
     triggerOnce: true,
-    threshold: 0.4,
+    threshold: 0.2,
   });
 
   const [count, setCount] = useState(0);
-  const frame = useRef();
 
   useEffect(() => {
     if (!inView) return;
 
-    let startTime = null;
+    let start = 0;
+    // Limit total steps to 35 steps max so React doesn't choke on updates
+    const totalSteps = 35;
+    const increment = end / totalSteps;
+    const stepTime = duration / totalSteps;
 
-    const animate = (time) => {
-      if (!startTime) startTime = time;
-
-      const progress = Math.min((time - startTime) / duration, 1);
-
-      setCount(Math.floor(progress * end));
-
-      if (progress < 1) {
-        frame.current = requestAnimationFrame(animate);
+    const timer = setInterval(() => {
+      start += increment;
+      if (start >= end) {
+        setCount(end);
+        clearInterval(timer);
+      } else {
+        setCount(Math.floor(start));
       }
-    };
+    }, stepTime);
 
-    frame.current = requestAnimationFrame(animate);
-
-    return () => cancelAnimationFrame(frame.current);
+    return () => clearInterval(timer);
   }, [inView, end, duration]);
 
   return (

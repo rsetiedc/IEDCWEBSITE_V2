@@ -16,27 +16,28 @@ export default function Hero() {
 
       <motion.div
         className="hero-content"
-        initial={{ opacity: 0, y: 70 }}
+        initial={{ opacity: 0, y: 20 }} // Reduced y offset for smoother load
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1 }}
+        viewport={{ once: true }} // Disables continuous tracking after enter
+        transition={{ duration: 0.6, ease: "easeOut" }}
       >
         <div className="hero-section">
           <div className="hero-top">
-            <img src={logo} alt="IEDC Logo" className="hero-logo" />
 
             <span className="hero-tag">
               Innovation • Entrepreneurship • Technology
             </span>
           </div>
+
           <h1>Think | Innovate | Inspire</h1>
 
           <p>
-            We are RSET IEDC and IIC RSET
+            We are RSET IEDC and IIC RSET, Rajagiri School of Engineering &
+            Technology.
           </p>
 
           <div className="hero-buttons">
             <button className="primary-btn">Explore</button>
-
             <button className="secondary-btn">Join Us</button>
           </div>
         </div>

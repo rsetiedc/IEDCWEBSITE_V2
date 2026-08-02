@@ -49,9 +49,11 @@ export default function Stats() {
               delay: index * 0.15,
             }}
             viewport={{ once: true }}
-            whileHover={{
-              y: -8,
-            }}
+            whileHover={
+              typeof window !== "undefined" && window.innerWidth > 768
+              ? { y: -8 }
+              : {}
+            }
           >
             <div className="stat-icon">{stat.icon}</div>
 
