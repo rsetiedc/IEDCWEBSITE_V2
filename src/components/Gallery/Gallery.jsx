@@ -6,25 +6,47 @@ import img3 from "../../assets/gallery/03.jpg";
 import img4 from "../../assets/gallery/04.jpg";
 
 const images = [
-  { id: 1, src: img1, title: "Workshop" },
-  { id: 2, src: img2, title: "Campus Activity" },
-  { id: 3, src: img3, title: "Innovation Meet" },
-  { id: 4, src: img4, title: "Tech Event" },
+  {
+    id: 1,
+    src: img1,
+    title: "Innovation Workshop",
+  },
+  {
+    id: 2,
+    src: img2,
+    title: "Campus Activities",
+  },
+  {
+    id: 3,
+    src: img3,
+    title: "Startup Discussions",
+  },
+  {
+    id: 4,
+    src: img4,
+    title: "IEDC Events",
+  },
 ];
 
 export default function Gallery() {
   return (
-    <section className="gallery">
+    <section id="gallery" className="gallery-section">
       <div className="gallery-header">
         <span className="gallery-tag">Gallery</span>
-        <h2>Moments at RSET IEDC</h2>
-        <p>A glimpse into our workshops, events and innovation ecosystem.</p>
+
+        <h2 className="gallery-title">Moments at RSET IEDC</h2>
+
+        <p className="gallery-subtitle">
+          A glimpse into our workshops, startup events, hackathons, community
+          initiatives and memorable moments.
+        </p>
       </div>
 
-      <div className="gallery-grid">
+      <div className="gallery-accordion">
         {images.map((image) => (
-          <div className="gallery-card" key={image.id}>
+          <div key={image.id} className="gallery-item">
             <img src={image.src} alt={image.title} />
+
             <div className="gallery-overlay">
               <h3>{image.title}</h3>
             </div>
