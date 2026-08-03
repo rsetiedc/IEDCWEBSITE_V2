@@ -7,6 +7,7 @@ import Hero from "./components/Hero/Hero";
 import HomeAbout from "./components/HomeAbout/HomeAbout";
 import Stats from "./components/Stats/Stats";
 import Gallery from "./components/Gallery/Gallery";
+import About from "./components/About/About.jsx";
 
 // Helper component to reset scroll position on page change
 function ScrollToTop() {
@@ -30,14 +31,20 @@ function HomePage() {
   );
 }
 
-
-
 // Temporary Placeholder for pages in development
 function ComingSoon({ pageTitle }) {
   return (
-    <div style={{ padding: "120px 20px 80px", textAlign: "center", minHeight: "60vh" }}>
+    <div
+      style={{
+        padding: "120px 20px 80px",
+        textAlign: "center",
+        minHeight: "60vh",
+      }}
+    >
       <h1>{pageTitle}</h1>
-      <p style={{ color: "#888", marginTop: "12px" }}>This page is currently under construction.</p>
+      <p style={{ color: "#888", marginTop: "12px" }}>
+        This page is currently under construction.
+      </p>
     </div>
   );
 }
@@ -50,12 +57,15 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/gallery" element={<Gallery />} />
-        
+        <Route path="/about" element={<About />} />
+
         {/* Active / In-Progress Pages */}
-        <Route path="/about" element={<ComingSoon pageTitle="About Us" />} />
         <Route path="/events" element={<ComingSoon pageTitle="Events" />} />
         <Route path="/team" element={<ComingSoon pageTitle="Team" />} />
-        <Route path="/contact" element={<ComingSoon pageTitle="Contact Us" />} />
+        <Route
+          path="/contact"
+          element={<ComingSoon pageTitle="Contact Us" />}
+        />
       </Routes>
       <Footer />
     </>

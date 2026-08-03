@@ -4,6 +4,7 @@ import img1 from "../../assets/gallery/01.jpg";
 import img2 from "../../assets/gallery/02.jpg";
 import img3 from "../../assets/gallery/03.jpg";
 import img4 from "../../assets/gallery/04.jpg";
+import img5 from "../../assets/gallery/05.jpg";
 
 const images = [
   {
@@ -25,6 +26,11 @@ const images = [
     id: 4,
     src: img4,
     title: "IEDC Events",
+  },
+  {
+    id: 5,
+    src: img5,
+    title: "past Events",
   },
 ];
 

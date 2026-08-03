@@ -1,0 +1,80 @@
+.about-card {
+
+    background: rgba(20,24,32,.75);
+
+    backdrop-filter: blur(16px);
+
+    border: 1px solid rgba(255,255,255,.08);
+    border-left: 4px solid #ff7a1a;
+
+    border-radius: 18px;
+
+    padding: 1.75rem;
+
+    transition: .35s ease;
+
+    transform-style: preserve-3d;
+
+}
+
+.about-card:hover{
+
+    box-shadow:
+    0 20px 45px rgba(0,0,0,.35),
+    0 0 30px rgba(255,122,26,.15);
+
+}
+
+.about-card-header{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:1rem;
+
+    margin-bottom:1rem;
+
+}
+
+.about-card-icon{
+
+    width:48px;
+    height:48px;
+
+    border-radius:50%;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    background:rgba(255,122,26,.12);
+
+    color:#ff7a1a;
+
+    font-size:1.2rem;
+
+}
+
+.about-card-title{
+
+    color:white;
+
+    font-size:1.35rem;
+
+    font-weight:700;
+
+    font-family:"Space Grotesk",sans-serif;
+
+}
+
+.about-card-body{
+
+    color:#b9c0cb;
+
+    line-height:1.85;
+
+    font-size:1rem;
+
+}
