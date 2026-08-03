@@ -16,9 +16,8 @@
 
 .navbar-container {
   width: 100%;
-  padding: 0 2rem; 
+  padding: 0 2rem;
   margin: 0;
-
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -28,13 +27,6 @@
   display: flex;
   align-items: center;
   gap: 20px;
-}
-
-.nav-links {
-  display: flex;
-  gap: 0.5rem;
-  align-items: center;
-  margin-left: auto;
 }
 
 .logo {
@@ -54,65 +46,77 @@
   transition: transform 0.3s ease;
 }
 
+.navbar.scrolled .logo img {
+  height: 75px;
+}
+
 .logo:hover img {
   transform: scale(1.05);
 }
 
+/* Nav Links Layout */
 .nav-links {
   display: flex;
   gap: 0.5rem;
   align-items: center;
+  margin-left: auto;
 }
 
 .nav-item {
   position: relative;
-  padding: 0.6rem 1.25rem;
-  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
 }
 
+/* NavLink Styling */
 .nav-item a {
-  color: rgba(255, 255, 255, 0.85);
-  text-decoration: none;
   position: relative;
   z-index: 2;
+  display: block;
+  padding: 0.6rem 1.25rem;
+  color: rgba(255, 255, 255, 0.85);
+  text-decoration: none;
   font-weight: 500;
   transition: color 0.25s ease;
 }
 
-/* Hover Underline (Only when not active) */
-.nav-item:not(.active) a::after {
+/* Active Link Text Color */
+.nav-item a.active {
+  color: #111114 !important;
+  font-weight: 600;
+}
+
+/* Hover Underline (Only when link is not active) */
+.nav-item a:not(.active)::after {
   content: "";
   position: absolute;
   left: 50%;
-  bottom: -4px;
+  bottom: 2px;
   width: 0;
   height: 2px;
-  background: #F59E0B;
+  background: #f59e0b;
   border-radius: 999px;
   transform: translateX(-50%);
   transition: width 0.3s ease;
 }
 
-.nav-item:not(.active):hover a {
+.nav-item a:not(.active):hover {
   color: white;
 }
 
-.nav-item:not(.active):hover a::after {
-  width: 75%;
+.nav-item a:not(.active):hover::after {
+  width: 65%;
 }
 
-/* Active Pill Container */
+/* Active Pill Background */
 .active-pill {
   position: absolute;
   inset: 0;
-  background: white;
+  background: #ffffff;
   border-radius: 999px;
   z-index: 1;
-}
-
-.nav-item.active a {
-  color: #111114;
 }
 
 .menu-btn {
@@ -124,11 +128,6 @@
   cursor: pointer;
   z-index: 1001;
 }
-
-.navbar.scrolled .logo img {
-  height: 75px;
-}
-
 
 @media (max-width: 900px) {
   .menu-btn {
@@ -153,4 +152,3 @@
     right: 0;
   }
 }
-

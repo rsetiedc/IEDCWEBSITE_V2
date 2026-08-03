@@ -1,5 +1,3 @@
-import { motion } from "framer-motion";
-
 import "./Gallery.css";
 
 import img1 from "../../assets/gallery/01.jpg";
@@ -7,95 +5,32 @@ import img2 from "../../assets/gallery/02.jpg";
 import img3 from "../../assets/gallery/03.jpg";
 import img4 from "../../assets/gallery/04.jpg";
 
-const galleryItems = [
-  {
-    id: 1,
-    title: "Innovation Workshop",
-    subtitle: "Technical Session",
-    image: img1,
-  },
-  {
-    id: 2,
-    title: "Campus Meetup",
-    subtitle: "Community Event",
-    image: img2,
-  },
-  {
-    id: 3,
-    title: "Startup Discussion",
-    subtitle: "Entrepreneurship",
-    image: img3,
-  },
-  {
-    id: 4,
-    title: "Team Activities",
-    subtitle: "IEDC RSET",
-    image: img4,
-  },
+const images = [
+  { id: 1, src: img1, title: "Workshop" },
+  { id: 2, src: img2, title: "Campus Activity" },
+  { id: 3, src: img3, title: "Innovation Meet" },
+  { id: 4, src: img4, title: "Tech Event" },
 ];
-
-const scrollingImages = [...galleryItems, ...galleryItems];
 
 export default function Gallery() {
   return (
-    <section id="gallery" className="gallery-section">
-
-      <motion.div
-        className="gallery-header"
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.7 }}
-      >
-
-        <span className="gallery-tag">
-          Gallery
-        </span>
-
-        <h2 className="gallery-title">
-          Moments That Inspire Innovation
-        </h2>
-
-        <p className="gallery-subtitle">
-          A glimpse into workshops, hackathons, startup events,
-          competitions and memorable moments from the IEDC community.
-        </p>
-
-      </motion.div>
-
-      <div className="gallery-wrapper">
-
-        <div className="gallery-track">
-
-          {scrollingImages.map((item, index) => (
-
-            <div
-              key={`${item.id}-${index}`}
-              className="gallery-card"
-            >
-
-              <img
-                src={item.image}
-                alt={item.title}
-                loading="lazy"
-              />
-
-              <div className="gallery-overlay">
-
-                <h3>{item.title}</h3>
-
-                <span>{item.subtitle}</span>
-
-              </div>
-
-            </div>
-
-          ))}
-
-        </div>
-
+    <section className="gallery">
+      <div className="gallery-header">
+        <span className="gallery-tag">Gallery</span>
+        <h2>Moments at RSET IEDC</h2>
+        <p>A glimpse into our workshops, events and innovation ecosystem.</p>
       </div>
 
+      <div className="gallery-grid">
+        {images.map((image) => (
+          <div className="gallery-card" key={image.id}>
+            <img src={image.src} alt={image.title} />
+            <div className="gallery-overlay">
+              <h3>{image.title}</h3>
+            </div>
+          </div>
+        ))}
+      </div>
     </section>
   );
 }
