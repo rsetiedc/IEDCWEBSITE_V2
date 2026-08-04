@@ -25,6 +25,9 @@ async function fetchEventsFromBaserow() {
   const url = `${API_URL}/database/rows/table/${TABLE_ID}/?user_field_names=true&size=200`;
   const response = await fetch(url, {
     headers: { Authorization: `Token ${TOKEN}` },
+    // Never serve a stale browser-cached response — the Events page refreshes
+    // on an interval and must always see the latest saved content.
+    cache: "no-store",
   });
 
   if (!response.ok) {
@@ -32,7 +35,7 @@ async function fetchEventsFromBaserow() {
   }
 
   const data = await response.json();
-  return (data.results || []).map(mapRowToEvent);
+  return (data.results || []).map(mapRowToEvent).filter(Boolean);
 }
 
 /**
@@ -47,16 +50,21 @@ const resolvePosterBasePath = (events) =>
   });
 
 export async function fetchEvents() {
-  if (import.meta.env.PROD) {
+  // Prefer LIVE Baserow data whenever credentials are configured (dev and
+  // production alike) so edits saved in the database show up automatically
+  // without a redeploy. The committed events.json snapshot is only a fallback
+  // for when the API is unreachable or credentials are missing.
+  if (TOKEN && TABLE_ID) {
     try {
-      return resolvePosterBasePath(await fetchEventsFromSnapshot());
+      return resolvePosterBasePath(await fetchEventsFromBaserow());
     } catch (err) {
-      if (TOKEN && TABLE_ID) {
-        return resolvePosterBasePath(await fetchEventsFromBaserow());
+      try {
+        return resolvePosterBasePath(await fetchEventsFromSnapshot());
+      } catch {
+        throw err; // surface the live-fetch error so the UI can offer a retry
       }
-      throw err;
     }
   }
 
-  return resolvePosterBasePath(await fetchEventsFromBaserow());
+  return resolvePosterBasePath(await fetchEventsFromSnapshot());
 }

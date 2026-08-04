@@ -169,7 +169,7 @@
   },
   {
     "id": 6,
-    "code": "",
+    "code": "IEDC006",
     "title": "ABC",
     "eventType": "",
     "category": "",
@@ -183,42 +183,13 @@
     "audience": "All",
     "contacts": [
       {
-        "name": "IEDC Coordinator",
-        "phone": "",
+        "name": "Mathew  Nathan",
+        "phone": "9345352789  3234432422",
         "email": ""
       }
     ],
-    "isOpen": false,
-    "registrationStatus": "",
-    "capacity": "",
-    "deadline": "",
-    "tags": [],
-    "keyTopics": [],
-    "registrationLink": ""
-  },
-  {
-    "id": 7,
-    "code": "",
-    "title": "Event 7",
-    "eventType": "",
-    "category": "",
-    "description": "",
-    "detailedDescription": "",
-    "poster": "",
-    "date": "TBA",
-    "time": "TBA",
-    "venue": "To be announced",
-    "organizer": "RSET IEDC",
-    "audience": "All",
-    "contacts": [
-      {
-        "name": "IEDC Coordinator",
-        "phone": "",
-        "email": ""
-      }
-    ],
-    "isOpen": false,
-    "registrationStatus": "",
+    "isOpen": true,
+    "registrationStatus": "Active",
     "capacity": "",
     "deadline": "",
     "tags": [],

@@ -109,14 +109,22 @@ export function buildContacts(row) {
 }
 
 export function mapRowToEvent(row) {
+  const code = clean(row["Field 1"]);
+  const title = clean(row.Event_Title);
+
+  // Skip placeholder/draft rows that have no content at all — e.g. an empty
+  // row accidentally left in the table. Without this they would render as
+  // empty "Event <id>" cards.
+  if (!title && !code) return null;
+
   const poster = resolvePosterUrl(row.Cover_Image);
   const regForm = clean(row.Reg_Form);
   const regSheet = clean(row.Reg_sheet);
 
   return {
     id: row.id,
-    code: clean(row["Field 1"]),
-    title: clean(row.Event_Title) || `Event ${row.id}`,
+    code,
+    title: title || `Event ${row.id}`,
     eventType: clean(row.Event_Type),
     category: clean(row.Category),
     description: clean(row.Short_Description) || clean(row.Detailed_Description),

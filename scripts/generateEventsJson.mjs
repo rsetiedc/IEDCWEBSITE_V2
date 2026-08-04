@@ -44,7 +44,7 @@ try {
   process.exit(0);
 }
 
-const events = (data.results || []).map(mapRowToEvent);
+const events = (data.results || []).map(mapRowToEvent).filter(Boolean);
 
 await fs.mkdir(path.dirname(outPath), { recursive: true });
 await fs.writeFile(outPath, `${JSON.stringify(events, null, 2)}\n`, "utf8");

@@ -60,11 +60,89 @@
 
 .events-tabs {
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  margin: 1.5rem 0 3rem;
+}
+
+.events-tablist {
+  display: flex;
   justify-content: center;
   align-items: center;
   gap: 0.75rem;
-  margin: 1.5rem 0 3rem;
   flex-wrap: wrap;
+}
+
+/* Toolbar: live-update indicator + manual refresh button */
+.events-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+}
+
+.events-updated {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.78rem;
+  color: #6f7885;
+  white-space: nowrap;
+}
+
+.events-live-dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: #2ecc71;
+  box-shadow: 0 0 0 0 rgba(46, 204, 113, 0.6);
+  animation: events-live-pulse 2s ease-out infinite;
+}
+
+@keyframes events-live-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(46, 204, 113, 0.55);
+  }
+  70% {
+    box-shadow: 0 0 0 6px rgba(46, 204, 113, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(46, 204, 113, 0);
+  }
+}
+
+.events-refresh {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: transparent;
+  color: #a1a9b6;
+  cursor: pointer;
+  transition: color 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+}
+
+.events-refresh:hover:not(:disabled) {
+  color: #ffffff;
+  border-color: rgba(255, 107, 0, 0.5);
+  transform: translateY(-1px);
+}
+
+.events-refresh:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.events-refresh-icon {
+  display: inline-flex;
+  font-size: 1.05rem;
+}
+
+.events-refresh.spinning .events-refresh-icon {
+  animation: events-spin 0.8s linear infinite;
 }
 
 .events-tab {
@@ -313,6 +391,7 @@
 
 .event-readmore:focus-visible,
 .events-tab:focus-visible,
+.events-refresh:focus-visible,
 .event-modal-close:focus-visible,
 .events-retry:focus-visible,
 .event-register-btn:focus-visible,

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { FiRefreshCw } from "react-icons/fi";
 import "./Events.css";
@@ -13,39 +13,103 @@ const TABS = [
   { key: "closed", label: "Closed Events" },
 ];
 
+// How often the page re-checks Baserow for changes (overridable via env).
+// Unset/invalid/zero values fall back to the 60s default.
+const parsedRefreshMs = Number(import.meta.env.VITE_EVENTS_REFRESH_MS);
+const REFRESH_INTERVAL_MS =
+  Number.isFinite(parsedRefreshMs) && parsedRefreshMs > 0
+    ? parsedRefreshMs
+    : 60_000;
+
 export default function Events() {
   const [events, setEvents] = useState([]);
   const [status, setStatus] = useState("loading"); // loading | ready | error
   const [activeTab, setActiveTab] = useState("open");
   const [selectedEvent, setSelectedEvent] = useState(null);
+  const [refreshing, setRefreshing] = useState(false);
+  const [lastUpdated, setLastUpdated] = useState(null);
+  const syncingRef = useRef(false);
+  const mountedRef = useRef(true);
 
-  // Fetch events from Baserow (business logic lives in services/eventsApi).
+  useEffect(() => {
+    mountedRef.current = true;
+    return () => {
+      mountedRef.current = false;
+    };
+  }, []);
+
+  /** Store the fetched events, close the modal if its event disappeared. */
+  const applyEvents = useCallback((data, { initial = false } = {}) => {
+    setEvents(data);
+    setLastUpdated(new Date());
+    setSelectedEvent((current) =>
+      current && !data.some((event) => event.id === current.id) ? null : current
+    );
+    if (initial) setStatus("ready");
+  }, []);
+
+  /**
+   * Fetch events from Baserow. `initial` failures surface the error state;
+   * background refreshes fail silently and keep the current list.
+   */
+  const syncEvents = useCallback(
+    async ({ initial = false } = {}) => {
+      if (syncingRef.current) return;
+      syncingRef.current = true;
+      if (!initial) setRefreshing(true);
+      try {
+        const data = await fetchEvents();
+        if (mountedRef.current) applyEvents(data, { initial });
+      } catch {
+        if (mountedRef.current && initial) setStatus("error");
+      } finally {
+        if (mountedRef.current) {
+          syncingRef.current = false;
+          setRefreshing(false);
+        }
+      }
+    },
+    [applyEvents]
+  );
+
+  // Initial load + auto-refresh: re-sync on a fixed interval and whenever the
+  // tab regains focus/visibility — so edits saved in Baserow appear here
+  // automatically, without a redeploy or even a manual reload.
   useEffect(() => {
     let cancelled = false;
+
+    // Initial load — chained so no state is set synchronously in the effect
+    // body (which react-hooks/set-state-in-effect would flag).
     fetchEvents()
       .then((data) => {
-        if (!cancelled) {
-          setEvents(data);
-          setStatus("ready");
-        }
+        if (!cancelled) applyEvents(data, { initial: true });
       })
       .catch(() => {
         if (!cancelled) setStatus("error");
       });
+
+    const intervalId =
+      REFRESH_INTERVAL_MS > 0
+        ? setInterval(() => syncEvents(), REFRESH_INTERVAL_MS)
+        : null;
+    const reSyncWhenVisible = () => {
+      if (document.visibilityState === "visible") syncEvents();
+    };
+    document.addEventListener("visibilitychange", reSyncWhenVisible);
+    window.addEventListener("focus", reSyncWhenVisible);
+
     return () => {
       cancelled = true;
+      if (intervalId) clearInterval(intervalId);
+      document.removeEventListener("visibilitychange", reSyncWhenVisible);
+      window.removeEventListener("focus", reSyncWhenVisible);
     };
-  }, []);
+  }, [applyEvents, syncEvents]);
 
   /** Manual retry (from the error state). */
   const handleRetry = () => {
     setStatus("loading");
-    fetchEvents()
-      .then((data) => {
-        setEvents(data);
-        setStatus("ready");
-      })
-      .catch(() => setStatus("error"));
+    syncEvents({ initial: true });
   };
 
   const openEvents = useMemo(() => events.filter((event) => event.isOpen), [events]);
@@ -96,39 +160,65 @@ export default function Events() {
       </section>
 
       <section className="events-content">
-        {/* ============ Section 2: Filter Tabs ============ */}
-        <div
-          className="events-tabs"
-          role="tablist"
-          aria-label="Filter events"
-          onKeyDown={handleTabKeyDown}
-        >
-          {TABS.map((tab) => {
-            const isActive = activeTab === tab.key;
-            return (
-              <button
-                key={tab.key}
-                type="button"
-                role="tab"
-                aria-selected={isActive}
-                aria-controls="events-panel"
-                className={`events-tab ${isActive ? "active" : ""}`}
-                onClick={() => setActiveTab(tab.key)}
-              >
-                {isActive && (
-                  <motion.span
-                    layoutId="events-tab-pill"
-                    className="events-tab-pill"
-                    transition={{ type: "spring", stiffness: 380, damping: 32 }}
-                  />
-                )}
-                <span className="events-tab-label">{tab.label}</span>
-                <span className="events-tab-count">
-                  {tab.key === "open" ? openEvents.length : closedEvents.length}
-                </span>
-              </button>
-            );
-          })}
+        {/* ============ Section 2: Filter Tabs + Auto-refresh ============ */}
+        <div className="events-tabs">
+          <div
+            className="events-tablist"
+            role="tablist"
+            aria-label="Filter events"
+            onKeyDown={handleTabKeyDown}
+          >
+            {TABS.map((tab) => {
+              const isActive = activeTab === tab.key;
+              return (
+                <button
+                  key={tab.key}
+                  type="button"
+                  role="tab"
+                  aria-selected={isActive}
+                  aria-controls="events-panel"
+                  className={`events-tab ${isActive ? "active" : ""}`}
+                  onClick={() => setActiveTab(tab.key)}
+                >
+                  {isActive && (
+                    <motion.span
+                      layoutId="events-tab-pill"
+                      className="events-tab-pill"
+                      transition={{ type: "spring", stiffness: 380, damping: 32 }}
+                    />
+                  )}
+                  <span className="events-tab-label">{tab.label}</span>
+                  <span className="events-tab-count">
+                    {tab.key === "open" ? openEvents.length : closedEvents.length}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Manual refresh + live-update indicator */}
+          <div className="events-toolbar">
+            {lastUpdated && status === "ready" && (
+              <span className="events-updated" role="status" aria-live="polite">
+                <span className="events-live-dot" aria-hidden="true" />
+                Auto-refreshed{" "}
+                {lastUpdated.toLocaleTimeString([], {
+                  hour: "numeric",
+                  minute: "2-digit",
+                })}
+              </span>
+            )}
+            <button
+              type="button"
+              className={`events-refresh ${refreshing ? "spinning" : ""}`}
+              onClick={() => syncEvents()}
+              disabled={refreshing}
+              aria-label="Refresh events from Baserow now"
+              title="Refresh events from Baserow now"
+            >
+              <FiRefreshCw className="events-refresh-icon" aria-hidden="true" />
+            </button>
+          </div>
         </div>
 
         {/* ============ Sections 3 & 4: Event Grid / Empty State ============ */}
