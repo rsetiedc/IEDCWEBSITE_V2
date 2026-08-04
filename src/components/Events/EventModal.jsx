@@ -7,6 +7,8 @@ const POSTER_TIMEOUT_MS = 8000;
 import {
   FiArrowUpRight,
   FiCalendar,
+  FiChevronLeft,
+  FiChevronRight,
   FiClock,
   FiLock,
   FiMail,
@@ -46,6 +48,32 @@ export default function EventModal({ event, onClose }) {
   // Clear the pending timer on unmount
   useEffect(() => () => clearTimeout(posterTimer.current), []);
 
+  // ----- Event photos gallery -----
+  const [activePhoto, setActivePhoto] = useState(0);
+  const [failedPhotos, setFailedPhotos] = useState(() => new Set());
+
+  // Photos still loadable — broken ones are dropped on error
+  const photos = (event.photos || []).filter((url) => !failedPhotos.has(url));
+  const currentIndex = Math.min(activePhoto, Math.max(photos.length - 1, 0));
+  const currentPhoto = photos.length ? photos[currentIndex] : null;
+
+  const markPhotoFailed = (url) =>
+    setFailedPhotos((prev) => new Set(prev).add(url));
+
+  const showPhoto = (direction) =>
+    setActivePhoto((i) =>
+      photos.length === 0 ? i : (i + direction + photos.length) % photos.length
+    );
+  const showPrevPhoto = () => showPhoto(-1);
+  const showNextPhoto = () => showPhoto(1);
+
+  // Keep the current photo count available to the stable keydown handler below
+  // (updated after every render, so the handler never reads a stale value).
+  const photosCountRef = useRef(0);
+  useEffect(() => {
+    photosCountRef.current = photos.length;
+  });
+
   // Focus the close button on open, trap focus, lock scroll, close on ESC.
   useEffect(() => {
     const previouslyFocused = document.activeElement;
@@ -54,6 +82,18 @@ export default function EventModal({ event, onClose }) {
     const handleKeyDown = (e) => {
       if (e.key === "Escape") {
         onClose();
+        return;
+      }
+      // Arrow keys navigate the event photo gallery (when it has photos)
+      if (
+        (e.key === "ArrowLeft" || e.key === "ArrowRight") &&
+        photosCountRef.current > 1
+      ) {
+        e.preventDefault();
+        const direction = e.key === "ArrowLeft" ? -1 : 1;
+        setActivePhoto((i) =>
+          (i + direction + photosCountRef.current) % photosCountRef.current
+        );
         return;
       }
       // Simple focus trap: keep Tab/Shift+Tab within the modal
@@ -231,6 +271,84 @@ export default function EventModal({ event, onClose }) {
             </div>
           </div>
         </div>
+
+        {/* ---------- Event photos gallery ---------- */}
+        {photos.length > 0 && (
+          <section className="event-modal-photos" aria-label={`${event.title} photos`}>
+            <div className="event-modal-photos-head">
+              <h3 className="event-modal-photos-title">Event Photos</h3>
+              {photos.length > 1 && (
+                <span className="event-modal-photos-count" aria-live="polite">
+                  {currentIndex + 1} / {photos.length}
+                </span>
+              )}
+            </div>
+
+            <div className="event-modal-photos-main">
+              {photos.length > 1 && (
+                <button
+                  type="button"
+                  className="event-modal-photos-nav prev"
+                  onClick={showPrevPhoto}
+                  aria-label="Previous photo"
+                >
+                  <FiChevronLeft aria-hidden="true" />
+                </button>
+              )}
+
+              <div className="event-modal-photos-stage">
+                {currentPhoto && (
+                  <motion.img
+                    key={currentPhoto}
+                    src={currentPhoto}
+                    alt={`${event.title} photo ${currentIndex + 1}`}
+                    referrerPolicy="no-referrer"
+                    initial={{ opacity: 0, scale: 0.98 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.25 }}
+                    onError={() => markPhotoFailed(currentPhoto)}
+                  />
+                )}
+              </div>
+
+              {photos.length > 1 && (
+                <button
+                  type="button"
+                  className="event-modal-photos-nav next"
+                  onClick={showNextPhoto}
+                  aria-label="Next photo"
+                >
+                  <FiChevronRight aria-hidden="true" />
+                </button>
+              )}
+            </div>
+
+            {photos.length > 1 && (
+              <div className="event-modal-photos-thumbs" aria-label="Choose photo">
+                {photos.map((url, index) => (
+                  <button
+                    key={url}
+                    type="button"
+                    className={`event-modal-photo-thumb ${
+                      index === currentIndex ? "active" : ""
+                    }`}
+                    aria-label={`Photo ${index + 1}`}
+                    aria-current={index === currentIndex}
+                    onClick={() => setActivePhoto(index)}
+                  >
+                    <img
+                      src={url}
+                      alt=""
+                      loading="lazy"
+                      referrerPolicy="no-referrer"
+                      onError={() => markPhotoFailed(url)}
+                    />
+                  </button>
+                ))}
+              </div>
+            )}
+          </section>
+        )}
       </motion.div>
     </motion.div>
   );

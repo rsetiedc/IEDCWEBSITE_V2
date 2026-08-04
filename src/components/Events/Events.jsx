@@ -270,7 +270,11 @@ export default function Events() {
       {/* ============ Section 5: Event Details Modal ============ */}
       <AnimatePresence>
         {selectedEvent && (
-          <EventModal event={selectedEvent} onClose={() => setSelectedEvent(null)} />
+          <EventModal
+            key={selectedEvent.id}
+            event={selectedEvent}
+            onClose={() => setSelectedEvent(null)}
+          />
         )}
       </AnimatePresence>
     </main>

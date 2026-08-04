@@ -1,4 +1,5 @@
 import { fetchSheetEvents, DEFAULT_SHEET_ID, DEFAULT_SHEET_GID } from "./googleSheets.js";
+import { getEventPhotos } from "./eventPhotos.js";
 
 // The events table lives in a publicly shared Google Sheet. These are
 // overridable via env vars but default to the shared sheet, so the site works
@@ -20,15 +21,27 @@ async function fetchEventsFromSnapshot() {
 }
 
 /**
- * Prefix site-relative poster paths (e.g. "/posters/x.jpg" stored in
+ * Prefix site-relative image paths (e.g. "/posters/x.jpg" stored in
  * public/) with the app's base path so they resolve correctly on subpath
- * deployments like GitHub Pages. Browser-only, so import.meta.env is safe.
+ * deployments like GitHub Pages. Applies to the poster and every event photo.
+ * Browser-only, so import.meta.env is safe.
  */
-const resolvePosterBasePath = (events) =>
-  events.map((event) => {
-    if (!event.poster || !event.poster.startsWith("/")) return event;
-    return { ...event, poster: `${import.meta.env.BASE_URL}${event.poster.slice(1)}` };
-  });
+const withBase = (url) =>
+  url && url.startsWith("/") ? `${import.meta.env.BASE_URL}${url.slice(1)}` : url;
+
+const resolveMediaBasePath = (events) =>
+  events.map((event) => ({
+    ...event,
+    poster: withBase(event.poster),
+    photos: (event.photos || []).map(withBase),
+  }));
+
+/**
+ * Attach the manually curated event photos (src/services/eventPhotos.js) to
+ * each event. These are codebase-managed — never read from the Google Sheet.
+ */
+const withEventPhotos = (events) =>
+  events.map((event) => ({ ...event, photos: getEventPhotos(event) }));
 
 export async function fetchEvents() {
   // Prefer LIVE data from the Google Sheet (public CSV export, CORS-enabled)
@@ -36,10 +49,10 @@ export async function fetchEvents() {
   // The committed events.json snapshot is only a fallback for when the sheet
   // is unreachable or Google is temporarily unavailable.
   try {
-    return resolvePosterBasePath(await fetchSheetEvents(SHEET_ID, SHEET_GID));
+    return resolveMediaBasePath(withEventPhotos(await fetchSheetEvents(SHEET_ID, SHEET_GID)));
   } catch (err) {
     try {
-      return resolvePosterBasePath(await fetchEventsFromSnapshot());
+      return resolveMediaBasePath(withEventPhotos(await fetchEventsFromSnapshot()));
     } catch {
       throw err; // surface the live-fetch error so the UI can offer a retry
     }

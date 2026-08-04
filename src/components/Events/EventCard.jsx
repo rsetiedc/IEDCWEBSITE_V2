@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { FiArrowUpRight, FiCalendar, FiClock, FiMapPin } from "react-icons/fi";
+import { FiArrowUpRight, FiCalendar, FiCamera, FiClock, FiMapPin } from "react-icons/fi";
 
 // If a poster request hangs (throttled/blocked network) instead of erroring,
 // fall back to the placeholder after this many seconds.
@@ -15,6 +15,8 @@ export default function EventCard({ event, onReadMore }) {
   // Fall back to the styled placeholder if the poster fails to load
   const [posterFailed, setPosterFailed] = useState(false);
   const posterTimer = useRef(null);
+  // Number of curated photos for this event (from src/services/eventPhotos.js)
+  const photoCount = (event.photos || []).length;
 
   // Arm the timeout only once the browser actually starts loading the image
   // (lazy-loaded posters below the fold must not be timed out pre-emptively).
@@ -84,6 +86,17 @@ export default function EventCard({ event, onReadMore }) {
           <div className="event-poster event-poster-fallback" aria-hidden="true">
             <span>{event.title.charAt(0).toUpperCase()}</span>
           </div>
+        )}
+
+        {photoCount > 0 && (
+          <span
+            className="event-photo-count"
+            title={`${photoCount} photo${photoCount === 1 ? "" : "s"}`}
+            aria-label={`${photoCount} photo${photoCount === 1 ? "" : "s"}`}
+          >
+            <FiCamera aria-hidden="true" />
+            {photoCount}
+          </span>
         )}
 
         <button

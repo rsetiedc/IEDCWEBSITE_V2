@@ -360,6 +360,43 @@
   color: rgba(255, 143, 61, 0.55);
 }
 
+/* Photo count badge — top-right corner of the poster */
+.event-photo-count {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
+  background: rgba(9, 9, 11, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(8px);
+  color: #ffffff;
+  font-size: 0.78rem;
+  font-weight: 700;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+  transition: background 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+}
+
+.event-card:hover .event-photo-count {
+  background: rgba(255, 107, 0, 0.9);
+  border-color: rgba(255, 107, 0, 0.9);
+  transform: translateY(-2px);
+}
+
+.event-photo-count svg {
+  color: #ff8f3d;
+  font-size: 0.95rem;
+  transition: color 0.3s ease;
+}
+
+.event-card:hover .event-photo-count svg {
+  color: #ffffff;
+}
+
 /* Read More overlay button */
 .event-readmore {
   position: absolute;
@@ -395,7 +432,9 @@
 .event-modal-close:focus-visible,
 .events-retry:focus-visible,
 .event-register-btn:focus-visible,
-.event-contact-links a:focus-visible {
+.event-contact-links a:focus-visible,
+.event-modal-photos-nav:focus-visible,
+.event-modal-photo-thumb:focus-visible {
   outline: 2px solid #ff6b00;
   outline-offset: 3px;
 }
@@ -726,6 +765,128 @@
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
+/* --------------------------- Modal: Event Photos --------------------------- */
+.event-modal-photos {
+  padding: 0 1.8rem 1.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.event-modal-photos-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.event-modal-photos-title {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 1.02rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0;
+}
+
+.event-modal-photos-count {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #c3cad4;
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  background: rgba(255, 107, 0, 0.12);
+  border: 1px solid rgba(255, 107, 0, 0.35);
+  white-space: nowrap;
+}
+
+.event-modal-photos-main {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.event-modal-photos-stage {
+  flex: 1;
+  min-width: 0;
+  aspect-ratio: 16 / 9;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #0c0c10;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.event-modal-photos-stage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.event-modal-photos-nav {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.05);
+  color: #c3cad4;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.event-modal-photos-nav:hover {
+  background: rgba(255, 107, 0, 0.9);
+  border-color: rgba(255, 107, 0, 0.9);
+  color: #ffffff;
+  transform: scale(1.06);
+}
+
+.event-modal-photos-thumbs {
+  display: flex;
+  gap: 0.6rem;
+  overflow-x: auto;
+  padding-bottom: 0.25rem;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 107, 0, 0.5) transparent;
+}
+
+.event-modal-photo-thumb {
+  position: relative;
+  flex-shrink: 0;
+  width: 5.5rem;
+  height: 3.7rem;
+  padding: 0;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 2px solid transparent;
+  background: #0c0c10;
+  cursor: pointer;
+  opacity: 0.6;
+  transition: opacity 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+}
+
+.event-modal-photo-thumb:hover {
+  opacity: 1;
+  transform: translateY(-2px);
+}
+
+.event-modal-photo-thumb.active {
+  opacity: 1;
+  border-color: #ff6b00;
+}
+
+.event-modal-photo-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
 /* ================================= Responsive ================================= */
 /* Tablet: two cards per row */
 @media (max-width: 1024px) {
@@ -772,5 +933,20 @@
 
   .event-modal-body {
     padding: 0 1.25rem 1.25rem;
+  }
+
+  .event-modal-photos {
+    padding: 0 1.25rem 1.25rem;
+  }
+
+  .event-modal-photos-nav {
+    width: 2.3rem;
+    height: 2.3rem;
+    font-size: 1.05rem;
+  }
+
+  .event-modal-photo-thumb {
+    width: 4.6rem;
+    height: 3.1rem;
   }
 }

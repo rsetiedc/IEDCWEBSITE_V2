@@ -8,7 +8,7 @@ export const splitList = (value) =>
     .map((item) => item.trim())
     .filter(Boolean);
 
-export function resolvePosterUrl(raw) {
+export function resolveImageUrl(raw) {
   const unwrap = (value) => {
     if (value == null) return "";
     if (typeof value === "string" || typeof value === "number" || typeof value === "boolean") {
@@ -39,7 +39,7 @@ export function resolvePosterUrl(raw) {
     ) || value.match(/lh3\.googleusercontent\.com\/d\/([A-Za-z0-9_-]+)/);
 
   if (driveIdMatch) {
-    // Serve Drive posters through Google's image CDN (lh3.googleusercontent.com),
+    // Serve Drive images through Google's image CDN (lh3.googleusercontent.com),
     // which is fast and reliable for hotlinking — unlike drive.usercontent.google.com
     // downloads, which many networks and ad blockers throttle. The =w1600 suffix
     // requests a max-width thumbnail to keep the page light.
@@ -49,6 +49,8 @@ export function resolvePosterUrl(raw) {
   // stored in the repo's public/ folder — these render without any external host).
   return /^(https?:\/\/|\/)/i.test(value) ? value : "";
 }
+
+export const resolvePosterUrl = (raw) => resolveImageUrl(raw);
 
 export function formatEventDate(start, end) {
   const parse = (raw) => {
