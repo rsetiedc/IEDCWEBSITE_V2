@@ -1,8 +1,8 @@
 import "./About.css";
-
 import AboutHero from "./AboutHero";
 import IEDCAbout from "./IEDCAbout";
 import IICAbout from "./IICAbout";
+import Objectives from "../Objectives/Objectives";
 
 export default function About() {
   return (
@@ -10,6 +10,7 @@ export default function About() {
       <AboutHero />
       <IEDCAbout />
       <IICAbout />
+      <Objectives />
     </main>
   );
 }

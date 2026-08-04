@@ -1,0 +1,81 @@
+.objective-card{
+
+    position:relative;
+
+    background:#161c24;
+
+    border:1px solid rgba(255,255,255,.06);
+
+    border-radius:24px;
+
+    padding:2rem;
+
+    overflow:hidden;
+
+    min-height:310px;
+}
+
+.objective-card:hover{
+
+    transform:translateY(-8px);
+
+    border-color:#ff6b00;
+
+    box-shadow:0 18px 40px rgba(0,0,0,.35);
+}
+
+.objective-top{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:2rem;
+}
+
+.objective-icon{
+
+    width:64px;
+    height:64px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:18px;
+
+    background:rgba(255,107,0,.12);
+
+    color:#ff6b00;
+
+    font-size:1.6rem;
+}
+
+.objective-number{
+
+    font-size:3rem;
+
+    font-weight:700;
+
+    color:rgba(255,255,255,.05);
+}
+
+.objective-card h3{
+
+    color:white;
+
+    font-size:1.45rem;
+
+    margin-bottom:1rem;
+
+    font-family:"Space Grotesk",sans-serif;
+}
+
+.objective-card p{
+
+    color:#b8c0ca;
+
+    line-height:1.8;
+}
