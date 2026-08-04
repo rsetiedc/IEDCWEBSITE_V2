@@ -44,6 +44,7 @@ function HomePage() {
       <Hero />
       <HomeAbout />
       <Stats />
+      <Gallery />
     </>
   );
 }
@@ -79,7 +80,6 @@ function App() {
         <Route path="/reports" element={<Reports />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/events" element={<Events />} />
-
 
         {/* Active / In-Progress Pages */}
         <Route path="/team" element={<ComingSoon pageTitle="Team" />} />
