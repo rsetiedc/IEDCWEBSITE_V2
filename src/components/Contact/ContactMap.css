@@ -1,0 +1,36 @@
+.contact-map {
+  position: relative;
+  background: var(--bg-card, #161c24);
+  border: 1px solid var(--border-card, rgba(255, 255, 255, 0.06));
+  border-radius: var(--radius-card, 24px);
+  overflow: hidden;
+  height: 100%;
+  min-height: 520px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  transition: border-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+.contact-map iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+  filter: invert(90%) hue-rotate(180deg) contrast(110%) grayscale(0.6) brightness(0.7);
+  transition: filter 0.4s ease-in-out, transform 0.4s ease-in-out;
+}
+
+.contact-map:hover iframe {
+  filter: invert(90%) hue-rotate(185deg) contrast(120%) brightness(0.95) grayscale(0);
+  transform: scale(1.01);
+}
+
+.contact-map:hover {
+  border-color: rgba(0, 0, 0, 0.671);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 107, 0, 0.1);
+}
+
+@media (max-width: 992px) {
+  .contact-map {
+    min-height: 400px;
+  }
+}

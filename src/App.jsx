@@ -9,6 +9,7 @@ import Stats from "./components/Stats/Stats";
 import Gallery from "./components/Gallery/Gallery";
 import Reports from "./components/Reports/Reports.jsx";
 import About from "./components/About/About.jsx";
+import Contact from "./components/Contact/Contact";
 
 // Helper component to reset scroll position on page change
 function ScrollToTop() {
@@ -60,11 +61,12 @@ function App() {
         <Route path="/gallery" element={<Gallery />} />
         <Route path="/about" element={<About />} />
         <Route path="/reports" element={<Reports />} />
+        <Route path="/contact" element={<Contact />} />
+
 
         {/* Active / In-Progress Pages */}
         <Route path="/events" element={<ComingSoon pageTitle="Events" />} />
         <Route path="/team" element={<ComingSoon pageTitle="Team" />} />
-        <Route path="/contact" element={<ComingSoon pageTitle="Contact Us" />} />
       </Routes>
       <Footer />
     </>

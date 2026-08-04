@@ -1,0 +1,35 @@
+:root {
+  --bg-primary: #0a0d12;
+  --bg-card: #12171f;
+  --bg-input: #171e28;
+  --color-accent: #ff6b00;
+  --color-accent-glow: rgba(255, 107, 0, 0.12);
+  --text-main: #f0f3f7;
+  --text-muted: #6c7888;
+  --border-card: rgba(255, 255, 255, 0.05);
+  --border-input: rgba(255, 255, 255, 0.07);
+  --radius-card: 24px;
+  --radius-input: 16px;
+  --radius-pill: 999px;
+  --font-heading: "Space Grotesk", sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  overflow-x: hidden;
+  background-color: var(--bg-primary);
+  color: var(--text-main);
+}
+
+.contact-page {
+  background: var(--bg-primary);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.contact-page section {
+  width: 100%;
+}
