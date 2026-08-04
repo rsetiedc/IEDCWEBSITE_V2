@@ -3,7 +3,6 @@ import { FaArrowDown } from "react-icons/fa";
 import "./Hero.css";
 
 import heroVideo from "../../assets/videos/hero.mp4";
-import logo from "../../assets/logos/rset_innovation.png";
 
 export default function Hero() {
   return (

@@ -34,6 +34,10 @@ jobs:
 
       - name: Build project
         run: npm run build
+        env:
+          VITE_BASEROW_API_URL: ${{ secrets.VITE_BASEROW_API_URL }}
+          VITE_BASEROW_TOKEN: ${{ secrets.VITE_BASEROW_TOKEN }}
+          VITE_BASEROW_TABLE_ID: ${{ secrets.VITE_BASEROW_TABLE_ID }}
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3

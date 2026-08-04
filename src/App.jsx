@@ -7,6 +7,7 @@ import Hero from "./components/Hero/Hero";
 import HomeAbout from "./components/HomeAbout/HomeAbout";
 import Stats from "./components/Stats/Stats";
 import Gallery from "./components/Gallery/Gallery";
+import Events from "./components/Events/Events.jsx";
 import Reports from "./components/Reports/Reports.jsx";
 import About from "./components/About/About.jsx";
 import Contact from "./components/Contact/Contact";
@@ -62,10 +63,10 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/reports" element={<Reports />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/events" element={<Events />} />
 
 
         {/* Active / In-Progress Pages */}
-        <Route path="/events" element={<ComingSoon pageTitle="Events" />} />
         <Route path="/team" element={<ComingSoon pageTitle="Team" />} />
       </Routes>
       <Footer />
