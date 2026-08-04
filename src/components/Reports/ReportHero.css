@@ -1,0 +1,36 @@
+.reports-hero {
+  min-height: 40vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 6rem 2rem 3rem;
+  background: #000000;
+}
+
+.reports-tag {
+  padding: 0.6rem 1.4rem;
+  background: rgba(255, 107, 0, 0.1);
+  color: #ff6b00;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.875rem;
+  margin-bottom: 1.25rem;
+  letter-spacing: 0.05em;
+}
+
+.reports-hero h1 {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  color: #ffffff;
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.reports-hero p {
+  color: #aeb7c2;
+  max-width: 650px;
+  line-height: 1.7;
+  font-size: 1.05rem;
+}

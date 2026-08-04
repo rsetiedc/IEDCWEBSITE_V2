@@ -7,6 +7,7 @@ import Hero from "./components/Hero/Hero";
 import HomeAbout from "./components/HomeAbout/HomeAbout";
 import Stats from "./components/Stats/Stats";
 import Gallery from "./components/Gallery/Gallery";
+import Reports from "./components/Reports/Reports.jsx";
 import About from "./components/About/About.jsx";
 
 // Helper component to reset scroll position on page change
@@ -58,14 +59,12 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/gallery" element={<Gallery />} />
         <Route path="/about" element={<About />} />
+        <Route path="/reports" element={<Reports />} />
 
         {/* Active / In-Progress Pages */}
         <Route path="/events" element={<ComingSoon pageTitle="Events" />} />
         <Route path="/team" element={<ComingSoon pageTitle="Team" />} />
-        <Route
-          path="/contact"
-          element={<ComingSoon pageTitle="Contact Us" />}
-        />
+        <Route path="/contact" element={<ComingSoon pageTitle="Contact Us" />} />
       </Routes>
       <Footer />
     </>
