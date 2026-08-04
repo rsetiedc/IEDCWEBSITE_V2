@@ -40,6 +40,15 @@ jobs:
           VITE_BASEROW_TOKEN: ${{ secrets.VITE_BASEROW_TOKEN }}
           VITE_BASEROW_TABLE_ID: ${{ secrets.VITE_BASEROW_TABLE_ID }}
 
+      - name: Verify events snapshot
+        run: |
+          COUNT=$(node --input-type=module -e "import { readFileSync } from 'node:fs'; const e = JSON.parse(readFileSync('./public/events.json', 'utf8')); console.log(e.length)")
+          echo "events.json contains $COUNT events"
+          if [ "$COUNT" -eq 0 ]; then
+            echo "::error::events.json is EMPTY. Add the VITE_BASEROW_TOKEN and VITE_BASEROW_TABLE_ID secrets under repo Settings -> Secrets and variables -> Actions (or commit a populated public/events.json)."
+            exit 1
+          fi
+
       - name: Build project
         run: npm run build
 

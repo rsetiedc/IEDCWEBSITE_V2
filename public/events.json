@@ -1,0 +1,228 @@
+[
+  {
+    "id": 1,
+    "code": "IEDC001",
+    "title": "Zero Points",
+    "eventType": "Quiz Competition",
+    "category": "",
+    "description": "",
+    "detailedDescription": "",
+    "poster": "",
+    "date": "July 1, 2026",
+    "time": "4:30 PM – 6:00 PM",
+    "venue": "K.E Seminar Hall",
+    "organizer": "RSET IEDC AND IIC RSET",
+    "audience": "Students",
+    "contacts": [
+      {
+        "name": "Safiya K N",
+        "phone": "8129118039",
+        "email": "rsetiedc@rajagiritech.edu.in"
+      }
+    ],
+    "isOpen": false,
+    "registrationStatus": "Closed",
+    "capacity": "70",
+    "deadline": "30-06-2026",
+    "tags": [],
+    "keyTopics": [
+      "Tech",
+      "Trivia"
+    ],
+    "registrationLink": "https://docs.google.com/forms/d/e/1FAIpQLSd7FumJOr6naGyfgDDAtWLwmqHJ8fI4gpF3dXionGp8iWklwQ/viewform?usp=publish-editor"
+  },
+  {
+    "id": 2,
+    "code": "IEDC002",
+    "title": "Call For Seed",
+    "eventType": "Sub-Core Team Selection",
+    "category": "",
+    "description": "Become a part of the RSET IEDC & IIC RSET community!",
+    "detailedDescription": "Become a part of the RSET IEDC & IIC RSET community! The Seed Members Call is your gateway to innovation, entrepreneurship, skill development, and exciting opportunities to build, learn, and grow.",
+    "poster": "https://drive.usercontent.google.com/download?id=1-nIROkCg1rN4wex3P0ObFggFXAQNrL4y&export=view",
+    "date": "July 1, 2026 – July 6",
+    "time": "TBA",
+    "venue": "Google Forms",
+    "organizer": "RSET IEDC AND IIC RSET",
+    "audience": "Students",
+    "contacts": [
+      {
+        "name": "Aaron Thomas",
+        "phone": "8448059331",
+        "email": "u2403009@rajagiri.edu.in"
+      },
+      {
+        "name": "Alan Isaac",
+        "phone": "8921932074",
+        "email": "u2408009@rajagiri.edu.in"
+      }
+    ],
+    "isOpen": false,
+    "registrationStatus": "Closed",
+    "capacity": "",
+    "deadline": "06-07-2026",
+    "tags": [],
+    "keyTopics": [],
+    "registrationLink": "https://forms.gle/M6HeXHV5WVxDNwkF7"
+  },
+  {
+    "id": 3,
+    "code": "IEDC003",
+    "title": "PRAYAAN",
+    "eventType": "",
+    "category": "",
+    "description": "",
+    "detailedDescription": "",
+    "poster": "https://drive.usercontent.google.com/download?id=1QH4t_KtbN8nGSD-iQZVngVQRap2PLeF9&export=view",
+    "date": "July 10, 2026",
+    "time": "11:40 AM – 12:40 PM",
+    "venue": "Gallery Hall",
+    "organizer": "RSET IEDC X IIC RSET X RAJAGIRI ORBIIT",
+    "audience": "Students",
+    "contacts": [
+      {
+        "name": "Nandana P Utsav Kumar Thakur",
+        "phone": "7510744610",
+        "email": ""
+      },
+      {
+        "name": "IEDC Coordinator",
+        "phone": "8369721663",
+        "email": ""
+      }
+    ],
+    "isOpen": false,
+    "registrationStatus": "Closed",
+    "capacity": "",
+    "deadline": "",
+    "tags": [],
+    "keyTopics": [],
+    "registrationLink": "https://docs.google.com/forms/d/e/1FAIpQLSdBKX7--5t1agZBAQDMtOGndT_UN-FM7gbyWeMqQjXckS_WHw/viewform"
+  },
+  {
+    "id": 4,
+    "code": "IEDC004",
+    "title": "Ctrl + Play",
+    "eventType": "",
+    "category": "",
+    "description": "Break the ice, meet new people, and take on exciting team challenges!",
+    "detailedDescription": "Connect, collaborate, and compete in a fun-filled event packed with games, laughter, and unforgettable moments.",
+    "poster": "https://drive.usercontent.google.com/download?id=1jk1wTVXSc8-m8BpmZD5VjGvP_Wm7aAKo&export=view",
+    "date": "July 17, 2026",
+    "time": "11:40 AM – 12:40 PM",
+    "venue": "Lecture Auditorium 1,  4th floor KE Block",
+    "organizer": "RSET IEDC X IIC RSET",
+    "audience": "Students",
+    "contacts": [
+      {
+        "name": "Celin Mampilly",
+        "phone": "9895661090",
+        "email": ""
+      },
+      {
+        "name": "Malavika D Nair",
+        "phone": "9818769193",
+        "email": ""
+      }
+    ],
+    "isOpen": false,
+    "registrationStatus": "Closed",
+    "capacity": "50",
+    "deadline": "",
+    "tags": [],
+    "keyTopics": [],
+    "registrationLink": "https://forms.gle/XPc8jS49SCfLErGD8"
+  },
+  {
+    "id": 5,
+    "code": "IEDC005",
+    "title": "Pitch Perfect with AI",
+    "eventType": "",
+    "category": "",
+    "description": "A one-hour workshop designed to help students understand how AI can be used in fundraising and investor pitch preparation.",
+    "detailedDescription": "An insightful talk session on leveraging AI for startup fundraising, covering practical techniques for refining pitch decks, conducting market research, developing value propositions, and preparing investor-ready pitches.",
+    "poster": "https://drive.usercontent.google.com/download?id=1-R_8TNyaXCd2dzQRUC7X7IQRGePuuuma&export=view",
+    "date": "July 30, 2026",
+    "time": "4:30 PM – 6:00 PM",
+    "venue": "KE Seminar Hall, 4th Floor, KE Block",
+    "organizer": "RSET IEDC X IIC RSET",
+    "audience": "Students",
+    "contacts": [
+      {
+        "name": "Rohan Sandesh",
+        "phone": "6238906876",
+        "email": ""
+      },
+      {
+        "name": "Derick Saji",
+        "phone": "9847993069",
+        "email": ""
+      }
+    ],
+    "isOpen": true,
+    "registrationStatus": "Active",
+    "capacity": "",
+    "deadline": "",
+    "tags": [],
+    "keyTopics": [],
+    "registrationLink": "https://docs.google.com/forms/d/e/1FAIpQLSdpY6GTrxQrxYiRmZM5oYsb7_qUSBtiTguPAdTwU6woWbCkag/viewform"
+  },
+  {
+    "id": 6,
+    "code": "",
+    "title": "ABC",
+    "eventType": "",
+    "category": "",
+    "description": "",
+    "detailedDescription": "",
+    "poster": "",
+    "date": "TBA",
+    "time": "TBA",
+    "venue": "To be announced",
+    "organizer": "RSET IEDC",
+    "audience": "All",
+    "contacts": [
+      {
+        "name": "IEDC Coordinator",
+        "phone": "",
+        "email": ""
+      }
+    ],
+    "isOpen": false,
+    "registrationStatus": "",
+    "capacity": "",
+    "deadline": "",
+    "tags": [],
+    "keyTopics": [],
+    "registrationLink": ""
+  },
+  {
+    "id": 7,
+    "code": "",
+    "title": "Event 7",
+    "eventType": "",
+    "category": "",
+    "description": "",
+    "detailedDescription": "",
+    "poster": "",
+    "date": "TBA",
+    "time": "TBA",
+    "venue": "To be announced",
+    "organizer": "RSET IEDC",
+    "audience": "All",
+    "contacts": [
+      {
+        "name": "IEDC Coordinator",
+        "phone": "",
+        "email": ""
+      }
+    ],
+    "isOpen": false,
+    "registrationStatus": "",
+    "capacity": "",
+    "deadline": "",
+    "tags": [],
+    "keyTopics": [],
+    "registrationLink": ""
+  }
+]

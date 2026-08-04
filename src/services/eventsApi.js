@@ -35,17 +35,28 @@ async function fetchEventsFromBaserow() {
   return (data.results || []).map(mapRowToEvent);
 }
 
+/**
+ * Prefix site-relative poster paths (e.g. "/posters/x.jpg" stored in
+ * public/) with the app's base path so they resolve correctly on subpath
+ * deployments like GitHub Pages. Browser-only, so import.meta.env is safe.
+ */
+const resolvePosterBasePath = (events) =>
+  events.map((event) => {
+    if (!event.poster || !event.poster.startsWith("/")) return event;
+    return { ...event, poster: `${import.meta.env.BASE_URL}${event.poster.slice(1)}` };
+  });
+
 export async function fetchEvents() {
   if (import.meta.env.PROD) {
     try {
-      return await fetchEventsFromSnapshot();
+      return resolvePosterBasePath(await fetchEventsFromSnapshot());
     } catch (err) {
       if (TOKEN && TABLE_ID) {
-        return fetchEventsFromBaserow();
+        return resolvePosterBasePath(await fetchEventsFromBaserow());
       }
       throw err;
     }
   }
 
-  return fetchEventsFromBaserow();
+  return resolvePosterBasePath(await fetchEventsFromBaserow());
 }

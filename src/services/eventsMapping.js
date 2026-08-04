@@ -41,7 +41,9 @@ export function resolvePosterUrl(raw) {
   if (driveIdMatch) {
     return `https://drive.usercontent.google.com/download?id=${driveIdMatch[1]}&export=view`;
   }
-  return /^https?:\/\//i.test(value) ? value : "";
+  // Accept absolute URLs as well as site-relative paths (e.g. "/posters/event.jpg"
+  // stored in the repo's public/ folder — these render without any external host).
+  return /^(https?:\/\/|\/)/i.test(value) ? value : "";
 }
 
 export function formatEventDate(start, end) {
