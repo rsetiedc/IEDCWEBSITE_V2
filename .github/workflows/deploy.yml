@@ -36,16 +36,17 @@ jobs:
       - name: Generate events snapshot
         run: node scripts/generateEventsJson.mjs
         env:
-          VITE_BASEROW_API_URL: ${{ secrets.VITE_BASEROW_API_URL }}
-          VITE_BASEROW_TOKEN: ${{ secrets.VITE_BASEROW_TOKEN }}
-          VITE_BASEROW_TABLE_ID: ${{ secrets.VITE_BASEROW_TABLE_ID }}
+          # Optional — the script falls back to the default public sheet if
+          # these repo variables are unset (set under Settings → Variables).
+          VITE_EVENTS_SHEET_ID: ${{ vars.VITE_EVENTS_SHEET_ID }}
+          VITE_EVENTS_SHEET_GID: ${{ vars.VITE_EVENTS_SHEET_GID }}
 
       - name: Verify events snapshot
         run: |
           COUNT=$(node --input-type=module -e "import { readFileSync } from 'node:fs'; const e = JSON.parse(readFileSync('./public/events.json', 'utf8')); console.log(e.length)")
           echo "events.json contains $COUNT events"
           if [ "$COUNT" -eq 0 ]; then
-            echo "::error::events.json is EMPTY. Add the VITE_BASEROW_TOKEN and VITE_BASEROW_TABLE_ID secrets under repo Settings -> Secrets and variables -> Actions (or commit a populated public/events.json)."
+            echo "::error::events.json is EMPTY. Check that the Google Sheet is publicly shared (or commit a populated public/events.json)."
             exit 1
           fi
 

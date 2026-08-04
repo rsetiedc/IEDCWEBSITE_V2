@@ -1,11 +1,17 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import process from "node:process";
+import {
+  getSheetCsvUrl,
+  parseCsv,
+  rowsToEventRows,
+  DEFAULT_SHEET_ID,
+  DEFAULT_SHEET_GID,
+} from "../src/services/googleSheets.js";
 import { mapRowToEvent } from "../src/services/eventsMapping.js";
 
-const apiUrl = process.env.VITE_BASEROW_API_URL || "https://api.baserow.io/api";
-const token = process.env.VITE_BASEROW_TOKEN || "";
-const tableId = process.env.VITE_BASEROW_TABLE_ID || "";
+const sheetId = process.env.VITE_EVENTS_SHEET_ID || DEFAULT_SHEET_ID;
+const sheetGid = process.env.VITE_EVENTS_SHEET_GID || DEFAULT_SHEET_GID;
 
 const outPath = path.join(process.cwd(), "public", "events.json");
 
@@ -21,30 +27,23 @@ const writeFallbackIfMissing = async (reason) => {
   }
 };
 
-if (!token || !tableId) {
-  await writeFallbackIfMissing("Missing VITE_BASEROW_TOKEN or VITE_BASEROW_TABLE_ID.");
-  process.exit(0);
-}
-
-const url = `${apiUrl}/database/rows/table/${tableId}/?user_field_names=true&size=200`;
-const response = await fetch(url, {
-  headers: { Authorization: `Token ${token}` },
-});
+const url = getSheetCsvUrl(sheetId, sheetGid);
+const response = await fetch(url, { cache: "no-store" });
 
 if (!response.ok) {
-  await writeFallbackIfMissing(`Baserow request failed: HTTP ${response.status}.`);
+  await writeFallbackIfMissing(`Google Sheet request failed: HTTP ${response.status}.`);
   process.exit(0);
 }
 
-let data;
+let text;
 try {
-  data = await response.json();
+  text = await response.text();
 } catch (e) {
-  await writeFallbackIfMissing(`Failed to parse Baserow response: ${e?.message || e}.`);
+  await writeFallbackIfMissing(`Failed to read Google Sheet response: ${e?.message || e}.`);
   process.exit(0);
 }
 
-const events = (data.results || []).map(mapRowToEvent).filter(Boolean);
+const events = rowsToEventRows(parseCsv(text)).map(mapRowToEvent).filter(Boolean);
 
 await fs.mkdir(path.dirname(outPath), { recursive: true });
 await fs.writeFile(outPath, `${JSON.stringify(events, null, 2)}\n`, "utf8");

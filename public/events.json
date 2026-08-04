@@ -7,7 +7,7 @@
     "category": "",
     "description": "",
     "detailedDescription": "",
-    "poster": "",
+    "poster": "https://lh3.googleusercontent.com/d/1q6vPaP_0T2s1TBv_md8Ng_8FNwmKS82y=w1600",
     "date": "July 1, 2026",
     "time": "4:30 PM – 6:00 PM",
     "venue": "K.E Seminar Hall",
@@ -81,12 +81,12 @@
     "audience": "Students",
     "contacts": [
       {
-        "name": "Nandana P Utsav Kumar Thakur",
+        "name": "Nandana P",
         "phone": "7510744610",
         "email": ""
       },
       {
-        "name": "IEDC Coordinator",
+        "name": "Utsav Kumar Thakur",
         "phone": "8369721663",
         "email": ""
       }
@@ -159,8 +159,8 @@
         "email": ""
       }
     ],
-    "isOpen": true,
-    "registrationStatus": "Active",
+    "isOpen": false,
+    "registrationStatus": "Closed",
     "capacity": "",
     "deadline": "",
     "tags": [],
@@ -170,30 +170,35 @@
   {
     "id": 6,
     "code": "IEDC006",
-    "title": "ABC",
+    "title": "Voices Over Kappi : Edition 2",
     "eventType": "",
     "category": "",
-    "description": "",
-    "detailedDescription": "",
-    "poster": "",
-    "date": "TBA",
-    "time": "TBA",
-    "venue": "To be announced",
-    "organizer": "RSET IEDC",
-    "audience": "All",
+    "description": "A panel where student founders share their journeys from idea to impact. Explore the challenges they faced, the opportunities they seized, and the lessons that can inspire your own entrepreneurial path",
+    "detailedDescription": "Entrepreneurship • Startups  • Innovation • Student Founders",
+    "poster": "https://lh3.googleusercontent.com/d/1l2XEI8xcu2GFbyCoBS8Z-0AEVRECH0MG=w1600",
+    "date": "July 31, 2026",
+    "time": "11:40 AM – 12:40 PM",
+    "venue": "Multimedia Hall",
+    "organizer": "RSET IEDC X IIC RSET X RAJAGIRI ORBIIT",
+    "audience": "Students",
     "contacts": [
       {
-        "name": "Mathew  Nathan",
-        "phone": "9345352789  3234432422",
+        "name": "Abiya Susan Ray",
+        "phone": "97444 46466",
+        "email": ""
+      },
+      {
+        "name": "Annu Mariam George",
+        "phone": "98957 64338",
         "email": ""
       }
     ],
-    "isOpen": true,
-    "registrationStatus": "Active",
+    "isOpen": false,
+    "registrationStatus": "Closed",
     "capacity": "",
     "deadline": "",
     "tags": [],
     "keyTopics": [],
-    "registrationLink": ""
+    "registrationLink": "https://docs.google.com/forms/d/e/1FAIpQLSejWD_MU8dcAWuUimiWFJs9VgzIcfCl_Ju9jKu8pqiTIDKWFg/viewform?usp=header"
   }
 ]

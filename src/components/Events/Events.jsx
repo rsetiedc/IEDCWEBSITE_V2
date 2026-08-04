@@ -13,8 +13,8 @@ const TABS = [
   { key: "closed", label: "Closed Events" },
 ];
 
-// How often the page re-checks Baserow for changes (overridable via env).
-// Unset/invalid/zero values fall back to the 60s default.
+// How often the page re-checks the Google Sheet for changes (overridable via
+// env). Unset/invalid/zero values fall back to the 60s default.
 const parsedRefreshMs = Number(import.meta.env.VITE_EVENTS_REFRESH_MS);
 const REFRESH_INTERVAL_MS =
   Number.isFinite(parsedRefreshMs) && parsedRefreshMs > 0
@@ -49,8 +49,8 @@ export default function Events() {
   }, []);
 
   /**
-   * Fetch events from Baserow. `initial` failures surface the error state;
-   * background refreshes fail silently and keep the current list.
+   * Fetch events from the Google Sheet. `initial` failures surface the error
+   * state; background refreshes fail silently and keep the current list.
    */
   const syncEvents = useCallback(
     async ({ initial = false } = {}) => {
@@ -73,7 +73,7 @@ export default function Events() {
   );
 
   // Initial load + auto-refresh: re-sync on a fixed interval and whenever the
-  // tab regains focus/visibility — so edits saved in Baserow appear here
+  // tab regains focus/visibility — so edits saved in the sheet appear here
   // automatically, without a redeploy or even a manual reload.
   useEffect(() => {
     let cancelled = false;
@@ -213,8 +213,8 @@ export default function Events() {
               className={`events-refresh ${refreshing ? "spinning" : ""}`}
               onClick={() => syncEvents()}
               disabled={refreshing}
-              aria-label="Refresh events from Baserow now"
-              title="Refresh events from Baserow now"
+              aria-label="Refresh events from the Google Sheet now"
+              title="Refresh events from the Google Sheet now"
             >
               <FiRefreshCw className="events-refresh-icon" aria-hidden="true" />
             </button>
