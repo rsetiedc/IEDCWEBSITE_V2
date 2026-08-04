@@ -1,5 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
+
+// If a poster request hangs (throttled/blocked network) instead of erroring,
+// fall back to the placeholder after this many seconds.
+const POSTER_TIMEOUT_MS = 8000;
 import {
   FiArrowUpRight,
   FiCalendar,
@@ -30,6 +34,13 @@ export default function EventModal({ event, onClose }) {
   const closeBtnRef = useRef(null);
   // Fall back to the styled placeholder if the poster fails to load
   const [posterFailed, setPosterFailed] = useState(false);
+  const posterTimer = useRef(null);
+
+  useEffect(() => {
+    if (!event.poster || posterFailed) return undefined;
+    posterTimer.current = setTimeout(() => setPosterFailed(true), POSTER_TIMEOUT_MS);
+    return () => clearTimeout(posterTimer.current);
+  }, [event.poster, posterFailed]);
 
   // Focus the close button on open, trap focus, lock scroll, close on ESC.
   useEffect(() => {
@@ -130,6 +141,7 @@ export default function EventModal({ event, onClose }) {
                 className="event-modal-poster"
                 loading="lazy"
                 referrerPolicy="no-referrer"
+                onLoad={() => clearTimeout(posterTimer.current)}
                 onError={() => setPosterFailed(true)}
               />
             ) : (

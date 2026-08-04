@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>RSET IEDC</title>
+    <script>
+      // GitHub Pages does not serve index.html for unknown paths, so refreshing
+      // or directly visiting a route like /events returns a 404. This file
+      // redirects to the app entry while preserving the original path via the
+      // ?p= query parameter, which App.jsx restores with the router.
+      (function () {
+        var base = "/IEDCWEBSITE_V2/";
+        var path = location.pathname;
+        if (path.indexOf(base) === 0) {
+          path = path.slice(base.length - 1); // keep the leading "/"
+        }
+        path = path || "/";
+        location.replace(base + "?p=" + encodeURIComponent(path));
+      })();
+    </script>
+  </head>
+  <body>
+    Redirecting to RSET IEDC&hellip;
+  </body>
+</html>

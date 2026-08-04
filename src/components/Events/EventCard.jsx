@@ -1,6 +1,10 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { FiArrowUpRight, FiCalendar, FiClock, FiMapPin } from "react-icons/fi";
+
+// If a poster request hangs (throttled/blocked network) instead of erroring,
+// fall back to the placeholder after this many seconds.
+const POSTER_TIMEOUT_MS = 8000;
 
 /**
  * EventCard — a single event card.
@@ -10,6 +14,13 @@ import { FiArrowUpRight, FiCalendar, FiClock, FiMapPin } from "react-icons/fi";
 export default function EventCard({ event, onReadMore }) {
   // Fall back to the styled placeholder if the poster fails to load
   const [posterFailed, setPosterFailed] = useState(false);
+  const posterTimer = useRef(null);
+
+  useEffect(() => {
+    if (!event.poster || posterFailed) return undefined;
+    posterTimer.current = setTimeout(() => setPosterFailed(true), POSTER_TIMEOUT_MS);
+    return () => clearTimeout(posterTimer.current);
+  }, [event.poster, posterFailed]);
 
   return (
     <motion.article
@@ -61,6 +72,7 @@ export default function EventCard({ event, onReadMore }) {
             className="event-poster"
             loading="lazy"
             referrerPolicy="no-referrer"
+            onLoad={() => clearTimeout(posterTimer.current)}
             onError={() => setPosterFailed(true)}
           />
         ) : (

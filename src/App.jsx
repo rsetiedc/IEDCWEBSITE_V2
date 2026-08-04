@@ -1,4 +1,4 @@
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
 import Navbar from "./components/Navbar/Navbar";
@@ -19,6 +19,20 @@ function ScrollToTop() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
+
+  return null;
+}
+
+// GitHub Pages serves 404.html for refreshes/direct deep links (e.g. /events).
+// It redirects to /?p=<original-path>; restore that route here.
+function RestoreRoute() {
+  const navigate = useNavigate();
+  const { search } = useLocation();
+
+  useEffect(() => {
+    const target = new URLSearchParams(search).get("p");
+    if (target) navigate(target, { replace: true });
+  }, [search, navigate]);
 
   return null;
 }
@@ -55,6 +69,7 @@ function ComingSoon({ pageTitle }) {
 function App() {
   return (
     <>
+      <RestoreRoute />
       <ScrollToTop />
       <Navbar />
       <Routes>

@@ -39,7 +39,11 @@ export function resolvePosterUrl(raw) {
     ) || value.match(/lh3\.googleusercontent\.com\/d\/([A-Za-z0-9_-]+)/);
 
   if (driveIdMatch) {
-    return `https://drive.usercontent.google.com/download?id=${driveIdMatch[1]}&export=view`;
+    // Serve Drive posters through Google's image CDN (lh3.googleusercontent.com),
+    // which is fast and reliable for hotlinking — unlike drive.usercontent.google.com
+    // downloads, which many networks and ad blockers throttle. The =w1600 suffix
+    // requests a max-width thumbnail to keep the page light.
+    return `https://lh3.googleusercontent.com/d/${driveIdMatch[1]}=w1600`;
   }
   // Accept absolute URLs as well as site-relative paths (e.g. "/posters/event.jpg"
   // stored in the repo's public/ folder — these render without any external host).
