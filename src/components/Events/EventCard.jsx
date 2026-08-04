@@ -16,11 +16,15 @@ export default function EventCard({ event, onReadMore }) {
   const [posterFailed, setPosterFailed] = useState(false);
   const posterTimer = useRef(null);
 
-  useEffect(() => {
-    if (!event.poster || posterFailed) return undefined;
+  // Arm the timeout only once the browser actually starts loading the image
+  // (lazy-loaded posters below the fold must not be timed out pre-emptively).
+  const handlePosterLoadStart = () => {
+    clearTimeout(posterTimer.current);
     posterTimer.current = setTimeout(() => setPosterFailed(true), POSTER_TIMEOUT_MS);
-    return () => clearTimeout(posterTimer.current);
-  }, [event.poster, posterFailed]);
+  };
+
+  // Clear the pending timer on unmount
+  useEffect(() => () => clearTimeout(posterTimer.current), []);
 
   return (
     <motion.article
@@ -72,6 +76,7 @@ export default function EventCard({ event, onReadMore }) {
             className="event-poster"
             loading="lazy"
             referrerPolicy="no-referrer"
+            onLoadStart={handlePosterLoadStart}
             onLoad={() => clearTimeout(posterTimer.current)}
             onError={() => setPosterFailed(true)}
           />
