@@ -1,23 +1,24 @@
 .contact-form-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border-card);
+  background: rgba(15, 7, 7, 0.534);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: var(--radius-card);
   padding: 2.5rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
   transition: border-color 0.4s ease, box-shadow 0.4s ease;
 }
-
-
 
 .form-tag {
   display: inline-block;
   align-self: flex-start;
   padding: 0.4rem 1rem;
   border-radius: var(--radius-pill);
-  background: rgba(255, 255, 255, 0.04);
+  background: rgba(255, 255, 255, 0.05);
   color: var(--text-muted);
   border: 1px solid var(--border-card);
   font-weight: 500;
@@ -57,8 +58,8 @@
 .contact-form-card input,
 .contact-form-card textarea {
   width: 100%;
-  background: var(--bg-input);
-  border: 1px solid var(--border-input);
+  background: rgba(18, 24, 33, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: var(--radius-input);
   padding: 0.9rem 1.1rem;
   color: var(--text-main);
@@ -75,13 +76,13 @@
 
 .contact-form-card input::placeholder,
 .contact-form-card textarea::placeholder {
-  color: #525d6b;
+  color: #64748b;
 }
 
 .contact-form-card input:focus,
 .contact-form-card textarea:focus {
   outline: none;
-  background: #1c2532;
+  background: rgba(0, 0, 0, 0.9);
   border-color: var(--color-accent);
   box-shadow: 0 0 0 4px var(--color-accent-glow);
 }
@@ -101,7 +102,7 @@
 
 .contact-form-card button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 8px 25px rgba(255, 107, 0, 0.4);
 }
 
 @media (max-width: 768px) {

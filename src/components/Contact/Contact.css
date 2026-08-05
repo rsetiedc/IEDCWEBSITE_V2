@@ -20,12 +20,12 @@ html {
 
 body {
   overflow-x: hidden;
-  background-color: var(--bg-primary);
+  background-color: #05080d;
   color: var(--text-main);
 }
 
 .contact-page {
-  background: var(--bg-primary);
+  background: transparent;
   min-height: 100vh;
   overflow-x: hidden;
 }
