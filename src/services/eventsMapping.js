@@ -66,8 +66,9 @@ export function formatEventDate(start, end) {
     date.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
 
   if (endDate && endDate.getTime() !== startDate.getTime()) {
-    const endFmt = endDate.toLocaleDateString("en-US", { month: "long", day: "numeric" });
-    return `${fmt(startDate)} – ${endFmt}${endDate.getFullYear() !== startDate.getFullYear() ? `, ${endDate.getFullYear()}` : ""}`;
+    // Show both dates in full (month, day, year) so the end date is never
+    // ambiguous or incomplete — e.g. "August 10, 2026 – August 12, 2026".
+    return `${fmt(startDate)} – ${fmt(endDate)}`;
   }
   return fmt(startDate);
 }
