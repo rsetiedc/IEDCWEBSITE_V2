@@ -7,6 +7,7 @@ import Hero from "./components/Hero/Hero";
 import HomeAbout from "./components/HomeAbout/HomeAbout";
 import Stats from "./components/Stats/Stats";
 import Gallery from "./components/Gallery/Gallery";
+import PastEvents from "./components/Gallery/PastEvents";
 import Events from "./components/Events/Events.jsx";
 import Reports from "./components/Reports/Reports.jsx";
 import About from "./components/About/About.jsx";
@@ -75,7 +76,10 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/gallery" element={<Gallery />} />
+        <Route path="/gallery" element={<>
+          <Gallery />
+          <PastEvents />
+        </>} />
         <Route path="/about" element={<About />} />
         <Route path="/reports" element={<Reports />} />
         <Route path="/contact" element={<Contact />} />

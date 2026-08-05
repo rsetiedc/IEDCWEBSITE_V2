@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import { motion } from "framer-motion";
+import { createPortal } from "react-dom";
+import { AnimatePresence, motion } from "framer-motion";
 import { FiArrowUpRight, FiCalendar, FiCamera, FiClock, FiMapPin } from "react-icons/fi";
 
 // If a poster request hangs (throttled/blocked network) instead of erroring,
@@ -17,6 +18,46 @@ export default function EventCard({ event, onReadMore }) {
   const posterTimer = useRef(null);
   // Number of curated photos for this event (from src/services/eventPhotos.js)
   const photoCount = (event.photos || []).length;
+
+  // Full-poster hover preview (floating panel showing the complete image)
+  const posterWrapRef = useRef(null);
+  const [preview, setPreview] = useState(null); // { left, top, width, height } | null
+
+  // Show the full poster beside the card, flipping to the left when there is
+  // no room on the right, and clamped to the viewport.
+  const openPosterPreview = () => {
+    const wrap = posterWrapRef.current;
+    if (!wrap || !event.poster || posterFailed) return;
+    const rect = wrap.getBoundingClientRect();
+    const gap = 20;
+    const width = Math.min(300, window.innerWidth - gap * 2);
+    const height = Math.min(430, window.innerHeight - gap * 2);
+
+    let left = rect.right + gap;
+    if (left + width > window.innerWidth - gap) {
+      left = rect.left - gap - width;
+      if (left < gap) left = gap;
+    }
+    let top = rect.top + rect.height / 2 - height / 2;
+    top = Math.max(gap, Math.min(top, window.innerHeight - height - gap));
+
+    setPreview({ left, top, width, height });
+  };
+
+  const closePosterPreview = () => setPreview(null);
+
+  // Close the preview if the page scrolls/resizes while it is open, so it
+  // never stays anchored to a position the card has moved away from.
+  useEffect(() => {
+    if (!preview) return undefined;
+    const close = () => setPreview(null);
+    window.addEventListener("scroll", close, { passive: true });
+    window.addEventListener("resize", close);
+    return () => {
+      window.removeEventListener("scroll", close);
+      window.removeEventListener("resize", close);
+    };
+  }, [preview]);
 
   // Arm the timeout only once the browser actually starts loading the image
   // (lazy-loaded posters below the fold must not be timed out pre-emptively).
@@ -70,7 +111,13 @@ export default function EventCard({ event, onReadMore }) {
       </div>
 
       {/* Poster + Read More overlay */}
-      <div className="event-poster-wrap">
+      <div
+        ref={posterWrapRef}
+        className="event-poster-wrap"
+        onMouseEnter={openPosterPreview}
+        onMouseLeave={closePosterPreview}
+        onClick={closePosterPreview}
+      >
         {event.poster && !posterFailed ? (
           <img
             src={event.poster}
@@ -111,6 +158,32 @@ export default function EventCard({ event, onReadMore }) {
           </span>
         </button>
       </div>
+
+      {/* Full-poster preview — rendered via portal so the card's overflow
+          (and its entrance transform) can never clip or misposition it. */}
+      {createPortal(
+        <AnimatePresence>
+          {preview && (
+            <motion.div
+              className="event-poster-preview"
+              style={{
+                left: preview.left,
+                top: preview.top,
+                width: preview.width,
+                height: preview.height,
+              }}
+              initial={{ opacity: 0, scale: 0.92 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.92 }}
+              transition={{ duration: 0.18, ease: "easeOut" }}
+              aria-hidden="true"
+            >
+              <img src={event.poster} alt="" referrerPolicy="no-referrer" />
+            </motion.div>
+          )}
+        </AnimatePresence>,
+        document.body
+      )}
     </motion.article>
   );
 }

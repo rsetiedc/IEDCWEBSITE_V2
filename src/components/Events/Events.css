@@ -345,6 +345,28 @@
   transform: scale(1.05);
 }
 
+/* Full-poster hover preview — fixed-position panel showing the whole image */
+.event-poster-preview {
+  position: fixed;
+  z-index: 2000;
+  pointer-events: none;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #0c0c10;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow:
+    0 24px 60px rgba(0, 0, 0, 0.65),
+    0 0 0 1px rgba(255, 107, 0, 0.14),
+    0 8px 24px rgba(255, 107, 0, 0.18);
+}
+
+.event-poster-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
 /* Fallback poster (no image URL available) */
 .event-poster-fallback {
   display: flex;
