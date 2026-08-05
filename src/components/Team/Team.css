@@ -1,5 +1,5 @@
 .team-page {
-  background: #05080d;
+  background: transparent; /* Changed from #05080d to transparent */
   min-height: 100vh;
   overflow-x: hidden;
 }

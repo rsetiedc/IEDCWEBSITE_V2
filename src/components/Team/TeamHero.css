@@ -6,14 +6,13 @@
   align-items: center;
   text-align: center;
   padding: 10rem 2rem 5rem;
-  background-color: #05080d;
+  background-color: transparent; /* Changed from #05080d to transparent */
   background-size: cover;
   background-position: center 35%;
   background-repeat: no-repeat;
   position: relative;
   overflow: hidden;
 }
-
 /* Overlay gradient tuned to show the background photo clearly */
 .team-hero::before {
   content: "";

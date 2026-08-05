@@ -13,6 +13,7 @@ import Reports from "./components/Reports/Reports.jsx";
 import About from "./components/About/About.jsx";
 import Contact from "./components/Contact/Contact";
 import Team from "./components/Team/Team.jsx";
+import Particles from "./components/Particles/Particles";
 
 // Helper component to reset scroll position on page change
 function ScrollToTop() {
@@ -39,7 +40,7 @@ function RestoreRoute() {
   return null;
 }
 
-//HomePage LAyout
+// HomePage Layout
 function HomePage() {
   return (
     <>
@@ -71,29 +72,63 @@ function ComingSoon({ pageTitle }) {
 
 function App() {
   return (
-    <>
-      <RestoreRoute />
-      <ScrollToTop />
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route
-          path="/gallery"
-          element={
-            <>
-              {" "}
-              <Gallery /> <PastEvents />{" "}
-            </>
-          }
-        />
-        <Route path="/about" element={<About />} />
-        <Route path="/reports" element={<Reports />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/events" element={<Events />} />
-        <Route path="/team" element={<Team />} />
-      </Routes>
-      <Footer />
-    </>
+    <div
+      style={{
+        position: "relative",
+        minHeight: "100vh",
+        background: "#05080d",
+        overflowX: "hidden",
+      }}
+    >
+      {/* Background Particles Container */}
+      <div
+        style={{
+          position: "fixed",
+          inset: 0,
+          zIndex: 0,
+          pointerEvents: "none",
+        }}
+      >
+        <Particles
+  particleColors={["#ffffff", "#ff6b00", "#ffffff"]}
+  particleCount={250}
+  particleSpread={8}
+  speed={0.12}
+  particleBaseSize={130}       /* Increased size dramatically */
+  sizeRandomness={1.5}         /* High variance gives large foreground dots + small background dots */
+  cameraDistance={12}          /* Pulls camera closer to make particles look larger */
+  moveParticlesOnHover={true}
+  particleHoverFactor={1.2}
+  alphaParticles={false}        /* Solid white/orange circles like React Bits demo */
+  disableRotation={false}
+  pixelRatio={window.devicePixelRatio || 1}
+/>
+      </div>
+
+      {/* Main Page Content */}
+      <div style={{ position: "relative", zIndex: 1 }}>
+        <RestoreRoute />
+        <ScrollToTop />
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route
+            path="/gallery"
+            element={
+              <>
+                <Gallery /> <PastEvents />
+              </>
+            }
+          />
+          <Route path="/about" element={<About />} />
+          <Route path="/reports" element={<Reports />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/events" element={<Events />} />
+          <Route path="/team" element={<Team />} />
+        </Routes>
+        <Footer />
+      </div>
+    </div>
   );
 }
 
