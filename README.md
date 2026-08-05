@@ -1,4 +1,4 @@
-# RSET IEDC Website V2
+# RSET IEDC AND IIC RSET Website V2
 
 The official website of the **Innovation & Entrepreneurship Development Cell (IEDC)** and **IIC RSET** at Rajagiri School of Engineering & Technology.
 
