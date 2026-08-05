@@ -1,0 +1,71 @@
+.team-hero {
+  min-height: 55vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 10rem 2rem 5rem;
+  background-color: #05080d;
+  background-size: cover;
+  background-position: center 35%;
+  background-repeat: no-repeat;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Overlay gradient tuned to show the background photo clearly */
+.team-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(5, 8, 13, 0.45) 0%,
+    rgba(5, 8, 13, 0.65) 60%,
+    rgba(5, 8, 13, 1) 100%
+  );
+  z-index: 1;
+}
+
+.team-hero-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 800px;
+}
+
+.team-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.6rem 1.4rem;
+  border-radius: 999px;
+  background: rgba(255, 107, 0, 0.25);
+  border: 1px solid rgba(255, 107, 0, 0.5);
+  color: #ff6b00;
+  font-weight: 600;
+  margin-bottom: 1.25rem;
+  font-size: 0.9rem;
+  letter-spacing: 0.5px;
+  backdrop-filter: blur(10px);
+}
+
+.team-hero h1 {
+  font-family: "Space Grotesk", sans-serif;
+  color: #ffffff;
+  font-size: clamp(2.8rem, 5vw, 5rem);
+  font-weight: 700;
+  margin-bottom: 1rem;
+  line-height: 1.1;
+  text-shadow: 0 4px 16px rgba(0, 0, 0, 0.9);
+}
+
+.team-hero p {
+  max-width: 680px;
+  color: #e2e8f0;
+  line-height: 1.8;
+  font-size: 1.05rem;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9);
+}

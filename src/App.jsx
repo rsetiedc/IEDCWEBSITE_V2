@@ -12,6 +12,7 @@ import Events from "./components/Events/Events.jsx";
 import Reports from "./components/Reports/Reports.jsx";
 import About from "./components/About/About.jsx";
 import Contact from "./components/Contact/Contact";
+import Team from "./components/Team/Team.jsx";
 
 // Helper component to reset scroll position on page change
 function ScrollToTop() {
@@ -76,17 +77,20 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/gallery" element={<>
-          <Gallery />
-          <PastEvents />
-        </>} />
+        <Route
+          path="/gallery"
+          element={
+            <>
+              {" "}
+              <Gallery /> <PastEvents />{" "}
+            </>
+          }
+        />
         <Route path="/about" element={<About />} />
         <Route path="/reports" element={<Reports />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/events" element={<Events />} />
-
-        {/* Active / In-Progress Pages */}
-        <Route path="/team" element={<ComingSoon pageTitle="Team" />} />
+        <Route path="/team" element={<Team />} />
       </Routes>
       <Footer />
     </>
