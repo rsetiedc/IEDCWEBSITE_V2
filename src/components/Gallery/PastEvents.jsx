@@ -1,5 +1,8 @@
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { FiCamera } from "react-icons/fi";
 import "./PastEvents.css";
+import PastEventModal from "./PastEventModal";
 
 /**
  * Gallery of Past Events — the flagship events of RSET IEDC & IIC RSET.
@@ -62,6 +65,8 @@ const PAST_EVENTS = [
 ];
 
 export default function PastEvents() {
+  const [selectedEvent, setSelectedEvent] = useState(null);
+
   return (
     <section className="past-events" aria-labelledby="past-events-title">
       <div className="past-events-head">
@@ -72,6 +77,7 @@ export default function PastEvents() {
         <p className="past-events-subtitle">
           A look back at the flagship events of RSET IEDC &amp; IIC RSET — the
           milestones that shaped our journey in innovation and entrepreneurship.
+          Click an event to open its photo gallery.
         </p>
       </div>
 
@@ -80,6 +86,16 @@ export default function PastEvents() {
           <motion.article
             key={event.id}
             className="past-event-card"
+            role="button"
+            tabIndex={0}
+            aria-label={`View photos of ${event.name}`}
+            onClick={() => setSelectedEvent(event)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                setSelectedEvent(event);
+              }
+            }}
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-40px" }}
@@ -99,6 +115,10 @@ export default function PastEvents() {
               <span className="past-event-art-num">
                 {String(event.id).padStart(2, "0")}
               </span>
+              <span className="past-event-view">
+                <FiCamera aria-hidden="true" />
+                View Photos
+              </span>
             </div>
 
             <div className="past-event-body">
@@ -109,6 +129,16 @@ export default function PastEvents() {
           </motion.article>
         ))}
       </div>
+
+      <AnimatePresence>
+        {selectedEvent && (
+          <PastEventModal
+            key={selectedEvent.id}
+            event={selectedEvent}
+            onClose={() => setSelectedEvent(null)}
+          />
+        )}
+      </AnimatePresence>
     </section>
   );
 }
