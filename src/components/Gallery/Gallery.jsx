@@ -4,7 +4,6 @@ import img03 from "../../assets/gallery/03.jpg";
 import img04 from "../../assets/gallery/04.jpg";
 import img05 from "../../assets/gallery/05.jpg";
 import "./Gallery.css";
-import ImageMarquee from "./ImageMarquee";
 
 const galleryImages = [
   { id: 1, src: img01, title: "Innovation Workshop" },
@@ -14,12 +13,9 @@ const galleryImages = [
   { id: 5, src: img05, title: "past Events" },
 ];
 
-export default function Gallery({ showAccordion = true, showMarquee = false, pageMode = false }) {
+export default function Gallery() {
   return (
-    <section
-      id="gallery"
-      className={`gallery-section${pageMode ? " gallery-section--page" : ""}`}
-    >
+    <section id="gallery" className="gallery-section">
       <div className="gallery-header">
         <span className="gallery-tag">Gallery</span>
         <h2 className="gallery-title">Moments at RSET IEDC</h2>
@@ -29,20 +25,16 @@ export default function Gallery({ showAccordion = true, showMarquee = false, pag
         </p>
       </div>
 
-      {showAccordion && (
-        <div className="gallery-accordion">
-          {galleryImages.map((image) => (
-            <div className="gallery-item" key={image.id}>
-              <img src={image.src} alt={image.title} />
-              <div className="gallery-overlay">
-                <h3>{image.title}</h3>
-              </div>
+      <div className="gallery-accordion">
+        {galleryImages.map((image) => (
+          <div className="gallery-item" key={image.id}>
+            <img src={image.src} alt={image.title} />
+            <div className="gallery-overlay">
+              <h3>{image.title}</h3>
             </div>
-          ))}
-        </div>
-      )}
-
-      {showMarquee && <ImageMarquee />}
+          </div>
+        ))}
+      </div>
     </section>
   );
 }

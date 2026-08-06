@@ -8,8 +8,6 @@
 }
 
 .particles-container canvas {
-  position: absolute;
-  inset: 0;
   display: block;
   width: 100% !important;
   height: 100% !important;

@@ -3,17 +3,14 @@ import { AnimatePresence, motion } from "framer-motion";
 import { FiCamera } from "react-icons/fi";
 import "./PastEvents.css";
 import PastEventModal from "./PastEventModal";
-import { getEventCoverPhoto } from "../../services/galleryPhotos";
-
 
 /**
  * Gallery of Past Events — the flagship events of RSET IEDC & IIC RSET.
  *
  * Self-contained section (own component + own CSS) so the existing gallery
- * code (Gallery.jsx / Gallery.css) is never touched. Each event has a photo
- * folder under src/assets/gallery/events_page/; the web-ready copies inside
- * its `optimized/` subfolder are loaded automatically by
- * services/galleryPhotos.js.
+ * code (Gallery.jsx / Gallery.css) is never touched. To show real photos
+ * later, drop images into src/assets/gallery/ and add an <img> in place of
+ * the placeholder art area.
  */
 const PAST_EVENTS = [
   {
@@ -39,64 +36,39 @@ const PAST_EVENTS = [
   },
   {
     id: 4,
+    name: "REDTAILS",
+    tag: "Flagship Event",
+    description:
+      "A high-energy celebration of innovation, technology and student talent at RSET.",
+  },
+  {
+    id: 5,
     name: "IGNIITE",
     tag: "Entrepreneurship",
     description:
       "A national-level entrepreneurship program igniting startup dreams among young minds.",
   },
   {
-    id: 5,
+    id: 6,
     name: "START-IT-UP",
     tag: "Startup Showcase",
     description:
       "A platform where student startups pitch their ideas to win support and incubation.",
   },
+  {
+    id: 7,
+    name: "FOUNDER'S JOURNEY",
+    tag: "Talk Series",
+    description:
+      "An inspiring series of talks where founders share the highs, lows and lessons of building a startup.",
+  },
 ];
-
-/**
- * Renders the art area for an event card — cover photo if available,
- * otherwise the gradient placeholder with the event initial.
- */
-function EventArt({ event }) {
-  const coverPhoto = getEventCoverPhoto(event.name);
-
-  return (
-    <div
-      className={`past-event-art past-event-art-${event.id}${coverPhoto ? " has-cover" : ""}`}
-      aria-hidden="true"
-    >
-      {coverPhoto && (
-        <img
-          src={coverPhoto}
-          alt=""
-          className="past-event-cover-img"
-          loading="lazy"
-          decoding="async"
-        />
-      )}
-      {!coverPhoto && (
-        <span className="past-event-art-letter">
-          {event.name.charAt(0)}
-        </span>
-      )}
-      <span className="past-event-art-num">
-        {String(event.id).padStart(2, "0")}
-      </span>
-      <span className="past-event-view">
-        <FiCamera aria-hidden="true" />
-        View Photos
-      </span>
-    </div>
-  );
-}
 
 export default function PastEvents() {
   const [selectedEvent, setSelectedEvent] = useState(null);
 
   return (
     <section className="past-events" aria-labelledby="past-events-title">
-
-
       <div className="past-events-head">
         <span className="past-events-tag">Flagship Events</span>
         <h2 id="past-events-title" className="past-events-title">
@@ -133,7 +105,21 @@ export default function PastEvents() {
               ease: "easeOut",
             }}
           >
-            <EventArt event={event} />
+            <div
+              className={`past-event-art past-event-art-${event.id}`}
+              aria-hidden="true"
+            >
+              <span className="past-event-art-letter">
+                {event.name.charAt(0)}
+              </span>
+              <span className="past-event-art-num">
+                {String(event.id).padStart(2, "0")}
+              </span>
+              <span className="past-event-view">
+                <FiCamera aria-hidden="true" />
+                View Photos
+              </span>
+            </div>
 
             <div className="past-event-body">
               <span className="past-event-tag">{event.tag}</span>

@@ -1,16 +1,8 @@
-/* ==========================================================================
-   Gallery Page — flagship events showcase + lightbox
-   ========================================================================== */
-
-.gallery-page {
-  background: #09090b;
+.gallery-section {
   min-height: 100vh;
-  background: #0b1117;
+  background: transparent;
   padding: 180px 8% 120px;
-  padding-bottom: 6rem;
-  overflow-x: hidden;
 }
-
 .gallery-tag {
   display: inline-block;
   padding: 8px 18px;
@@ -20,81 +12,69 @@
   font-weight: 600;
   margin-bottom: 16px;
 }
-
-/* ------------------------------------------------------------------
-   Standalone Gallery page — push the heading below the fixed navbar
-   (navbar is ~186px tall: 150px logo + 18px top/bottom padding).
-   Applied only on the /gallery route via the pageMode prop.
-   ------------------------------------------------------------------ */
-.gallery-section--page {
-  padding-top: clamp(210px, 24vh, 250px);
-}
-
 .gallery-header {
   text-align: center;
   max-width: 900px;
   margin: 0 auto 70px;
 }
 
-/* ------------------------------ Accordion image strip ------------------------------ */
+.gallery-title {
+  font-size: 3.5rem;
+  margin: 18px 0;
+}
+
+.gallery-subtitle {
+  color: #9ea7b3;
+  line-height: 1.8;
+}
+
 .gallery-accordion {
   display: flex;
-  gap: 1rem;
-  justify-content: center;
-  flex-wrap: wrap;
-  max-width: 1200px;
-  margin: 0 auto 2.5rem;
-  padding: 0 1rem;
+  gap: 12px;
+  width: min(1300px, 100%);
+  height: 520px;
+  margin: 60px auto 0;
 }
 
 .gallery-item {
   position: relative;
-  flex: 1 1 200px;
-  max-width: 280px;
-  height: 220px;
-  border-radius: 16px;
+  flex: 1;
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background: #121216;
+  border-radius: 22px;
   cursor: pointer;
-  transition: transform 0.4s ease, border-color 0.35s ease, box-shadow 0.35s ease, flex 0.5s ease;
-}
-
-.gallery-item:hover {
-  transform: translateY(-6px);
-  border-color: rgba(255, 107, 0, 0.45);
-  box-shadow:
-    0 18px 44px rgba(0, 0, 0, 0.5),
-    0 0 0 1px rgba(255, 107, 0, 0.15);
-  flex: 1.5 1 200px;
+  transition: flex 0.55s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .gallery-item img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  display: block;
-  transition: transform 0.6s ease;
+  transition: transform 0.55s ease;
+}
+
+/* When hovering the gallery */
+.gallery-accordion:hover .gallery-item {
+  flex: 0.8;
+}
+
+/* Expand hovered image */
+.gallery-accordion .gallery-item:hover {
+  flex: 4;
 }
 
 .gallery-item:hover img {
-  transform: scale(1.08);
+  transform: scale(1);
 }
 
 .gallery-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    180deg,
-    rgba(9, 9, 11, 0) 40%,
-    rgba(9, 9, 11, 0.7) 80%,
-    rgba(9, 9, 11, 0.95)
-  );
   display: flex;
   align-items: flex-end;
-  padding: 1rem 1.1rem;
+  padding: 28px;
+  background: linear-gradient(transparent 45%, rgba(0, 0, 0, 0.75));
   opacity: 0;
-  transition: opacity 0.35s ease;
+  transition: 0.35s;
 }
 
 .gallery-item:hover .gallery-overlay {
@@ -102,428 +82,28 @@
 }
 
 .gallery-overlay h3 {
-  font-family: "Space Grotesk", sans-serif;
-  font-size: 0.95rem;
-  font-weight: 700;
-  color: #ffffff;
-  margin: 0;
-  letter-spacing: 0.02em;
+  color: #fff;
+  font-size: 1.5rem;
+  transform: translateY(20px);
+  transition: 0.35s;
 }
 
-/* ------------------------------ Section 1: Hero ------------------------------ */
-.gallery-hero {
-  min-height: 42vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  padding: 7rem 2rem 3rem;
-  background:
-    radial-gradient(60% 90% at 50% 0%, rgba(255, 107, 0, 0.08), transparent 60%),
-    #000000;
-}
-
-.gallery-tag {
-  padding: 0.6rem 1.4rem;
-  background: rgba(255, 107, 0, 0.1);
-  color: #ff6b00;
-  border-radius: 999px;
-  font-weight: 600;
-  font-size: 0.875rem;
-  letter-spacing: 0.05em;
-  margin-bottom: 1.25rem;
-}
-
-.gallery-hero h1 {
-  font-family: "Space Grotesk", sans-serif;
-  font-weight: 700;
-  font-size: clamp(2.5rem, 6vw, 4.5rem);
-  letter-spacing: -0.02em;
-  color: #ffffff;
-  margin-bottom: 1rem;
-}
-
-.gallery-hero p {
-  color: #aeb7c2;
-  max-width: 640px;
-  line-height: 1.7;
-  font-size: 1.05rem;
-}
-
-/* ------------------------------ Section 2: Grid ------------------------------ */
-.gallery-content {
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 1.5rem;
-}
-
-/* Bento grid: IEDC Summit is featured (2x2), with two wide rows */
-.gallery-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-auto-rows: 210px;
-  gap: 1.1rem;
-}
-
-.gallery-card:nth-child(1) {
-  grid-column: span 2;
-  grid-row: span 2;
-}
-
-.gallery-card:nth-child(2),
-.gallery-card:nth-child(5) {
-  grid-column: span 2;
-}
-
-/* ------------------------------- Event card ------------------------------- */
-.gallery-card {
-  position: relative;
-  display: block;
-  padding: 0;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 20px;
-  overflow: hidden;
-  background: #121216;
-  cursor: pointer;
-  text-align: left;
-  color: inherit;
-  transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
-}
-
-.gallery-card:focus-visible {
-  outline: 2px solid #ff6b00;
-  outline-offset: 3px;
-}
-
-.gallery-card:hover {
-  transform: translateY(-4px);
-  border-color: rgba(255, 107, 0, 0.45);
-  box-shadow:
-    0 18px 44px rgba(0, 0, 0, 0.5),
-    0 0 0 1px rgba(255, 107, 0, 0.15);
-}
-
-.gallery-card img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.6s ease;
-}
-
-.gallery-card:hover img {
-  transform: scale(1.07);
-}
-
-/* Bottom gradient for text readability */
-.gallery-card-overlay {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  background: linear-gradient(
-    180deg,
-    rgba(9, 9, 11, 0) 35%,
-    rgba(9, 9, 11, 0.55) 72%,
-    rgba(9, 9, 11, 0.92)
-  );
-  transition: background 0.35s ease;
-}
-
-.gallery-card:hover .gallery-card-overlay {
-  background: linear-gradient(
-    180deg,
-    rgba(9, 9, 11, 0.25) 0%,
-    rgba(9, 9, 11, 0.6) 70%,
-    rgba(9, 9, 11, 0.94)
-  );
-}
-
-/* Badge — top-left, revealed on hover */
-.gallery-card-badge {
-  position: absolute;
-  top: 1rem;
-  left: 1rem;
-  z-index: 2;
-  padding: 0.3rem 0.8rem;
-  border-radius: 999px;
-  background: rgba(255, 107, 0, 0.16);
-  border: 1px solid rgba(255, 143, 61, 0.45);
-  color: #ffb14d;
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  backdrop-filter: blur(6px);
-  opacity: 0;
-  transform: translateY(-8px);
-  transition: opacity 0.35s ease, transform 0.35s ease;
-}
-
-.gallery-card:hover .gallery-card-badge {
-  opacity: 1;
+.gallery-item:hover .gallery-overlay h3 {
   transform: translateY(0);
 }
 
-/* "View Photo" chip — centre, revealed on hover */
-.gallery-card-view {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  z-index: 2;
-  transform: translate(-50%, -50%) scale(0.9);
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-  padding: 0.55rem 1.1rem;
-  border-radius: 999px;
-  background: rgba(9, 9, 11, 0.65);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  backdrop-filter: blur(8px);
-  color: #ffffff;
-  font-size: 0.85rem;
-  font-weight: 600;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.35s ease, transform 0.35s ease;
-}
-
-.gallery-card:hover .gallery-card-view {
-  opacity: 1;
-  transform: translate(-50%, -50%) scale(1);
-}
-
-/* Caption — bottom of the card */
-.gallery-card-caption {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 2;
-  padding: 1.1rem 1.25rem;
-}
-
-.gallery-card-title {
-  font-family: "Space Grotesk", sans-serif;
-  font-size: clamp(1rem, 2.2vw, 1.45rem);
-  font-weight: 700;
-  color: #ffffff;
-  letter-spacing: 0.02em;
-}
-
-.gallery-card-desc {
-  color: #c3cad4;
-  font-size: 0.85rem;
-  line-height: 1.55;
-  max-height: 0;
-  opacity: 0;
-  overflow: hidden;
-  transition: max-height 0.4s ease, opacity 0.4s ease, margin 0.4s ease;
-}
-
-.gallery-card:hover .gallery-card-desc {
-  max-height: 6rem;
-  opacity: 1;
-  margin-top: 0.35rem;
-}
-
-/* Note under the grid */
-.gallery-note {
-  text-align: center;
-  color: #6f7885;
-  font-size: 0.85rem;
-  margin-top: 2.5rem;
-}
-
-/* ================================== Lightbox ================================== */
-.gallery-lightbox {
-  position: fixed;
-  inset: 0;
-  z-index: 1000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1.25rem;
-  padding: 1.5rem;
-  background: rgba(5, 5, 7, 0.85);
-  backdrop-filter: blur(10px);
-}
-
-.gallery-lightbox-figure {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  max-width: min(920px, 90vw);
-  max-height: 88vh;
-  border-radius: 18px;
-  overflow: hidden;
-  background: #121216;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.6);
-}
-
-.gallery-lightbox-figure img {
-  width: 100%;
-  max-height: 72vh;
-  object-fit: cover;
-  display: block;
-}
-
-.gallery-lightbox-figure figcaption {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  padding: 1rem 1.25rem;
-}
-
-.gallery-lightbox-tag {
-  padding: 0.25rem 0.7rem;
-  border-radius: 999px;
-  background: rgba(255, 107, 0, 0.14);
-  border: 1px solid rgba(255, 143, 61, 0.4);
-  color: #ffb14d;
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  flex-shrink: 0;
-}
-
-.gallery-lightbox-title {
-  font-family: "Space Grotesk", sans-serif;
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: #ffffff;
-}
-
-.gallery-lightbox-counter {
-  margin-left: auto;
-  color: #6f7885;
-  font-size: 0.85rem;
-  white-space: nowrap;
-}
-
-.gallery-lightbox-close {
-  position: absolute;
-  top: 1.25rem;
-  right: 1.25rem;
-  z-index: 3;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 2.6rem;
-  height: 2.6rem;
-  border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  background: rgba(255, 255, 255, 0.06);
-  color: #ffffff;
-  font-size: 1.2rem;
-  cursor: pointer;
-  transition: background 0.25s ease, color 0.25s ease, transform 0.25s ease;
-}
-
-.gallery-lightbox-close:hover {
-  background: rgba(255, 107, 0, 0.9);
-  transform: rotate(90deg);
-}
-
-.gallery-lightbox-nav {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 3rem;
-  height: 3rem;
-  border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  background: rgba(9, 9, 11, 0.6);
-  color: #ffffff;
-  font-size: 1.4rem;
-  cursor: pointer;
-  flex-shrink: 0;
-  transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
-}
-
-.gallery-lightbox-nav:hover {
-  background: rgba(255, 107, 0, 0.9);
-  border-color: rgba(255, 107, 0, 0.9);
-  transform: scale(1.05);
-}
-
-.gallery-lightbox-close:focus-visible,
-.gallery-lightbox-nav:focus-visible {
-  outline: 2px solid #ff6b00;
-  outline-offset: 3px;
-}
-
-/* ================================= Responsive ================================= */
-/* Tablet: two columns */
-@media (max-width: 1024px) {
-  .gallery-grid {
-    grid-template-columns: repeat(2, 1fr);
-    grid-auto-rows: 200px;
-  }
-
-  .gallery-item {
-    height: 180px;
-  }
-}
-
-/* Mobile: single column + stacked lightbox */
-@media (max-width: 620px) {
-  .gallery-grid {
-    grid-template-columns: 1fr;
-    grid-auto-rows: auto;
-    gap: 1rem;
-  }
-
-  .gallery-card:nth-child(n) {
-    grid-column: auto;
-    grid-row: auto;
-    aspect-ratio: 16 / 10;
-  }
-
-  .gallery-lightbox {
-    gap: 0;
-    padding: 0.75rem;
-  }
-
-  .gallery-lightbox-figure img {
-    max-height: 66vh;
-  }
-
-  .gallery-lightbox-figure figcaption {
-    padding: 1rem 1.25rem 4.5rem;
-  }
-
-  .gallery-lightbox-nav {
-    position: absolute;
-    bottom: 1.25rem;
-    width: 2.7rem;
-    height: 2.7rem;
-  }
-
-  .gallery-lightbox-nav.prev {
-    left: 1rem;
-  }
-
-  .gallery-lightbox-nav.next {
-    right: 1rem;
-  }
-
+@media (max-width: 900px) {
   .gallery-accordion {
-    gap: 0.75rem;
+    flex-direction: column;
+    height: auto;
   }
 
   .gallery-item {
-    height: 160px;
-    flex: 1 1 140px;
-    max-width: none;
+    height: 260px;
   }
 
+  .gallery-accordion:hover .gallery-item,
   .gallery-item:hover {
-    flex: 1 1 140px;
+    flex: 1;
   }
 }

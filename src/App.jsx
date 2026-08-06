@@ -114,7 +114,7 @@ function App() {
             path="/gallery"
             element={
               <>
-                <Gallery showMarquee pageMode /> <PastEvents />
+                <Gallery /> <PastEvents />
               </>
             }
           />
