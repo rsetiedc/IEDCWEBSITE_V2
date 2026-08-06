@@ -4,7 +4,6 @@ import {
   FaLinkedinIn,
   FaGithub,
   FaEnvelope,
-  FaSyncAlt,
 } from "react-icons/fa";
 
 // Automatically import all images from assets/team

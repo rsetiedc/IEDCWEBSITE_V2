@@ -115,25 +115,28 @@ export default function Particles({
     const camera = new Camera(gl, { fov: 15 });
     camera.position.set(0, 0, cameraDistance);
 
+    let width = 0;
+    let height = 0;
+
     const resize = () => {
-      const width = container.clientWidth;
-      const height = container.clientHeight;
+      width = container.clientWidth;
+      height = container.clientHeight;
       renderer.setSize(width, height);
       camera.perspective({ aspect: gl.canvas.width / gl.canvas.height });
     };
     window.addEventListener('resize', resize, false);
     resize();
 
+    // Normalized pointer position (for hover motion).
     const handleMouseMove = (e) => {
       const rect = container.getBoundingClientRect();
-      const x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
-      const y = -(((e.clientY - rect.top) / rect.height) * 2 - 1);
-      mouseRef.current = { x, y };
+      mouseRef.current = {
+        x: ((e.clientX - rect.left) / rect.width) * 2 - 1,
+        y: -((e.clientY - rect.top) / rect.height) * 2 - 1
+      };
     };
 
-    if (moveParticlesOnHover) {
-      window.addEventListener('mousemove', handleMouseMove);
-    }
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
 
     const count = particleCount;
     const positions = new Float32Array(count * 3);
@@ -188,7 +191,8 @@ export default function Particles({
       lastTime = t;
       elapsed += delta * speed;
 
-      program.uniforms.uTime.value = elapsed * 0.001;
+      const time = elapsed * 0.001;
+      program.uniforms.uTime.value = time;
 
       if (moveParticlesOnHover) {
         particles.position.x = -mouseRef.current.x * particleHoverFactor;
@@ -211,9 +215,7 @@ export default function Particles({
 
     return () => {
       window.removeEventListener('resize', resize);
-      if (moveParticlesOnHover) {
-        window.removeEventListener('mousemove', handleMouseMove);
-      }
+      window.removeEventListener('mousemove', handleMouseMove);
       cancelAnimationFrame(animationFrameId);
       if (container.contains(gl.canvas)) {
         container.removeChild(gl.canvas);

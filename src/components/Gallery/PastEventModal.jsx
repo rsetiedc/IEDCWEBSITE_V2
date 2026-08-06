@@ -162,6 +162,7 @@ export default function PastEventModal({ event, onClose }) {
               src={photos[previewIndex]}
               alt={`${event.name} photo ${previewIndex + 1}`}
               referrerPolicy="no-referrer"
+              decoding="async"
               onClick={() => setPreviewIndex(null)}
             />
             {photos.length > 1 && (
@@ -215,6 +216,7 @@ export default function PastEventModal({ event, onClose }) {
                     src={url}
                     alt={`${event.name} photo ${index + 1}`}
                     loading="lazy"
+                    decoding="async"
                     referrerPolicy="no-referrer"
                   />
                   <span className="past-event-photo-num" aria-hidden="true">

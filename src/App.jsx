@@ -50,24 +50,6 @@ function HomePage() {
   );
 }
 
-// Temporary Placeholder for pages in development
-function ComingSoon({ pageTitle }) {
-  return (
-    <div
-      style={{
-        padding: "120px 20px 80px",
-        textAlign: "center",
-        minHeight: "60vh",
-      }}
-    >
-      <h1>{pageTitle}</h1>
-      <p style={{ color: "#888", marginTop: "12px" }}>
-        This page is currently under construction.
-      </p>
-    </div>
-  );
-}
-
 function App() {
   return (
     <div
@@ -114,7 +96,7 @@ function App() {
             path="/gallery"
             element={
               <>
-                <Gallery /> <PastEvents />
+                <Gallery showMarquee pageMode /> <PastEvents />
               </>
             }
           />

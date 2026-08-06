@@ -12,9 +12,9 @@
 .past-events-head {
   text-align: center;
   max-width: 760px;
-  margin: 0 auto 3.5rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  padding-top: 4.5rem;
+  margin: 0 auto 3rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  padding-top: 3rem;
 }
 
 .past-events-tag {
@@ -49,8 +49,10 @@
 /* ------------------------------ Event cards ------------------------------ */
 .past-events-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .past-event-card {
@@ -66,6 +68,7 @@
   color: inherit;
   font: inherit;
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
   transition: transform 0.35s ease, border-color 0.35s ease,
     box-shadow 0.35s ease;
 }
@@ -116,11 +119,30 @@
 .past-event-art-5 {
   background: linear-gradient(135deg, #42220a, #221207);
 }
-.past-event-art-6 {
-  background: linear-gradient(135deg, #33200e, #191008);
+
+/* Cover photo image */
+.past-event-cover-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+  z-index: 0;
 }
-.past-event-art-7 {
-  background: linear-gradient(135deg, #3a2414, #1e1209);
+
+.past-event-art.has-cover::before {
+  background: linear-gradient(
+    180deg,
+    rgba(9, 9, 11, 0) 20%,
+    rgba(9, 9, 11, 0.45) 65%,
+    rgba(9, 9, 11, 0.9)
+  );
+  z-index: 1;
+}
+
+.past-event-card:hover .past-event-cover-img {
+  transform: scale(1.07);
 }
 
 .past-event-art-letter {
@@ -131,6 +153,7 @@
   line-height: 1;
   color: rgba(255, 255, 255, 0.14);
   transition: transform 0.4s ease, color 0.4s ease;
+  z-index: 1;
 }
 
 .past-event-card:hover .past-event-art-letter {
@@ -142,6 +165,7 @@
   position: absolute;
   top: 0.9rem;
   right: 1rem;
+  z-index: 2;
   font-family: "Space Grotesk", sans-serif;
   font-size: 0.85rem;
   font-weight: 700;
@@ -159,6 +183,7 @@
   position: absolute;
   bottom: 1rem;
   left: 1rem;
+  z-index: 2;
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;
@@ -244,6 +269,7 @@
   max-width: 880px;
   max-height: 92vh;
   overflow-y: auto;
+  overscroll-behavior: contain;
   background: #121216;
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 20px;
@@ -323,6 +349,7 @@
   background: #0c0c10;
   border: 1px solid rgba(255, 255, 255, 0.08);
   cursor: zoom-in;
+  -webkit-tap-highlight-color: transparent;
   transition: transform 0.25s ease, border-color 0.25s ease,
     box-shadow 0.25s ease;
 }
@@ -494,18 +521,25 @@
 }
 
 /* ------------------------------- Responsive ------------------------------- */
+@media (max-width: 1024px) {
+  .past-events-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 @media (max-width: 700px) {
   .past-events {
     padding: 0 6% 4rem;
   }
 
   .past-events-head {
-    padding-top: 3rem;
-    margin-bottom: 2.5rem;
+    padding-top: 2rem;
+    margin-bottom: 2rem;
   }
 
   .past-events-grid {
-    gap: 1.1rem;
+    grid-template-columns: 1fr;
+    gap: 1rem;
   }
 
   .past-event-modal-overlay {
@@ -524,5 +558,22 @@
 
   .past-event-preview {
     padding: 1rem 1.2rem 4.5rem;
+  }
+}
+
+/* Very small phones — tighter photo grid so tiles stay tappable */
+@media (max-width: 380px) {
+  .past-event-modal-grid {
+    grid-template-columns: repeat(auto-fill, minmax(118px, 1fr));
+    gap: 0.6rem;
+    padding: 0.9rem 1rem;
+  }
+
+  .past-event-modal-head {
+    padding: 1rem 1rem 0.2rem;
+  }
+
+  .past-event-modal-title {
+    font-size: 1.25rem;
   }
 }
