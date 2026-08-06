@@ -5,7 +5,6 @@ import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
 import Hero from "./components/Hero/Hero";
 import HomeAbout from "./components/HomeAbout/HomeAbout";
-import Stats from "./components/Stats/Stats";
 import Gallery from "./components/Gallery/Gallery";
 import PastEvents from "./components/Gallery/PastEvents";
 import Events from "./components/Events/Events.jsx";
@@ -46,7 +45,6 @@ function HomePage() {
     <>
       <Hero />
       <HomeAbout />
-      <Stats />
       <Gallery />
     </>
   );

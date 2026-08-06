@@ -200,9 +200,11 @@
    ========================================== */
 
 @media (max-width: 768px) {
-  .hero-video {
+
+  /*  .hero-video {
     display: none !important;
   }
+*/
 
   .hero {
     background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%);
