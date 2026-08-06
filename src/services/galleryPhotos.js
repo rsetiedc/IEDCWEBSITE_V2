@@ -1,37 +1,85 @@
 /**
  * Photo links for the flagship events on the Gallery page.
  *
- * Event photos are not available yet, so every event currently has an empty
- * list and the viewer shows "Yet to arrive" placeholders.
+ * Photos are loaded dynamically from src/assets/gallery/events_page/ using
+ * Vite's import.meta.glob. Each event folder contains an `optimized/`
+ * subfolder with web-ready copies (JPEG, max 1920px) of every photo in that
+ * event:
+ *   - iedc_summit_2023       → IEDC SUMMIT
+ *   - iic_regional_meet_2025 → IIC REGIONAL MEET
+ *   - hacksus                → HACKSUS
+ *   - start_it_up            → START-IT-UP
+ *   - igniite                → IGNIITE
  *
- * ── How developers publish photos ──────────────────────────────────────────
- * Photo links are managed in code — paste public image URLs into that
- * event's array below. Any direct image link works, e.g.:
- *   - Google Drive: "https://lh3.googleusercontent.com/d/<FILE_ID>=w1600"
- *     (the file must be shared as *Anyone with the link → Viewer*)
- *   - Repo files:   "/posters/iedc-summit-1.jpg" (drop the image in public/)
- *   - Any other:    "https://example.com/photo.jpg"
- *
- *   "IEDC SUMMIT": [
- *     "https://lh3.googleusercontent.com/d/...=w1600",
- *     "/posters/iedc-summit-1.jpg",
- *   ],
- *
- * Each event's viewer shows 5–7 photo slots (up to 7 photos per event);
- * filled slots display the linked image, empty ones show "Yet to arrive".
- * ───────────────────────────────────────────────────────────────────────────
+ * The original, large files (JPG/PNG/HEIC/NEF) stay untouched next to the
+ * `optimized/` folder and are deliberately NOT loaded — so every event photo
+ * is shown exactly once, in a size that loads fast on mobile.
  */
-const GALLERY_PHOTOS = {
-  "IEDC SUMMIT": [],
-  "IIC REGIONAL MEET": [],
-  HACKSUS: [],
-  REDTAILS: [],
-  IGNIITE: [],
-  "START-IT-UP": [],
-  "FOUNDER'S JOURNEY": [],
+
+// Vite glob pattern: eagerly import the optimized JPEG copies of every event.
+const imageModules = import.meta.glob(
+  "../assets/gallery/events_page/*/optimized/*.{jpg,jpeg}",
+  { eager: true, import: "default" }
+);
+
+// Map folder names to event names (must match PAST_EVENTS in PastEvents.jsx)
+const FOLDER_TO_EVENT = {
+  iedc_summit_2023: "IEDC SUMMIT",
+  iic_regional_meet_2025: "IIC REGIONAL MEET",
+  hacksus: "HACKSUS",
+  start_it_up: "START-IT-UP",
+  igniite: "IGNIITE",
 };
 
-/** Photo URLs for an event (managed by developers in this file). */
+/**
+ * Build a lookup: event name → array of image URLs.
+ * We iterate over the glob results, extract the event folder name from each
+ * path, map it to the canonical event name, and collect the URLs.
+ */
+function buildPhotoMap() {
+  const map = {};
+
+  for (const [filePath, imageUrl] of Object.entries(imageModules)) {
+    // Extract the event folder from the path, e.g.:
+    // ".../events_page/hacksus/optimized/IMG_4150.jpg" → "hacksus"
+    const match = filePath.match(/events_page\/([^/]+)\/optimized\//);
+    if (!match) continue;
+
+    const folderName = match[1];
+    const eventName = FOLDER_TO_EVENT[folderName];
+    if (!eventName) continue; // Unknown folder — skip
+
+    if (!map[eventName]) map[eventName] = [];
+    map[eventName].push(imageUrl);
+  }
+
+  // Sort photos within each event for consistent ordering
+  for (const eventName of Object.keys(map)) {
+    map[eventName].sort((a, b) => a.localeCompare(b));
+  }
+
+  return map;
+}
+
+// Build the photo map once at module load time
+const GALLERY_PHOTOS = buildPhotoMap();
+
+/**
+ * Photo URLs for an event (auto-loaded from the events_page folder).
+ * @param {string} eventName — must match the name in PAST_EVENTS
+ * @returns {string[]} array of image URLs (empty if no photos found)
+ */
 export function getGalleryPhotos(eventName) {
   return (GALLERY_PHOTOS[eventName] || []).slice();
+}
+
+/**
+ * Cover photo URL for an event (the first image in its folder).
+ * Returns null if the event has no photos.
+ * @param {string} eventName
+ * @returns {string|null}
+ */
+export function getEventCoverPhoto(eventName) {
+  const photos = GALLERY_PHOTOS[eventName];
+  return photos && photos.length > 0 ? photos[0] : null;
 }
