@@ -129,6 +129,9 @@
   object-fit: cover;
   transition: transform 0.6s ease;
   z-index: 0;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 .past-event-art.has-cover::before {
@@ -371,6 +374,9 @@
   height: 100%;
   object-fit: cover;
   display: block;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 .past-event-photo-num {
@@ -579,6 +585,11 @@
 
   .past-event-modal-overlay {
     padding: 0.75rem;
+  }
+
+  /* Last row of the photo grid sits clear of the home indicator */
+  .past-event-modal {
+    padding-bottom: env(safe-area-inset-bottom);
   }
 
   .past-event-modal-head {

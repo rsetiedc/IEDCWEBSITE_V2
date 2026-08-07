@@ -4,12 +4,14 @@
   width: 100%;
   z-index: 1000;
   transition: padding 0.35s ease, background 0.35s ease;
-  padding: 18px 0;
+  /* env() keeps the bar clear of the iPhone notch / Dynamic Island */
+  padding: calc(18px + env(safe-area-inset-top)) 0 18px;
 }
 
 .navbar.scrolled {
-  padding: 12px 0;
+  padding: calc(12px + env(safe-area-inset-top)) 0 12px;
   backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
   background: rgba(9, 9, 11, 0.72);
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
@@ -160,12 +162,26 @@
     top: 0;
     width: 280px;
     height: 100vh;
+    height: 100dvh; /* stable height on iOS (address-bar collapse) */
     background: #111114;
     flex-direction: column;
     justify-content: center;
     gap: 1.5rem;
     transition: right 0.35s ease;
     box-shadow: -5px 0 25px rgba(0, 0, 0, 0.5);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    /* Keep the last item clear of the home indicator / landscape notch */
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+    padding-right: env(safe-area-inset-right);
+    box-sizing: border-box;
+  }
+
+  /* Auto margins keep centering *and* let the top item stay reachable when
+     the drawer overflows on short (landscape) screens. */
+  .nav-links > * {
+    margin: auto 0;
   }
 
   .nav-links.open {

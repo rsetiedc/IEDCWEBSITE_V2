@@ -3,6 +3,7 @@
 
     width: 100%;
     min-height: 65vh;
+    min-height: 65dvh; /* stable on iOS / Android browser chrome */
 
     display: flex;
     align-items: center;
@@ -122,6 +123,13 @@
 
     .about-hero {
         min-height: 50vh;
+        min-height: 50dvh;
+    }
+
+    /* Full-screen blur is expensive on mobile GPUs */
+    .about-hero-overlay {
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
     }
 
     .about-hero-content h1 {

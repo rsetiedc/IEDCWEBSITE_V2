@@ -117,4 +117,17 @@
   .contact-form-card h2 {
     font-size: 1.5rem;
   }
+
+  /* iOS Safari auto-zooms into inputs under 16px — keep them at 16px */
+  .contact-form-card input,
+  .contact-form-card textarea {
+    font-size: 16px;
+  }
+
+  /* Full-width submit for a comfortable touch target */
+  .contact-form-card button {
+    align-self: stretch;
+    width: 100%;
+    padding: 0.9rem 1.8rem;
+  }
 }

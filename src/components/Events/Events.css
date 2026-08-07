@@ -556,7 +556,9 @@
   width: 100%;
   max-width: 960px;
   max-height: 92vh;
+  max-height: 92dvh; /* no jump on Android address-bar collapse / iOS chrome */
   overflow-y: auto;
+  overscroll-behavior: contain; /* stop scroll chaining behind the modal */
   background: #121216;
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 20px;
@@ -959,6 +961,11 @@
 
   .event-modal-photos {
     padding: 0 1.25rem 1.25rem;
+  }
+
+  /* Keep the last row clear of the iPhone home indicator */
+  .event-modal {
+    padding-bottom: env(safe-area-inset-bottom);
   }
 
   .event-modal-photos-nav {

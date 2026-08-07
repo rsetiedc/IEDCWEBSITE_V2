@@ -6,6 +6,10 @@
 
 html {
   scroll-behavior: smooth;
+  /* Prevent iOS from auto-inflating font sizes on landscape rotation */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  overflow-x: hidden;
 }
 
 body {
@@ -19,6 +23,10 @@ body {
 #root {
   width: 100%;
   min-height: 100vh;
+  /* iOS Safari: use the small viewport so the fixed navbar/drawer never
+     gets pushed under the browser chrome or leaves a jump when the
+     address bar collapses. */
+  min-height: 100dvh;
 }
 
 a {
@@ -28,4 +36,37 @@ a {
 
 button {
   font: inherit;
+}
+
+/* ==========================================================================
+   Touch / mobile hardening (Android + iOS)
+   ========================================================================== */
+
+/* Kill the grey flash on tap on Android Chrome and iOS Safari */
+a,
+button,
+input,
+textarea,
+select,
+[role="button"] {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Remove the 300ms double-tap delay / accidental double-tap zoom on iOS
+   for interactive elements */
+a,
+button,
+[role="button"] {
+  touch-action: manipulation;
+}
+
+/* iOS Safari auto-zooms into any form control whose font-size is below
+   16px. The contact form's own CSS bumps its controls to 16px on phones
+   (a bare element rule here would lose to the form's class selectors). */
+
+/* Respect users who disable motion (Android accessibility / iOS Reduce Motion) */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }

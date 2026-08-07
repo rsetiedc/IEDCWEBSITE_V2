@@ -28,6 +28,21 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Lock background scrolling while the mobile drawer is open and close it
+  // with the Escape key (helps keyboard users & iOS/Android trackpads).
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? "hidden" : "";
+    if (!menuOpen) return undefined;
+    const onKeyDown = (e) => {
+      if (e.key === "Escape") setMenuOpen(false);
+    };
+    document.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.removeEventListener("keydown", onKeyDown);
+      document.body.style.overflow = "";
+    };
+  }, [menuOpen]);
+
   return (
     <header className={`navbar ${scrolled ? "scrolled" : ""}`}>
       <div className="navbar-container">

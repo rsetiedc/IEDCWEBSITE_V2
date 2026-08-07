@@ -1,3 +1,4 @@
+import { useState } from "react";
 import "./TeamCard.css";
 
 import {
@@ -21,8 +22,31 @@ const getImage = (filename) => {
 };
 
 export default function TeamCard({ member }) {
+  // Touch devices have no :hover — tapping the card flips it to the bio
+  // (desktop still flips on hover; clicking also toggles as a bonus).
+  const [flipped, setFlipped] = useState(false);
+
+  const toggleFlip = () => setFlipped((prev) => !prev);
+
   return (
-    <div className="team-card">
+    <div
+      className={`team-card ${flipped ? "flipped" : ""}`}
+      role="button"
+      tabIndex={0}
+      aria-pressed={flipped}
+      aria-label={`View bio of ${member.name}`}
+      onClick={toggleFlip}
+      onKeyDown={(e) => {
+        // Only flip when the card itself is focused — Enter/Space pressed on
+        // a child (e.g. a social link on the back face) must activate that
+        // child instead of bubbling up and flipping the card.
+        if (e.target !== e.currentTarget) return;
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          toggleFlip();
+        }
+      }}
+    >
 
       <div className="team-card-inner">
 
@@ -43,6 +67,11 @@ export default function TeamCard({ member }) {
             <p className="team-role">
               {member.role}
             </p>
+
+            <span className="flip-indicator" aria-hidden="true">
+              <span className="flip-hint-hover">Hover to flip</span>
+              <span className="flip-hint-tap">Tap to flip</span>
+            </span>
 
           </div>
 
@@ -67,7 +96,10 @@ export default function TeamCard({ member }) {
                 "Passionate about innovation and entrepreneurship."}
             </p>
 
-            <div className="team-socials">
+            <div
+              className="team-socials"
+              onClick={(e) => e.stopPropagation()}
+            >
 
               {member.linkedin && (
                 <a

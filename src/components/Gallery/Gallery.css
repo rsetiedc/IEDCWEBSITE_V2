@@ -429,6 +429,7 @@
   width: 100%;
   max-width: min(920px, 90vw);
   max-height: 88vh;
+  max-height: 88dvh; /* stable on iOS / Android browser chrome */
   border-radius: 18px;
   overflow: hidden;
   background: #121216;
@@ -580,12 +581,12 @@
   }
 
   .gallery-lightbox-figure figcaption {
-    padding: 1rem 1.25rem 4.5rem;
+    padding: 1rem 1.25rem calc(4.5rem + env(safe-area-inset-bottom));
   }
 
   .gallery-lightbox-nav {
     position: absolute;
-    bottom: 1.25rem;
+    bottom: calc(1.25rem + env(safe-area-inset-bottom));
     width: 2.7rem;
     height: 2.7rem;
   }
@@ -652,10 +653,41 @@
     opacity: 1;
   }
 
+  /* Grid cards: keep the caption/description readable without hover */
+  .gallery-card:active {
+    transform: scale(0.97);
+  }
+
+  .gallery-card .gallery-card-desc {
+    max-height: 6rem;
+    opacity: 1;
+    margin-top: 0.35rem;
+  }
+
+  .gallery-card .gallery-card-badge {
+    opacity: 1;
+    transform: none;
+  }
+
+  .gallery-card .gallery-card-view {
+    opacity: 1;
+    /* keep the centre-point translate — transform: none would un-center it */
+    transform: translate(-50%, -50%) scale(1);
+  }
+
   .gallery-scroll-wrapper:hover .gallery-scroll-content,
   .gallery-scroll-content {
     animation-play-state: running;
   }
+}
+
+/* Gallery images are content, not text — suppress the iOS long-press callout
+   and accidental text selection on photos. */
+.gallery-item img,
+.gallery-card img {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 /* Respect users who disable motion (common on Android for battery/sensitivity) */

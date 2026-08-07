@@ -78,3 +78,17 @@
     font-size:1rem;
 
 }
+
+/* Card blur is expensive on low-end phones — drop it on small screens */
+@media (max-width: 768px){
+
+    .about-card{
+
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+
+        background: rgba(20,24,32,.9);
+
+    }
+
+}

@@ -2,7 +2,8 @@
   /* Set background to pure black to blend the dark logo backgrounds seamlessly */
   background: #000000;
   color: #d6d6d6;
-  padding: 4rem 7% 1.5rem;
+  /* Keep the copyright bar clear of the iPhone home indicator */
+  padding: 4rem 7% calc(1.5rem + env(safe-area-inset-bottom));
   border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
@@ -171,7 +172,7 @@
 
 @media (max-width: 768px) {
   .footer {
-    padding: 3rem 6% 1.5rem;
+    padding: 3rem 6% calc(1.5rem + env(safe-area-inset-bottom));
   }
 
   .footer-grid {

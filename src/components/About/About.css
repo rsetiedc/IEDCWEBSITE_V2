@@ -178,6 +178,9 @@
 
     .about-page{
         gap:5rem;
+        /* Mobile navbar is shorter (~136px) — avoid double padding with
+           the hero's own top padding on small screens */
+        padding: 60px 0 6rem;
     }
 
     .about-section{

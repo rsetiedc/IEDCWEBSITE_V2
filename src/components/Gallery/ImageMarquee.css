@@ -87,6 +87,10 @@
   object-fit: cover;
   display: block;
   transition: transform 0.4s ease;
+  /* Photos aren't text — suppress the iOS long-press callout */
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 .marquee-item:hover .marquee-img {
