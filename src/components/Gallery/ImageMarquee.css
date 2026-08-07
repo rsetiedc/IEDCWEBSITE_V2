@@ -53,6 +53,7 @@
   gap: 0.75rem;
   width: max-content;
   animation: marquee-scroll 30s linear infinite;
+  will-change: transform; /* promote to its own GPU layer — smoother on mobile */
 }
 
 /* Pause on hover */
@@ -165,5 +166,29 @@
   .marquee-content {
     gap: 0.4rem;
     animation-duration: 20s;
+  }
+}
+
+/* Touch devices have no hover: always show the event name chip and stop a
+   stuck :hover (from tapping) from pausing the marquee permanently. */
+@media (hover: none) {
+  .marquee-item {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .marquee-item .marquee-item-overlay {
+    opacity: 1;
+  }
+
+  .marquee-wrapper:hover .marquee-content,
+  .marquee-content {
+    animation-play-state: running;
+  }
+}
+
+/* Respect users who disable motion */
+@media (prefers-reduced-motion: reduce) {
+  .marquee-content {
+    animation: none;
   }
 }

@@ -268,6 +268,7 @@
   width: 100%;
   max-width: 880px;
   max-height: 92vh;
+  max-height: 92dvh; /* dynamic viewport height — no jump on Android address-bar collapse */
   overflow-y: auto;
   overscroll-behavior: contain;
   background: #121216;
@@ -434,6 +435,7 @@
 .past-event-preview img {
   max-width: 100%;
   max-height: 62vh;
+  max-height: 62dvh;
   border-radius: 12px;
   display: block;
   cursor: zoom-out;
@@ -527,9 +529,42 @@
   }
 }
 
+/* Touch devices have no hover: keep the "View Photos" chip visible and add
+   press feedback on the event cards. */
+@media (hover: none) {
+  .past-event-card {
+    touch-action: manipulation;
+  }
+
+  .past-event-card:active {
+    transform: scale(0.98);
+  }
+
+  .past-event-card .past-event-view {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Respect users who disable motion */
+@media (prefers-reduced-motion: reduce) {
+  .past-event-card {
+    transition: none;
+  }
+
+  .past-event-card:hover {
+    transform: none;
+  }
+}
+
 @media (max-width: 700px) {
   .past-events {
     padding: 0 6% 4rem;
+  }
+
+  /* Don't let the modal fight Android's on-screen navigation bar */
+  .past-event-modal-overlay {
+    padding-bottom: calc(0.75rem + env(safe-area-inset-bottom));
   }
 
   .past-events-head {

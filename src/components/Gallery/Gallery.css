@@ -32,41 +32,112 @@
 
 .gallery-header {
   text-align: center;
-  max-width: 900px;
-  margin: 0 auto 70px;
+  max-width: 860px;
+  margin: 0 auto 50px;
 }
 
-/* ------------------------------ Accordion image strip ------------------------------ */
-.gallery-accordion {
+.gallery-title {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: clamp(2.2rem, 5vw, 3.5rem);
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  margin: 0 0 1.25rem;
+}
+
+.gallery-subtitle {
+  color: #a0aab8;
+  font-size: clamp(1rem, 2vw, 1.15rem);
+  line-height: 1.8;
+  margin: 0 auto;
+  max-width: 780px;
+}
+
+/* ------------------------------ Auto-scrolling image marquee strip ------------------------------ */
+.gallery-scroll-wrapper {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  margin: 0 auto 3rem;
+  padding: 0.5rem 0;
+}
+
+.gallery-fade-left,
+.gallery-fade-right {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.gallery-fade-left {
+  left: 0;
+  background: linear-gradient(
+    90deg,
+    #0b1117 0%,
+    rgba(11, 17, 23, 0.6) 50%,
+    transparent 100%
+  );
+}
+
+.gallery-fade-right {
+  right: 0;
+  background: linear-gradient(
+    270deg,
+    #0b1117 0%,
+    rgba(11, 17, 23, 0.6) 50%,
+    transparent 100%
+  );
+}
+
+.gallery-scroll-track {
+  width: 100%;
+  overflow: hidden;
+}
+
+.gallery-scroll-content {
   display: flex;
-  gap: 1rem;
-  justify-content: center;
-  flex-wrap: wrap;
-  max-width: 1200px;
-  margin: 0 auto 2.5rem;
-  padding: 0 1rem;
+  gap: 1.25rem;
+  width: max-content;
+  animation: gallery-auto-scroll 32s linear infinite;
+  will-change: transform; /* promote to its own GPU layer — smoother on mobile */
+}
+
+.gallery-scroll-wrapper:hover .gallery-scroll-content {
+  animation-play-state: paused;
+}
+
+@keyframes gallery-auto-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(calc(-33.3333% - 0.416rem));
+  }
 }
 
 .gallery-item {
   position: relative;
-  flex: 1 1 200px;
-  max-width: 280px;
-  height: 220px;
-  border-radius: 16px;
+  flex-shrink: 0;
+  width: 280px;
+  height: 240px;
+  border-radius: 18px;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.08);
   background: #121216;
   cursor: pointer;
-  transition: transform 0.4s ease, border-color 0.35s ease, box-shadow 0.35s ease, flex 0.5s ease;
+  transition: transform 0.4s ease, border-color 0.35s ease, box-shadow 0.35s ease;
 }
 
 .gallery-item:hover {
-  transform: translateY(-6px);
-  border-color: rgba(255, 107, 0, 0.45);
+  transform: translateY(-6px) scale(1.02);
+  border-color: rgba(255, 107, 0, 0.5);
   box-shadow:
     0 18px 44px rgba(0, 0, 0, 0.5),
-    0 0 0 1px rgba(255, 107, 0, 0.15);
-  flex: 1.5 1 200px;
+    0 0 0 1px rgba(255, 107, 0, 0.2);
 }
 
 .gallery-item img {
@@ -86,13 +157,13 @@
   inset: 0;
   background: linear-gradient(
     180deg,
-    rgba(9, 9, 11, 0) 40%,
-    rgba(9, 9, 11, 0.7) 80%,
+    rgba(9, 9, 11, 0) 35%,
+    rgba(9, 9, 11, 0.65) 75%,
     rgba(9, 9, 11, 0.95)
   );
   display: flex;
   align-items: flex-end;
-  padding: 1rem 1.1rem;
+  padding: 1.1rem 1.25rem;
   opacity: 0;
   transition: opacity 0.35s ease;
 }
@@ -103,7 +174,7 @@
 
 .gallery-overlay h3 {
   font-family: "Space Grotesk", sans-serif;
-  font-size: 0.95rem;
+  font-size: 1.05rem;
   font-weight: 700;
   color: #ffffff;
   margin: 0;
@@ -467,7 +538,21 @@
   }
 
   .gallery-item {
-    height: 180px;
+    width: 220px;
+    height: 190px;
+  }
+
+  .gallery-fade-left,
+  .gallery-fade-right {
+    width: 50px;
+  }
+}
+
+/* Keep the heading off the screen edges once the viewport nears the
+   header's max-width (tablets & phones) */
+@media (max-width: 900px) {
+  .gallery-header {
+    padding: 0 6%;
   }
 }
 
@@ -513,17 +598,69 @@
     right: 1rem;
   }
 
-  .gallery-accordion {
-    gap: 0.75rem;
+  .gallery-scroll-content {
+    gap: 0.85rem;
+    animation-duration: 25s;
   }
 
   .gallery-item {
-    height: 160px;
-    flex: 1 1 140px;
-    max-width: none;
+    width: 170px;
+    height: 150px;
   }
 
-  .gallery-item:hover {
-    flex: 1 1 140px;
+  /* Navbar is ~136px tall on phones — match the clearance to it */
+  .gallery-section--page {
+    padding-top: clamp(150px, 20vh, 170px);
+  }
+
+  .gallery-header {
+    margin-bottom: 32px;
+  }
+}
+
+/* Small phones — keep the marquee tiles tappable & readable */
+@media (max-width: 480px) {
+  .gallery-scroll-content {
+    gap: 0.7rem;
+  }
+
+  .gallery-item {
+    width: 150px;
+    height: 130px;
+  }
+
+  .gallery-fade-left,
+  .gallery-fade-right {
+    width: 36px;
+  }
+}
+
+/* Touch devices (Android/iOS) have no hover: always surface the tile titles
+   and add press feedback. Also prevent a stuck :hover (from tapping) from
+   pausing the marquee permanently. */
+@media (hover: none) {
+  .gallery-item {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+
+  .gallery-item:active {
+    transform: scale(0.96);
+  }
+
+  .gallery-item .gallery-overlay {
+    opacity: 1;
+  }
+
+  .gallery-scroll-wrapper:hover .gallery-scroll-content,
+  .gallery-scroll-content {
+    animation-play-state: running;
+  }
+}
+
+/* Respect users who disable motion (common on Android for battery/sensitivity) */
+@media (prefers-reduced-motion: reduce) {
+  .gallery-scroll-content {
+    animation: none;
   }
 }

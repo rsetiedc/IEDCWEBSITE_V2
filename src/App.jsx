@@ -14,6 +14,17 @@ import Contact from "./components/Contact/Contact";
 import Team from "./components/Team/Team.jsx";
 import Particles from "./components/Particles/Particles";
 
+// Android/low-power devices: cap the WebGL pixel ratio and particle count on
+// small screens so the fixed background canvas stays cheap to render while
+// scrolling (high-DPR phones make 250 large point sprites very expensive).
+function getParticleTuning() {
+  const smallScreen = window.innerWidth < 768;
+  return {
+    count: smallScreen ? 120 : 250,
+    pixelRatio: Math.min(window.devicePixelRatio || 1, smallScreen ? 1.5 : 2),
+  };
+}
+
 // Helper component to reset scroll position on page change
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -51,6 +62,8 @@ function HomePage() {
 }
 
 function App() {
+  const particleTuning = getParticleTuning();
+
   return (
     <div
       style={{
@@ -71,7 +84,7 @@ function App() {
       >
         <Particles
   particleColors={["#ffffff", "#ff6b00", "#ffffff"]}
-  particleCount={250}
+  particleCount={particleTuning.count}
   particleSpread={8}
   speed={0.12}
   particleBaseSize={130}       /* Increased size dramatically */
@@ -81,7 +94,7 @@ function App() {
   particleHoverFactor={1.2}
   alphaParticles={false}        /* Solid white/orange circles like React Bits demo */
   disableRotation={false}
-  pixelRatio={window.devicePixelRatio || 1}
+  pixelRatio={particleTuning.pixelRatio}
 />
       </div>
 
