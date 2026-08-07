@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { FaArrowDown } from "react-icons/fa";
+import { Link } from "react-router-dom";
 import "./Hero.css";
 
 import heroVideo from "../../assets/videos/hero.mp4";
@@ -35,8 +36,9 @@ export default function Hero() {
           </p>
 
           <div className="hero-buttons">
-            <button className="primary-btn">Explore</button>
-            <button className="secondary-btn">Join Us</button>
+            <Link to="/about" className="primary-btn">
+              Explore
+            </Link>
           </div>
         </div>
       </motion.div>
