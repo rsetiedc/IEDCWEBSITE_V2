@@ -18,17 +18,36 @@ export default function Gallery({ showAccordion = true, showMarquee = false, pag
   // Triplicate the image set to allow seamless infinite scrolling
   const tripledImages = [...galleryImages, ...galleryImages, ...galleryImages];
 
+  const homepageStats = [
+    { value: "3000+", label: "Members" },
+    { value: "200+", label: "Events" },
+    { value: "2021", label: "IPL Winners" },
+    { value: "2023", label: "IEDC Summit Host" },
+  ];
+
   return (
     <section
       id="gallery"
       className={`gallery-section${pageMode ? " gallery-section--page" : ""}`}
     >
       <div className="gallery-header">
+        {!pageMode && (
+          <div className="gallery-stats-row">
+            {homepageStats.map((stat, i) => (
+              <div key={i} className="gallery-stat-box">
+                <span className="stat-val">{stat.value}</span>
+                <span className="stat-lbl">{stat.label}</span>
+              </div>
+            ))}
+          </div>
+        )}
         <span className="gallery-tag">Gallery</span>
         <h2 className="gallery-title">Moments & Memories at RSET IEDC</h2>
-        <p className="gallery-subtitle">
-          Step into our vibrant ecosystem of innovation and creativity! From high-energy hackathons and hands-on technical workshops to inspiring founder talks, startup pitch showcases, and collaborative community initiatives — explore the pivotal moments that define our journey at Rajagiri School of Engineering & Technology.
-        </p>
+        {pageMode && (
+          <p className="gallery-subtitle">
+            Step into our vibrant ecosystem of innovation and creativity! From high-energy hackathons and hands-on technical workshops to inspiring founder talks, startup pitch showcases, and collaborative community initiatives — explore the pivotal moments that define our journey at Rajagiri School of Engineering & Technology.
+          </p>
+        )}
       </div>
 
       {showAccordion && (

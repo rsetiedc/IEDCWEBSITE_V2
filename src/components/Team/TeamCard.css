@@ -186,10 +186,7 @@
   line-height: 1.5;
   font-size: 0.88rem;
   margin-bottom: 1.25rem;
-  display: -webkit-box;
-  -webkit-line-clamp: 4;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+  /* Show the complete role description — never truncate the bio. */
 }
 
 .team-socials {
