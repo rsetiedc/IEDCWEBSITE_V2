@@ -1,6 +1,29 @@
 # RSET IEDC AND IIC RSET Website V2
 
-The official website of the **Innovation & Entrepreneurship Development Cell (IEDC)** and **IIC RSET** at Rajagiri School of Engineering & Technology.
+The official website of the **Innovation & Entrepreneurship Development Cell (IEDC)** and **IIC RSET** at Rajagiri School of Engineering & Technology. It highlights the cells' objectives, team, events, photo gallery, and annual reports.
+
+## Project Overview
+
+A single-page React application that serves as the digital home for the Innovation & Entrepreneurship Development Cell and the Institution's Innovation Council at RSET. Built as a fast, animated, and mobile-optimized site, it gives students, faculty, and visitors a window into the cells' activities, people, and achievements.
+
+### Pages
+
+- **Home** – Hero intro with an animated particle background, an overview of the cells, and a preview of the photo gallery.
+- **About** – Mission, objectives, and background of both IEDC and IIC RSET.
+- **Events** – Upcoming and past events, powered by a data snapshot generated from a Google Sheet (see [`scripts/generateEventsJson.mjs`](scripts/generateEventsJson.mjs)).
+- **Team** – Profiles of the core team members.
+- **Gallery** – Flagship event photo galleries and a scrolling image marquee.
+- **Reports** – Annual and activity reports presented in a tabular format.
+- **Contact** – Contact form and location details.
+
+### Key Features
+
+- Animated particle background (capped on mobile for low-power devices)
+- Animated navigation with an active-page pill indicator and a mobile drawer
+- Scroll-to-top and deep-link route restoration on page change
+- Framer Motion–powered transitions and micro-interactions throughout
+- Fully responsive, optimized for Android and iOS devices
+- Deployed to GitHub Pages via a GitHub Actions workflow
 
 ## Getting Started
 
