@@ -10,11 +10,12 @@ import { mapRowToEvent, clean } from "./eventsMapping.js";
  *      (primary field "ID" holds the event code), holding the event's
  *      contact people and phone numbers, linked back to the events table.
  *
- * Both tables are read with the database token below. The token is needed
- * client-side, so it is visible to visitors — keep it scoped to read-only in
- * Baserow. It can be overridden via the VITE_BASEROW_TOKEN env var.
+ * Both tables are read with the Baserow database token, which must be
+ * provided via the VITE_BASEROW_TOKEN env var (e.g. in .env or CI secrets) —
+ * there is no hardcoded default. The token is needed client-side, so it is
+ * visible to visitors; keep it scoped to read-only in Baserow.
  */
-export const DEFAULT_BASEROW_TOKEN = "5QizEuQqqha4ViUdweWNCVuCo9S36RQx";
+export const DEFAULT_BASEROW_TOKEN = "";
 export const DEFAULT_EVENTS_TABLE_ID = 1123078;
 export const DEFAULT_CONTACTS_TABLE_ID = 1123079;
 export const BASEROW_API_BASE = "https://api.baserow.io/api";
@@ -59,6 +60,11 @@ export async function fetchBaserowEvents({
   eventsTableId = DEFAULT_EVENTS_TABLE_ID,
   contactsTableId = DEFAULT_CONTACTS_TABLE_ID,
 } = {}) {
+  if (!token) {
+    throw new Error(
+      "Baserow token missing: set VITE_BASEROW_TOKEN (see .env.example)."
+    );
+  }
   const [eventRows, contactRows] = await Promise.all([
     fetchBaserowRows(eventsTableId, token),
     fetchBaserowRows(contactsTableId, token),

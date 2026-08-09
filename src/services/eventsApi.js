@@ -7,8 +7,10 @@ import {
 import { getEventPhotos } from "./eventPhotos.js";
 
 // The events live in a Baserow database (events table + linked contacts
-// table). These are overridable via env vars but default to the configured
-// database, so the site works without any setup.
+// table). The read-only token must come from VITE_BASEROW_TOKEN (.env or CI
+// secrets); the table IDs fall back to the configured database defaults. If
+// Baserow is unreachable (or no token is set), the committed events.json
+// snapshot is used instead.
 const BASEROW_TOKEN = import.meta.env.VITE_BASEROW_TOKEN || DEFAULT_BASEROW_TOKEN;
 const EVENTS_TABLE_ID =
   Number(import.meta.env.VITE_BASEROW_EVENTS_TABLE_ID) || DEFAULT_EVENTS_TABLE_ID;
