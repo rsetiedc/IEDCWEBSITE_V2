@@ -33,6 +33,15 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Check Baserow token configured
+        env:
+          VITE_BASEROW_TOKEN: ${{ secrets.VITE_BASEROW_TOKEN }}
+        run: |
+          if [ -z "$VITE_BASEROW_TOKEN" ]; then
+            echo "::error::The VITE_BASEROW_TOKEN secret is not set, so the deployed Events page cannot live-fetch from Baserow. Add a read-only token under Settings -> Secrets and variables -> Actions, then re-run this workflow."
+            exit 1
+          fi
+
       - name: Generate events snapshot
         run: node scripts/generateEventsJson.mjs
         env:
@@ -54,6 +63,14 @@ jobs:
 
       - name: Build project
         run: npm run build
+        env:
+          # Pass the Baserow credentials into the client bundle so the deployed
+          # site reads events LIVE from Baserow (the Events page auto-refreshes
+          # every 15s) instead of only using the deploy-time snapshot. The token
+          # is embedded in the public JS bundle, so keep it scoped to read-only.
+          VITE_BASEROW_TOKEN: ${{ secrets.VITE_BASEROW_TOKEN }}
+          VITE_BASEROW_EVENTS_TABLE_ID: ${{ vars.VITE_BASEROW_EVENTS_TABLE_ID }}
+          VITE_BASEROW_CONTACTS_TABLE_ID: ${{ vars.VITE_BASEROW_CONTACTS_TABLE_ID }}
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3

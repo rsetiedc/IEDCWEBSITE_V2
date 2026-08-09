@@ -191,11 +191,6 @@
         "name": "Annu Mariam George",
         "phone": "98957 64338",
         "email": ""
-      },
-      {
-        "name": "Hima Arun",
-        "phone": "9074577161",
-        "email": ""
       }
     ],
     "isOpen": false,
@@ -220,13 +215,7 @@
     "venue": "KE Seminar Hall",
     "organizer": "RSET IEDC X IIC RSET",
     "audience": "Students",
-    "contacts": [
-      {
-        "name": "Hima Arun",
-        "phone": "9074577161",
-        "email": ""
-      }
-    ],
+    "contacts": [],
     "isOpen": true,
     "registrationStatus": "Active",
     "capacity": "",
@@ -270,28 +259,23 @@
     "registrationLink": "https://forms.gle/7G811VxPsgPYdp9W8"
   },
   {
-    "id": 9,
-    "code": "IEDC009",
-    "title": "Hi",
-    "eventType": "",
+    "id": 10,
+    "code": "IEDC010",
+    "title": "sAMPLE eVENT",
+    "eventType": "sample",
     "category": "",
-    "description": "",
+    "description": "lorem ipsum",
     "detailedDescription": "",
-    "poster": "https://lh3.googleusercontent.com/d/1q6vPaP_0T2s1TBv_md8Ng_8FNwmKS82y=w1600",
-    "date": "TBA",
+    "poster": "https://lh3.googleusercontent.com/d/1UfX1yrLw255coUoJUSq7on9UJXeqyULW=w1600",
+    "date": "August 11, 2026",
     "time": "TBA",
     "venue": "To be announced",
     "organizer": "RSET IEDC",
     "audience": "All",
     "contacts": [
       {
-        "name": "Ryan George",
-        "phone": "",
-        "email": ""
-      },
-      {
-        "name": "Justus Binu",
-        "phone": "",
+        "name": "rYAN",
+        "phone": "9605715441",
         "email": ""
       }
     ],
@@ -301,6 +285,6 @@
     "deadline": "",
     "tags": [],
     "keyTopics": [],
-    "registrationLink": ""
+    "registrationLink": "https://luma.com/3fk2qmlh"
   }
 ]
