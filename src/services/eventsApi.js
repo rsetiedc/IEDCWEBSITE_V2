@@ -1,11 +1,19 @@
-import { fetchSheetEvents, DEFAULT_SHEET_ID, DEFAULT_SHEET_GID } from "./googleSheets.js";
+import {
+  fetchBaserowEvents,
+  DEFAULT_BASEROW_TOKEN,
+  DEFAULT_EVENTS_TABLE_ID,
+  DEFAULT_CONTACTS_TABLE_ID,
+} from "./baserow.js";
 import { getEventPhotos } from "./eventPhotos.js";
 
-// The events table lives in a publicly shared Google Sheet. These are
-// overridable via env vars but default to the shared sheet, so the site works
-// without any configuration.
-const SHEET_ID = import.meta.env.VITE_EVENTS_SHEET_ID || DEFAULT_SHEET_ID;
-const SHEET_GID = import.meta.env.VITE_EVENTS_SHEET_GID || DEFAULT_SHEET_GID;
+// The events live in a Baserow database (events table + linked contacts
+// table). These are overridable via env vars but default to the configured
+// database, so the site works without any setup.
+const BASEROW_TOKEN = import.meta.env.VITE_BASEROW_TOKEN || DEFAULT_BASEROW_TOKEN;
+const EVENTS_TABLE_ID =
+  Number(import.meta.env.VITE_BASEROW_EVENTS_TABLE_ID) || DEFAULT_EVENTS_TABLE_ID;
+const CONTACTS_TABLE_ID =
+  Number(import.meta.env.VITE_BASEROW_CONTACTS_TABLE_ID) || DEFAULT_CONTACTS_TABLE_ID;
 
 async function fetchEventsFromSnapshot() {
   const url = `${import.meta.env.BASE_URL}events.json`;
@@ -38,18 +46,22 @@ const resolveMediaBasePath = (events) =>
 
 /**
  * Attach the manually curated event photos (src/services/eventPhotos.js) to
- * each event. These are codebase-managed — never read from the Google Sheet.
+ * each event. These are codebase-managed — never read from Baserow.
  */
 const withEventPhotos = (events) =>
   events.map((event) => ({ ...event, photos: getEventPhotos(event) }));
 
 export async function fetchEvents() {
-  // Prefer LIVE data from the Google Sheet (public CSV export, CORS-enabled)
-  // so edits saved in the sheet show up automatically without a redeploy.
-  // The committed events.json snapshot is only a fallback for when the sheet
-  // is unreachable or Google is temporarily unavailable.
+  // Prefer LIVE data from Baserow (CORS-enabled REST API) so edits saved in
+  // the database show up automatically without a redeploy. The committed
+  // events.json snapshot is only a fallback for when Baserow is unreachable.
   try {
-    return resolveMediaBasePath(withEventPhotos(await fetchSheetEvents(SHEET_ID, SHEET_GID)));
+    const events = await fetchBaserowEvents({
+      token: BASEROW_TOKEN,
+      eventsTableId: EVENTS_TABLE_ID,
+      contactsTableId: CONTACTS_TABLE_ID,
+    });
+    return resolveMediaBasePath(withEventPhotos(events));
   } catch (err) {
     try {
       return resolveMediaBasePath(withEventPhotos(await fetchEventsFromSnapshot()));

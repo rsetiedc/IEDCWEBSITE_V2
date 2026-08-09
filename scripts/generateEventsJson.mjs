@@ -2,16 +2,17 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import process from "node:process";
 import {
-  getSheetCsvUrl,
-  parseCsv,
-  rowsToEventRows,
-  DEFAULT_SHEET_ID,
-  DEFAULT_SHEET_GID,
-} from "../src/services/googleSheets.js";
-import { mapRowToEvent } from "../src/services/eventsMapping.js";
+  fetchBaserowEvents,
+  DEFAULT_BASEROW_TOKEN,
+  DEFAULT_EVENTS_TABLE_ID,
+  DEFAULT_CONTACTS_TABLE_ID,
+} from "../src/services/baserow.js";
 
-const sheetId = process.env.VITE_EVENTS_SHEET_ID || DEFAULT_SHEET_ID;
-const sheetGid = process.env.VITE_EVENTS_SHEET_GID || DEFAULT_SHEET_GID;
+const token = process.env.VITE_BASEROW_TOKEN || DEFAULT_BASEROW_TOKEN;
+const eventsTableId =
+  Number(process.env.VITE_BASEROW_EVENTS_TABLE_ID) || DEFAULT_EVENTS_TABLE_ID;
+const contactsTableId =
+  Number(process.env.VITE_BASEROW_CONTACTS_TABLE_ID) || DEFAULT_CONTACTS_TABLE_ID;
 
 const outPath = path.join(process.cwd(), "public", "events.json");
 
@@ -27,23 +28,13 @@ const writeFallbackIfMissing = async (reason) => {
   }
 };
 
-const url = getSheetCsvUrl(sheetId, sheetGid);
-const response = await fetch(url, { cache: "no-store" });
-
-if (!response.ok) {
-  await writeFallbackIfMissing(`Google Sheet request failed: HTTP ${response.status}.`);
-  process.exit(0);
-}
-
-let text;
+let events;
 try {
-  text = await response.text();
+  events = await fetchBaserowEvents({ token, eventsTableId, contactsTableId });
 } catch (e) {
-  await writeFallbackIfMissing(`Failed to read Google Sheet response: ${e?.message || e}.`);
+  await writeFallbackIfMissing(`Baserow request failed: ${e?.message || e}.`);
   process.exit(0);
 }
-
-const events = rowsToEventRows(parseCsv(text)).map(mapRowToEvent).filter(Boolean);
 
 await fs.mkdir(path.dirname(outPath), { recursive: true });
 await fs.writeFile(outPath, `${JSON.stringify(events, null, 2)}\n`, "utf8");

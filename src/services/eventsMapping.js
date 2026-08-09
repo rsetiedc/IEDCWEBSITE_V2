@@ -102,10 +102,13 @@ export function buildContacts(row) {
   const names = splitList(row.Contact_Person);
   const phones = splitList(row.Contact_Phone);
   const emails = splitList(row.Contact_Email);
-  const count = Math.max(names.length, phones.length, emails.length, 1);
+  const count = Math.max(names.length, phones.length, emails.length);
 
+  // One contact per person, zipped across the three columns. Returns an
+  // empty array when the event has no contact data at all — nothing is
+  // displayed for events with no contacts listed.
   return Array.from({ length: count }, (_, i) => ({
-    name: names[i] || "IEDC Coordinator",
+    name: names[i] || "Contact",
     phone: phones[i] || "",
     email: emails[i] || "",
   }));

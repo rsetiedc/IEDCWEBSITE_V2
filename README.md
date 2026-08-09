@@ -10,7 +10,7 @@ A single-page React application that serves as the digital home for the Innovati
 
 - **Home** – Hero intro with an animated particle background, an overview of the cells, and a preview of the photo gallery.
 - **About** – Mission, objectives, and background of both IEDC and IIC RSET.
-- **Events** – Upcoming and past events, powered by a data snapshot generated from a Google Sheet (see [`scripts/generateEventsJson.mjs`](scripts/generateEventsJson.mjs)).
+- **Events** – Upcoming and past events, powered by live data from a Baserow database, with a committed snapshot fallback (see [`scripts/generateEventsJson.mjs`](scripts/generateEventsJson.mjs)).
 - **Team** – Profiles of the core team members.
 - **Gallery** – Flagship event photo galleries and a scrolling image marquee.
 - **Reports** – Annual and activity reports presented in a tabular format.
@@ -49,3 +49,4 @@ A single-page React application that serves as the digital home for the Innovati
 - Framer Motion
 - React Router
 - React Icons
+- Baserow (events data source)

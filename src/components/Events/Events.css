@@ -325,6 +325,70 @@
   overflow-wrap: break-word;
 }
 
+/* Contact people + phones (from the Baserow contacts table) */
+.event-card-contacts {
+  margin-top: 0.5rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.09);
+}
+
+.event-card-contacts-label {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #6f7885;
+  margin-bottom: 0.55rem;
+}
+
+.event-card-contacts-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.event-card-contact {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.45rem 0.5rem;
+  min-width: 0;
+}
+
+.event-card-contact-icon {
+  flex-shrink: 0;
+  color: #ff6b00;
+  font-size: 0.95rem;
+}
+
+.event-card-contact-name {
+  color: #e2e7ee;
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.event-card-contact-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: #a1a9b6;
+  font-size: 0.82rem;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  transition: color 0.25s ease;
+}
+
+.event-card-contact-link:hover {
+  color: #ff8f3d;
+}
+
+.event-card-contact-link:focus-visible {
+  outline: 2px solid #ff6b00;
+  outline-offset: 2px;
+}
+
 /* Poster */
 .event-poster-wrap {
   position: relative;

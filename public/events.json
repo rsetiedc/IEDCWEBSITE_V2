@@ -17,7 +17,7 @@
       {
         "name": "Safiya K N",
         "phone": "8129118039",
-        "email": "rsetiedc@rajagiritech.edu.in"
+        "email": ""
       }
     ],
     "isOpen": false,
@@ -49,12 +49,12 @@
       {
         "name": "Aaron Thomas",
         "phone": "8448059331",
-        "email": "u2403009@rajagiri.edu.in"
+        "email": ""
       },
       {
         "name": "Alan Isaac",
         "phone": "8921932074",
-        "email": "u2408009@rajagiri.edu.in"
+        "email": ""
       }
     ],
     "isOpen": false,
@@ -191,6 +191,11 @@
         "name": "Annu Mariam George",
         "phone": "98957 64338",
         "email": ""
+      },
+      {
+        "name": "Hima Arun",
+        "phone": "9074577161",
+        "email": ""
       }
     ],
     "isOpen": false,
@@ -200,5 +205,102 @@
     "tags": [],
     "keyTopics": [],
     "registrationLink": "https://docs.google.com/forms/d/e/1FAIpQLSejWD_MU8dcAWuUimiWFJs9VgzIcfCl_Ju9jKu8pqiTIDKWFg/viewform?usp=header"
+  },
+  {
+    "id": 7,
+    "code": "IEDC007",
+    "title": "Smart India Hackathon (SIH) 2026 Internal Selection",
+    "eventType": "",
+    "category": "",
+    "description": "This is the official internal selection round to choose teams that will represent RSET at the national-level Smart India Hackathon 2026.",
+    "detailedDescription": "Form a team of 6 members (with at least one female member) and pitch your most innovative ideas to solve real-world challenges.\n.",
+    "poster": "https://lh3.googleusercontent.com/d/1UfX1yrLw255coUoJUSq7on9UJXeqyULW=w1600",
+    "date": "TBA",
+    "time": "4:30 PM – 6:00 PM",
+    "venue": "KE Seminar Hall",
+    "organizer": "RSET IEDC X IIC RSET",
+    "audience": "Students",
+    "contacts": [
+      {
+        "name": "Hima Arun",
+        "phone": "9074577161",
+        "email": ""
+      }
+    ],
+    "isOpen": true,
+    "registrationStatus": "Active",
+    "capacity": "",
+    "deadline": "",
+    "tags": [],
+    "keyTopics": [],
+    "registrationLink": "https://forms.gle/qcJB2fbcsDpYCNQ96"
+  },
+  {
+    "id": 8,
+    "code": "IEDC008",
+    "title": "ALL IN, ALL OUT",
+    "eventType": "",
+    "category": "",
+    "description": "Every choice comes with a cost.  Every round changes the game.",
+    "detailedDescription": "Think fast, trust your instincts, and make the right calls as you take on puzzles, challenges, and unexpected twists. Strategy, teamwork, and timing will decide who rises to the top.",
+    "poster": "https://lh3.googleusercontent.com/d/1xp0U7z01gY5TUXnkr_bv0plZdNjwousF=w1600",
+    "date": "August 11, 2026",
+    "time": "4:30 PM – 6:00 PM",
+    "venue": "KE Seminar Hall",
+    "organizer": "RSET IEDC X IIC RSET",
+    "audience": "Students",
+    "contacts": [
+      {
+        "name": "Roshni Michael",
+        "phone": "7356640628",
+        "email": ""
+      },
+      {
+        "name": "Hima Arun",
+        "phone": "9074577161",
+        "email": ""
+      }
+    ],
+    "isOpen": true,
+    "registrationStatus": "Active",
+    "capacity": "",
+    "deadline": "",
+    "tags": [],
+    "keyTopics": [],
+    "registrationLink": "https://forms.gle/7G811VxPsgPYdp9W8"
+  },
+  {
+    "id": 9,
+    "code": "IEDC009",
+    "title": "Hi",
+    "eventType": "",
+    "category": "",
+    "description": "",
+    "detailedDescription": "",
+    "poster": "https://lh3.googleusercontent.com/d/1q6vPaP_0T2s1TBv_md8Ng_8FNwmKS82y=w1600",
+    "date": "TBA",
+    "time": "TBA",
+    "venue": "To be announced",
+    "organizer": "RSET IEDC",
+    "audience": "All",
+    "contacts": [
+      {
+        "name": "Ryan George",
+        "phone": "",
+        "email": ""
+      },
+      {
+        "name": "Justus Binu",
+        "phone": "",
+        "email": ""
+      }
+    ],
+    "isOpen": true,
+    "registrationStatus": "Active",
+    "capacity": "",
+    "deadline": "",
+    "tags": [],
+    "keyTopics": [],
+    "registrationLink": ""
   }
 ]

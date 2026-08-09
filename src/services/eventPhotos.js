@@ -1,10 +1,10 @@
 /**
  * Manually curated event photos.
  *
- * Event photos live in this file — NOT in the Google Sheet — so they are
+ * Event photos live in this file — NOT in the events database — so they are
  * hand-maintained in the codebase. The map is keyed by the event code (the
- * "Field 1" column in the sheet), which stays stable even if sheet rows are
- * reordered or retitled.
+ * "Field 1" column in the events database), which stays stable even if rows
+ * are reordered or retitled.
  *
  * How to add photos for an event:
  *   1. Drop the images into `public/event-photos/<CODE>/` (e.g. IEDC001).

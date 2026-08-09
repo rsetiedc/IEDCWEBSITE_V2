@@ -1,7 +1,16 @@
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { AnimatePresence, motion } from "framer-motion";
-import { FiArrowUpRight, FiCalendar, FiCamera, FiClock, FiMapPin } from "react-icons/fi";
+import {
+  FiArrowUpRight,
+  FiCalendar,
+  FiCamera,
+  FiClock,
+  FiMail,
+  FiMapPin,
+  FiPhone,
+  FiUser,
+} from "react-icons/fi";
 
 // If a poster request hangs (throttled/blocked network) instead of erroring,
 // fall back to the placeholder after this many seconds.
@@ -18,6 +27,11 @@ export default function EventCard({ event, onReadMore }) {
   const posterTimer = useRef(null);
   // Number of curated photos for this event (from src/services/eventPhotos.js)
   const photoCount = (event.photos || []).length;
+  // Contact people from the Baserow events + contacts tables. Every person
+  // listed in the database is shown (names always render; phones/emails are
+  // added when the table has them). Events with no contacts map to an empty
+  // list, so no section is rendered.
+  const contacts = event.contacts || [];
 
   // Full-poster hover preview (floating panel showing the complete image)
   const posterWrapRef = useRef(null);
@@ -108,6 +122,45 @@ export default function EventCard({ event, onReadMore }) {
             <span>{event.venue}</span>
           </li>
         </ul>
+
+        {/* Contact people + phone numbers (from Baserow) */}
+        {contacts.length > 0 && (
+          <div className="event-card-contacts">
+            <span className="event-card-contacts-label">Contact</span>
+            <ul className="event-card-contacts-list">
+              {contacts.map((contact, index) => {
+                // tel: links must contain only digits and "+" — strip the
+                // rest, and fall back to email when nothing usable remains.
+                const cleanedPhone = contact.phone
+                  ? contact.phone.replace(/[^+\d]/g, "")
+                  : "";
+                return (
+                  <li key={index} className="event-card-contact">
+                    <FiUser className="event-card-contact-icon" aria-hidden="true" />
+                    <span className="event-card-contact-name">{contact.name}</span>
+                    {cleanedPhone ? (
+                      <a
+                        href={`tel:${cleanedPhone}`}
+                        className="event-card-contact-link"
+                      >
+                        <FiPhone aria-hidden="true" /> {contact.phone}
+                      </a>
+                    ) : (
+                      contact.email && (
+                        <a
+                          href={`mailto:${contact.email}`}
+                          className="event-card-contact-link"
+                        >
+                          <FiMail aria-hidden="true" /> {contact.email}
+                        </a>
+                      )
+                    )}
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        )}
       </div>
 
       {/* Poster + Read More overlay */}

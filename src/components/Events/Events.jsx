@@ -13,13 +13,16 @@ const TABS = [
   { key: "closed", label: "Closed Events" },
 ];
 
-// How often the page re-checks the Google Sheet for changes (overridable via
-// env). Unset/invalid/zero values fall back to the 60s default.
+// How often the page re-checks the Baserow database for changes (overridable
+// via VITE_EVENTS_REFRESH_MS in .env). Unset/invalid/zero values fall back to
+// the 15s default, and the page additionally re-syncs instantly whenever the
+// tab regains focus/visibility — so edits in Baserow appear with very little
+// latency.
 const parsedRefreshMs = Number(import.meta.env.VITE_EVENTS_REFRESH_MS);
 const REFRESH_INTERVAL_MS =
   Number.isFinite(parsedRefreshMs) && parsedRefreshMs > 0
     ? parsedRefreshMs
-    : 60_000;
+    : 15_000;
 
 export default function Events() {
   const [events, setEvents] = useState([]);
@@ -38,19 +41,24 @@ export default function Events() {
     };
   }, []);
 
-  /** Store the fetched events, close the modal if its event disappeared. */
+  /**
+   * Store the fetched events. If the details modal is open, swap its event for
+   * the freshly fetched one (when it still exists) so the modal always shows
+   * the latest data from Baserow.
+   */
   const applyEvents = useCallback((data, { initial = false } = {}) => {
     setEvents(data);
     setLastUpdated(new Date());
-    setSelectedEvent((current) =>
-      current && !data.some((event) => event.id === current.id) ? null : current
-    );
+    setSelectedEvent((current) => {
+      if (!current) return current;
+      return data.find((event) => event.id === current.id) || null;
+    });
     if (initial) setStatus("ready");
   }, []);
 
   /**
-   * Fetch events from the Google Sheet. `initial` failures surface the error
-   * state; background refreshes fail silently and keep the current list.
+   * Fetch events from Baserow. `initial` failures surface the error state;
+   * background refreshes fail silently and keep the current list.
    */
   const syncEvents = useCallback(
     async ({ initial = false } = {}) => {
@@ -73,7 +81,7 @@ export default function Events() {
   );
 
   // Initial load + auto-refresh: re-sync on a fixed interval and whenever the
-  // tab regains focus/visibility — so edits saved in the sheet appear here
+  // tab regains focus/visibility — so edits saved in Baserow appear here
   // automatically, without a redeploy or even a manual reload.
   useEffect(() => {
     let cancelled = false;
@@ -110,6 +118,15 @@ export default function Events() {
   const handleRetry = () => {
     setStatus("loading");
     syncEvents({ initial: true });
+  };
+
+  /**
+   * Open an event's details modal, first pulling the latest Baserow data in
+   * the background so the modal opens with fresh details.
+   */
+  const handleReadMore = (event) => {
+    syncEvents();
+    setSelectedEvent(event);
   };
 
   const openEvents = useMemo(() => events.filter((event) => event.isOpen), [events]);
@@ -213,8 +230,8 @@ export default function Events() {
               className={`events-refresh ${refreshing ? "spinning" : ""}`}
               onClick={() => syncEvents()}
               disabled={refreshing}
-              aria-label="Refresh events from the Google Sheet now"
-              title="Refresh events from the Google Sheet now"
+              aria-label="Refresh events from Baserow now"
+              title="Refresh events from Baserow now"
             >
               <FiRefreshCw className="events-refresh-icon" aria-hidden="true" />
             </button>
@@ -252,7 +269,7 @@ export default function Events() {
                   <EventCard
                     key={event.id}
                     event={event}
-                    onReadMore={() => setSelectedEvent(event)}
+                    onReadMore={() => handleReadMore(event)}
                   />
                 ))}
               </motion.div>
