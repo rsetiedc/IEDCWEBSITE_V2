@@ -87,7 +87,13 @@ export function getEventCoverPhoto(eventName) {
   if (!photos || photos.length === 0) return null;
 
   if (eventName === "IEDC SUMMIT") {
-    const specificCover = photos.find((url) => url.includes("Summit2023_33.jpg"));
+    // Match "Summit2023_2" even though Vite renames bundled assets with a
+    // content hash (e.g. "Summit2023_2-BeatC4Ub.jpg" in the production
+    // build). A plain includes("Summit2023_2.jpg") would silently fail on
+    // GitHub Pages and fall back to the wrong cover.
+    const specificCover = photos.find((url) =>
+      /(?:^|\/)Summit2023_2[.-]/.test(url)
+    );
     if (specificCover) return specificCover;
   }
 
