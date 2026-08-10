@@ -7,12 +7,16 @@
   max-width: 1200px;
   margin: auto;
 
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
 }
 
 .stat-card {
+  flex: 1 1 200px;
+  max-width: 230px;
+
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.08);
 
@@ -20,7 +24,7 @@
 
   border-radius: 20px;
 
-  padding: 2rem;
+  padding: 2rem 1.25rem;
 
   text-align: center;
 
@@ -51,20 +55,10 @@
   color: #c5c5c5;
 }
 
-@media (max-width: 900px) {
-  .stats-container {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 600px) {
-  .stats-container {
-    grid-template-columns: 1fr;
-  }
-}
-
 @media (max-width: 768px) {
   .stat-card {
+    flex: 1 1 140px;
+    max-width: 100%;
     /* Remove expensive blur rendering on mobile */
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;

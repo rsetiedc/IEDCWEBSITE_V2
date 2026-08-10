@@ -27,6 +27,11 @@ const stats = [
     target: 2023,
     label: "IEDC Summit Host",
   },
+  {
+    icon: <FaRocket />,
+    target: 2025,
+    label: "IIC Regional Summit",
+  },
 ];
 
 export default function Stats() {

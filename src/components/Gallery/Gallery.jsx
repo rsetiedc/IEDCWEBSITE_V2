@@ -23,6 +23,7 @@ export default function Gallery({ showAccordion = true, showMarquee = false, pag
     { value: "200+", label: "Events" },
     { value: "2021", label: "IPL Winners" },
     { value: "2023", label: "IEDC Summit Host" },
+    { value: "2025", label: "IIC Regional Summit" },
   ];
 
   return (
