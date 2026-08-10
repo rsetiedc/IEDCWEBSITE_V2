@@ -18,7 +18,7 @@
 
 // Vite glob pattern: eagerly import the optimized JPEG copies of every event.
 const imageModules = import.meta.glob(
-  "../assets/gallery/events_page/*/optimized/*.{jpg,jpeg}",
+  "../assets/gallery/events_page/*/optimized/*.{jpg,jpeg,JPG,JPEG}",
   { eager: true, import: "default" }
 );
 
@@ -29,6 +29,7 @@ const FOLDER_TO_EVENT = {
   hacksus: "HACKSUS",
   start_it_up: "START-IT-UP",
   igniite: "IGNIITE",
+  mad: "MAD",
 };
 
 /**

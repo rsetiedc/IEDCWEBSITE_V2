@@ -36,9 +36,8 @@ export default function IICAbout() {
           <span className="about-tag">About IIC RSET</span>
 
           <h2 className="about-title">
-            IIC - Rajagiri School of
-            Engineering & Technology
-            (RSET)
+            <span className="about-title-fullform">Institution's Innovation Council</span>
+            Innovation Beyond Boundaries
           </h2>
 
           <div className="about-cards">

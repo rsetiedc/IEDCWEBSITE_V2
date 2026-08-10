@@ -51,6 +51,13 @@ const PAST_EVENTS = [
     description:
       "A platform where student startups pitch their ideas to win support and incubation.",
   },
+  {
+    id: 6,
+    name: "MAD",
+    tag: "Freshers' Orientation",
+    description:
+      "An exclusive series of events, competitions, and workshops organized for incoming first-year engineering students to introduce them to campus innovation, creativity, and the startup ecosystem.",
+  },
 ];
 
 /**

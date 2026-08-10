@@ -61,6 +61,7 @@ export default function IEDCAbout() {
           </span>
 
           <h2 className="about-title">
+            <span className="about-title-fullform">Innovation and Entrepreneurship Development Centre</span>
             Building Young Student Entrepreneurs
           </h2>
 

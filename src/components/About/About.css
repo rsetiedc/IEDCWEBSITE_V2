@@ -105,6 +105,15 @@
     margin-bottom: 2.5rem;
 }
 
+.about-title-fullform {
+    display: block;
+    font-size: clamp(1rem, 1.8vw, 1.35rem);
+    font-weight: 500;
+    color: #ff6b00;
+    letter-spacing: 0.04em;
+    margin-bottom: 0.6rem;
+}
+
 .about-cards {
     display: flex;
     flex-direction: column;
