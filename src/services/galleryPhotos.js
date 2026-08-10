@@ -75,12 +75,21 @@ export function getGalleryPhotos(eventName) {
 }
 
 /**
- * Cover photo URL for an event (the first image in its folder).
+ * Cover photo URL for an event.
+ * If a custom cover photo is defined for an event, it will use that photo;
+ * otherwise, it defaults to the first image in its folder.
  * Returns null if the event has no photos.
  * @param {string} eventName
  * @returns {string|null}
  */
 export function getEventCoverPhoto(eventName) {
   const photos = GALLERY_PHOTOS[eventName];
-  return photos && photos.length > 0 ? photos[0] : null;
+  if (!photos || photos.length === 0) return null;
+
+  if (eventName === "IEDC SUMMIT") {
+    const specificCover = photos.find((url) => url.includes("Summit2023_33.jpg"));
+    if (specificCover) return specificCover;
+  }
+
+  return photos[0];
 }
