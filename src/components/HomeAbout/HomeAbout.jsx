@@ -27,14 +27,10 @@ export default function HomeAbout() {
           {/* Paragraph Card Box */}
           <div className="about-text-card">
             <p>
-              At RSET IEDC, we nurture students interested in establishing their
-              startups and aim to ignite their entrepreneurial spirit right here
-              at the campus at Rajagiri School of Engineering and Technology. The
-              Innovation and Development Center (IEDC) not only acts as a
-              facilitator that shapes students' ideas but also serves as a
-              platform to showcase their skills. We are proud to have the backing
-              of Kerala Startup Mission, which supports 283 IEDCs across the
-              state. Come and be a part of the most funded club on the campus.
+              At RSET, IEDC and IIC work together to foster a culture of innovation, entrepreneurship, and creativity among students.
+              RSET IEDC nurtures aspiring entrepreneurs by providing a platform to transform ideas into impactful ventures, develop skills, and explore the startup ecosystem with the support of the Kerala Startup Mission.
+              IIC RSET (Institution’s Innovation Council) complements this vision by encouraging innovation, creative thinking, research, and problem-solving, helping students turn their ideas into meaningful solutions.
+              Together, IEDC and IIC create a vibrant ecosystem where students can think, innovate, build, and inspire. Come and be a part of one of the most dynamic innovation and entrepreneurship communities at RSET.
             </p>
           </div>
 

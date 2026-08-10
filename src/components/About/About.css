@@ -5,7 +5,9 @@
     display: flex;
     flex-direction: column;
     gap: 8rem;
-    padding: 180px 0 6rem;
+    /* No top spacer: the hero runs flush to the viewport top so its
+       background image sits behind the transparent fixed navbar. */
+    padding: 0 0 6rem;
 }
 .about-section {
     width: 100%;
@@ -187,9 +189,8 @@
 
     .about-page{
         gap:5rem;
-        /* Mobile navbar is shorter (~136px) — avoid double padding with
-           the hero's own top padding on small screens */
-        padding: 60px 0 6rem;
+        /* No top spacer on mobile either — the hero covers the header */
+        padding: 0 0 5rem;
     }
 
     .about-section{

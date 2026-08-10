@@ -9,7 +9,10 @@
     align-items: center;
     justify-content: center;
 
-    padding: 8rem 2rem 5rem;
+    /* Top padding clears the tall (unscrolled) fixed navbar (~186px) so the
+       hero text never sits underneath the transparent header now that the
+       image runs all the way to the top of the viewport. */
+    padding: 12rem 2rem 5rem;
 
     background-size: cover;
     background-position: center;
@@ -107,7 +110,7 @@
 
     .about-hero {
         min-height: 55vh;
-        padding: 7rem 1.5rem 4rem;
+        padding: 10rem 1.5rem 4rem;
     }
 
     .about-hero-content h1 {
