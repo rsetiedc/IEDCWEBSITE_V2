@@ -53,7 +53,7 @@ export const teamMembers = [
   {
     name: "Aaron Thomas",
     role: "Quality & Operations Co-Lead - IIC",
-    image: "aaron.jpeg",
+    image: "aaron.jpg",
     bio: "Assists in coordinating IIC operations, streamlining processes, and maintaining high standards across innovation activities.",
     linkedin: "https://www.linkedin.com/in/aaron-thomas09/"
   },
