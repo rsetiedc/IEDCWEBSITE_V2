@@ -68,10 +68,6 @@ export default function TeamCard({ member }) {
               {member.role}
             </p>
 
-            <span className="flip-indicator" aria-hidden="true">
-              <span className="flip-hint-hover">Hover to flip</span>
-              <span className="flip-hint-tap">Tap to flip</span>
-            </span>
 
           </div>
 
@@ -137,7 +133,7 @@ export default function TeamCard({ member }) {
           </div>
 
           <span className="card-watermark">
-            IEDC
+            {member.role && member.role.includes("IIC") ? "IIC" : "IEDC"}
           </span>
 
         </div>

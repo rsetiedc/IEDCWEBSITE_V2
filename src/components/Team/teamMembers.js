@@ -10,9 +10,9 @@ export const teamMembers = [
   },
   {
     name: "Ms. Anu Maria Joykutty",
-    role: "Assistant Nodal Officer",
+    role: "Nodal Officer",
     image: "2_Anu.jpg",
-    bio: "Assists the Nodal Officer in planning, coordinating, and monitoring IEDC and IIC activities while ensuring smooth execution of programs and initiatives.",
+    bio: "Provides strategic leadership, institutional coordination, and overall guidance for all IEDC and IIC initiatives while serving as the primary liaison with government and institutional stakeholders.",
     linkedin: "https://www.linkedin.com/in/anu-maria-joykutty-6997671a7/"
   },
   {

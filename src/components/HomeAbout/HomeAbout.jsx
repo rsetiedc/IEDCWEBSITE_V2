@@ -19,10 +19,6 @@ export default function HomeAbout() {
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
         >
-          {/* Section Tag Badge */}
-          <span className="section-tag">
-            About RSET IEDC
-          </span>
 
           <h2>
             Be a part of one of the most vibrant club in RSET
