@@ -21,7 +21,7 @@ export default function HomeAbout() {
         >
 
           <h2>
-            Be a part of one of the most vibrant club in RSET
+            Be a part of the most vibrant organization in RSET
           </h2>
 
           {/* Paragraph Card Box */}
