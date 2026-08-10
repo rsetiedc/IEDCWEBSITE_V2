@@ -14,13 +14,13 @@ import Contact from "./components/Contact/Contact";
 import Team from "./components/Team/Team.jsx";
 import Particles from "./components/Particles/Particles";
 
-// Android/low-power devices: cap the WebGL pixel ratio and particle count on
-// small screens so the fixed background canvas stays cheap to render while
-// scrolling (high-DPR phones make 250 large point sprites very expensive).
+// Background ambience tuning: a deliberately small particle count keeps the
+// field subtle, and the pixel ratio is capped on small screens so the fixed
+// background canvas stays cheap to render while scrolling.
 function getParticleTuning() {
   const smallScreen = window.innerWidth < 768;
   return {
-    count: smallScreen ? 120 : 250,
+    count: smallScreen ? 90 : 200,
     pixelRatio: Math.min(window.devicePixelRatio || 1, smallScreen ? 1.5 : 2),
   };
 }
@@ -86,13 +86,13 @@ function App() {
   particleColors={["#ffffff", "#ff6b00", "#ffffff"]}
   particleCount={particleTuning.count}
   particleSpread={8}
-  speed={0.12}
-  particleBaseSize={130}       /* Increased size dramatically */
-  sizeRandomness={1.5}         /* High variance gives large foreground dots + small background dots */
-  cameraDistance={12}          /* Pulls camera closer to make particles look larger */
+  speed={0.05}                  /* Very slow, gentle background motion */
+  particleBaseSize={60}         /* Small, subtle background dots */
+  sizeRandomness={1.5}          /* High variance: small background dots + a few larger ones */
+  cameraDistance={12}           /* Pulls camera closer to make particles look larger */
   moveParticlesOnHover={true}
-  particleHoverFactor={1.2}
-  alphaParticles={false}        /* Solid white/orange circles like React Bits demo */
+  particleHoverFactor={0.3}     /* Mouse only nudges the field slightly */
+  alphaParticles={false}        /* Solid white/orange circles */
   disableRotation={false}
   pixelRatio={particleTuning.pixelRatio}
 />

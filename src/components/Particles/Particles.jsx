@@ -28,9 +28,14 @@ const vertex = /* glsl */ `
   uniform float uSpread;
   uniform float uBaseSize;
   uniform float uSizeRandomness;
+  uniform float uTanFov;
+  uniform float uAspect;
+  uniform float uNear;
+  uniform float uFar;
   
   varying vec4 vRandom;
   varying vec3 vColor;
+  varying float vAlpha;
   
   void main() {
     vRandom = random;
@@ -41,17 +46,48 @@ const vertex = /* glsl */ `
     
     vec4 mPos = modelMatrix * vec4(pos, 1.0);
     float t = uTime;
-    mPos.x += sin(t * random.z + 6.28 * random.w) * mix(0.1, 1.5, random.x);
-    mPos.y += sin(t * random.y + 6.28 * random.x) * mix(0.1, 1.5, random.w);
-    mPos.z += sin(t * random.w + 6.28 * random.y) * mix(0.1, 1.5, random.z);
+    // Continuous per-particle drift (independent of the cursor): each particle
+    // orbits its base position on smooth sine paths so the field always flows.
+    // Amplitudes are tiny so nothing ever moves at a noticeable pace — just a
+    // slow, subtle background hum.
+    mPos.x += sin(t * random.z + 6.28 * random.w) * mix(0.02, 0.12, random.x);
+    mPos.y += sin(t * random.y + 6.28 * random.x) * mix(0.02, 0.12, random.w);
+    mPos.z += sin(t * random.w + 6.28 * random.y) * mix(0.02, 0.12, random.z);
     
     vec4 mvPos = viewMatrix * mPos;
+
+    // Toroidal wrap: particles can never leave the visible field, so the number
+    // of particles on screen is always constant and none ever disappear. This
+    // only changes *where* a particle is rendered — never whether it renders.
+    //
+    // 1) Wrap depth along the view axis so nothing is clipped by the near or
+    //    far planes (e.g. a particle pushed behind the camera re-enters at the
+    //    far side as a small distant dot).
+    float depth = -mvPos.z;
+    float wrappedDepth = mod(depth - uNear, uFar - uNear) + uNear;
+    mvPos.z = -wrappedDepth;
+
+    // 2) Pac-Man style wrap across the visible frustum at that depth, so a
+    //    particle exiting one edge of the screen re-enters from the opposite
+    //    edge with the same apparent size.
+    float halfW = wrappedDepth * uTanFov * uAspect;
+    float halfH = wrappedDepth * uTanFov;
+    mvPos.x = mod(mvPos.x + halfW, 2.0 * halfW) - halfW;
+    mvPos.y = mod(mvPos.y + halfH, 2.0 * halfH) - halfH;
 
     if (uSizeRandomness == 0.0) {
       gl_PointSize = uBaseSize;
     } else {
       gl_PointSize = (uBaseSize * (1.0 + uSizeRandomness * (random.x - 0.5))) / length(mvPos.xyz);
+      // Safety cap: with uNear = 2.0 the natural max size stays well under
+      // this, but it guards against any extreme near-field flash.
+      gl_PointSize = min(gl_PointSize, 80.0);
     }
+
+    // Larger dots are slightly transparent: the bigger the sprite, the more it
+    // fades, so big particles sit softly in the background while small ones
+    // stay crisp and opaque.
+    vAlpha = clamp(1.0 - (gl_PointSize - 12.0) * 0.015, 0.35, 1.0);
 
     gl_Position = projectionMatrix * mvPos;
   }
@@ -64,6 +100,7 @@ const fragment = /* glsl */ `
   uniform float uAlphaParticles;
   varying vec4 vRandom;
   varying vec3 vColor;
+  varying float vAlpha;
   
   void main() {
     vec2 uv = gl_PointCoord.xy;
@@ -73,7 +110,11 @@ const fragment = /* glsl */ `
       if(d > 0.5) {
         discard;
       }
-      gl_FragColor = vec4(vColor + 0.2 * sin(uv.yxx + uTime + vRandom.y * 6.28), 1.0);
+      // Transparent (large) dots fade smoothly to zero right at the discard
+      // edge (no hard ring); fully opaque small dots keep their crisp edge.
+      float soft = smoothstep(0.5, 0.4, d);
+      float alpha = mix(vAlpha * soft, vAlpha, step(0.999, vAlpha));
+      gl_FragColor = vec4(vColor + 0.2 * sin(uv.yxx + uTime + vRandom.y * 6.28), alpha);
     } else {
       float circle = smoothstep(0.5, 0.4, d) * 0.8;
       gl_FragColor = vec4(vColor + 0.2 * sin(uv.yxx + uTime + vRandom.y * 6.28), circle);
@@ -117,12 +158,19 @@ export default function Particles({
 
     let width = 0;
     let height = 0;
+    // Declared here (before the first resize()) so the resize handler can
+    // refresh the wrap aspect ratio once the program exists. Resizing only
+    // updates the canvas/projection — particles are never recreated or reset.
+    let program;
 
     const resize = () => {
       width = container.clientWidth;
       height = container.clientHeight;
       renderer.setSize(width, height);
       camera.perspective({ aspect: gl.canvas.width / gl.canvas.height });
+      if (program) {
+        program.uniforms.uAspect.value = gl.canvas.width / gl.canvas.height;
+      }
     };
     window.addEventListener('resize', resize, false);
     resize();
@@ -137,6 +185,13 @@ export default function Particles({
     };
 
     window.addEventListener('mousemove', handleMouseMove, { passive: true });
+
+    // Pointer left the page → drop the hover offset back to center. The drift
+    // animation keeps running regardless; this only returns the cloud's anchor.
+    const handleMouseLeave = () => {
+      mouseRef.current = { x: 0, y: 0 };
+    };
+    window.addEventListener('mouseleave', handleMouseLeave);
 
     const count = particleCount;
     const positions = new Float32Array(count * 3);
@@ -165,7 +220,7 @@ export default function Particles({
       color: { size: 3, data: colors }
     });
 
-    const program = new Program(gl, {
+    program = new Program(gl, {
       vertex,
       fragment,
       uniforms: {
@@ -173,7 +228,14 @@ export default function Particles({
         uSpread: { value: particleSpread },
         uBaseSize: { value: particleBaseSize * pixelRatio },
         uSizeRandomness: { value: sizeRandomness },
-        uAlphaParticles: { value: alphaParticles ? 1 : 0 }
+        uAlphaParticles: { value: alphaParticles ? 1 : 0 },
+        // Wrap parameters: keep every particle inside the view frustum. uNear is
+        // deliberately raised well above the camera near plane: particles that
+        // drift extremely close to the camera are what read as large, fast dots.
+        uTanFov: { value: Math.tan((camera.fov * Math.PI) / 360) },
+        uAspect: { value: gl.canvas.width / gl.canvas.height },
+        uNear: { value: 2.0 },
+        uFar: { value: 98 }
       },
       transparent: true,
       depthTest: false
@@ -194,13 +256,12 @@ export default function Particles({
       const time = elapsed * 0.001;
       program.uniforms.uTime.value = time;
 
-      if (moveParticlesOnHover) {
-        particles.position.x = -mouseRef.current.x * particleHoverFactor;
-        particles.position.y = -mouseRef.current.y * particleHoverFactor;
-      } else {
-        particles.position.x = 0;
-        particles.position.y = 0;
-      }
+      // Ease the cloud anchor toward its target so mouse-driven motion stays
+      // slow and smooth (mouse only influences movement — never visibility).
+      const targetX = moveParticlesOnHover ? -mouseRef.current.x * particleHoverFactor : 0;
+      const targetY = moveParticlesOnHover ? -mouseRef.current.y * particleHoverFactor : 0;
+      particles.position.x += (targetX - particles.position.x) * 0.02;
+      particles.position.y += (targetY - particles.position.y) * 0.02;
 
       if (!disableRotation) {
         particles.rotation.x = Math.sin(elapsed * 0.0002) * 0.1;
@@ -216,6 +277,7 @@ export default function Particles({
     return () => {
       window.removeEventListener('resize', resize);
       window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseleave', handleMouseLeave);
       cancelAnimationFrame(animationFrameId);
       if (container.contains(gl.canvas)) {
         container.removeChild(gl.canvas);
