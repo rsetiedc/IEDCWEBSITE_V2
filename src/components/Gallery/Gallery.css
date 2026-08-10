@@ -74,6 +74,38 @@
   font-weight: 500;
 }
 
+/* ------------------------- IIC RSET star-rating box ------------------------- */
+.rating-stars {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  margin-top: 0.35rem;
+}
+
+.rating-stars svg {
+  font-size: 1.5rem;
+  transition: transform 0.3s ease;
+}
+
+.gallery-stat-box:hover .rating-stars svg {
+  transform: scale(1.12);
+}
+
+.rating-stars .star-on {
+  color: #ffb800;
+}
+
+.rating-stars .star-off {
+  color: rgba(255, 255, 255, 0.18);
+}
+
+.rating-max {
+  color: #c5c5c5;
+  font-size: 0.85em;
+  font-weight: 500;
+}
+
 .gallery-title {
   font-family: "Space Grotesk", sans-serif;
   font-size: clamp(2.2rem, 5vw, 3.5rem);

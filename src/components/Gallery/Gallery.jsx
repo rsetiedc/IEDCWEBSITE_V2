@@ -3,6 +3,7 @@ import img02 from "../../assets/gallery/02.jpg";
 import img03 from "../../assets/gallery/03.jpg";
 import img04 from "../../assets/gallery/04.jpg";
 import img05 from "../../assets/gallery/05.jpg";
+import { FaStar } from "react-icons/fa";
 import "./Gallery.css";
 import ImageMarquee from "./ImageMarquee";
 
@@ -24,6 +25,7 @@ export default function Gallery({ showAccordion = true, showMarquee = false, pag
     { value: "2021", label: "IPL Winners" },
     { value: "2023", label: "IEDC Summit Host" },
     { value: "2025", label: "IIC Regional Summit" },
+    { rating: 4, label: "IIC RSET Rating" },
   ];
 
   return (
@@ -36,7 +38,27 @@ export default function Gallery({ showAccordion = true, showMarquee = false, pag
           <div className="gallery-stats-row">
             {homepageStats.map((stat, i) => (
               <div key={i} className="gallery-stat-box">
-                <span className="stat-val">{stat.value}</span>
+                {stat.rating ? (
+                  <>
+                    <div
+                      className="rating-stars"
+                      aria-label={`${stat.rating} out of 5 star rating for IIC RSET`}
+                    >
+                      {[1, 2, 3, 4, 5].map((star) => (
+                        <FaStar
+                          key={star}
+                          className={star <= stat.rating ? "star-on" : "star-off"}
+                          aria-hidden="true"
+                        />
+                      ))}
+                    </div>
+                    <span className="stat-val">
+                      {stat.rating}.0<span className="rating-max"> / 5</span>
+                    </span>
+                  </>
+                ) : (
+                  <span className="stat-val">{stat.value}</span>
+                )}
                 <span className="stat-lbl">{stat.label}</span>
               </div>
             ))}
