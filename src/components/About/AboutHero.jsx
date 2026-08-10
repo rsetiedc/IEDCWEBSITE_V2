@@ -26,7 +26,7 @@ export default function AboutHero() {
         </h1>
 
         <p>
-          Discover how RSET IEDC and Institution's Innovation Council (IIC)
+          Discover how RSET IEDC and IIC RSET
           empower students to innovate, build startups and transform ideas into
           impactful solutions.
         </p>
