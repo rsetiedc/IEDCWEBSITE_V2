@@ -25,7 +25,7 @@ export const teamMembers = [
   {
     name: "Amy Reni Varghese",
     role: "Student Lead - IIC",
-    image: "amy.jpg",
+    image: "amy.jpeg",
     bio: "Heads student-led innovation activities under IIC by fostering creativity, ideation, and multidisciplinary collaboration.",
     linkedin: "https://www.linkedin.com/in/amy-reni-varghese-77b201322/"
   },
@@ -53,7 +53,7 @@ export const teamMembers = [
   {
     name: "Aaron Thomas",
     role: "Quality & Operations Co-Lead - IIC",
-    image: "aaron.jpg",
+    image: "aaron.jpeg",
     bio: "Assists in coordinating IIC operations, streamlining processes, and maintaining high standards across innovation activities.",
     linkedin: "https://www.linkedin.com/in/aaron-thomas09/"
   },
@@ -81,7 +81,7 @@ export const teamMembers = [
   {
     name: "Justin Joven Malakkaran",
     role: "Technology Co-Lead",
-    image: "justin.jpg",
+    image: "justin.jpeg",
     bio: "Assists in managing technical projects, maintaining digital systems, and implementing technology solutions for organizational activities.",
     linkedin: "https://www.linkedin.com/in/justinjovenm/"
   },
