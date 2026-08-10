@@ -82,4 +82,14 @@ export function getGalleryPhotos(eventName) {
  * @param {string} eventName
  * @returns {string|null}
  */
+export function getEventCoverPhoto(eventName) {
+  const photos = GALLERY_PHOTOS[eventName];
+  if (!photos || photos.length === 0) return null;
 
+  if (eventName === "IEDC SUMMIT") {
+    const specificCover = photos.find((url) => url.includes("Summit2023_2.jpg"));
+    if (specificCover) return specificCover;
+  }
+
+  return photos[0];
+}
