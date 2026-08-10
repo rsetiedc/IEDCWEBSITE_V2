@@ -87,7 +87,7 @@ export function getEventCoverPhoto(eventName) {
   if (!photos || photos.length === 0) return null;
 
   if (eventName === "IEDC SUMMIT") {
-    const specificCover = photos.find((url) => url.includes("Summit2023_2.jpg"));
+    const specificCover = photos.find((url) => url.includes("Summit2023_33.jpg"));
     if (specificCover) return specificCover;
   }
 
