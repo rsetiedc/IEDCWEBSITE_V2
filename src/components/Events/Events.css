@@ -14,11 +14,21 @@
   min-height: 42vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  /* Top-align instead of centering so the heading can never slide
+     underneath the fixed navbar (~186px desktop / ~136px mobile).
+     Padding-top always clears the navbar height (+ safe-area inset on
+     notched phones) regardless of viewport height. */
+  justify-content: flex-start;
   align-items: center;
   text-align: center;
-  padding: 7rem 2rem 3rem;
+  padding: calc(clamp(12rem, 22vh, 15rem) + env(safe-area-inset-top)) 2rem 3rem;
   background:transparent;
+}
+
+@media (max-width: 768px) {
+  .events-hero {
+    padding: calc(clamp(10rem, 25vh, 12rem) + env(safe-area-inset-top)) 1.25rem 3rem;
+  }
 }
 
 .events-tag {
