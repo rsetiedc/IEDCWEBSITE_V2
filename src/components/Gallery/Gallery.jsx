@@ -26,6 +26,7 @@ export default function Gallery({ showAccordion = true, showMarquee = false, pag
     { value: "2023", label: "IEDC Summit Host" },
     { value: "2025", label: "IIC Regional Summit" },
     { rating: 4, label: "IIC RSET Rating" },
+    { value: "18", label: "Startups incubated under Rajagiri Orbiit" },
   ];
 
   return (

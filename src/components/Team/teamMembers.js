@@ -151,7 +151,7 @@ export const teamMembers = [
   {
     name: "Sanju Joji",
     role: "Finance Lead",
-    image: "sanju.png",
+    image: "sanju.jpg",
     bio: "Manages budgeting, financial planning, expense tracking, and resource allocation to ensure the sustainable operation of IEDC and IIC activities.",
     linkedin: "https://www.linkedin.com/in/sanju-joji-966239269/"
   },
