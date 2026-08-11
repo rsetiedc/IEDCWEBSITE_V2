@@ -5,7 +5,7 @@ import { setTimeout as sleep } from "node:timers/promises";
 
 const CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
 const PORT = 9222;
-const BASE = "http://localhost:4173/IEDCWEBSITE_V2";
+const BASE = "http://localhost:4173";
 
 const chrome = spawn(
   CHROME,

@@ -9,13 +9,10 @@
       // redirects to the app entry while preserving the original path via the
       // ?p= query parameter, which App.jsx restores with the router.
       (function () {
-        var base = "/IEDCWEBSITE_V2/";
-        var path = location.pathname;
-        if (path.indexOf(base) === 0) {
-          path = path.slice(base.length - 1); // keep the leading "/"
-        }
-        path = path || "/";
-        location.replace(base + "?p=" + encodeURIComponent(path));
+        // Site is served from the domain root, so deep-link routes like
+        // /events are preserved as-is and restored by App.jsx via ?p=.
+        var path = location.pathname || "/";
+        location.replace("/?p=" + encodeURIComponent(path));
       })();
     </script>
   </head>
