@@ -4,7 +4,7 @@ import { FaBullseye, FaRocket, FaArrowRight } from "react-icons/fa";
 
 import AboutCard from "./AboutCard";
 
-import groupPhoto from "../../assets/images/home-about.jpg";
+import groupPhoto from "../../assets/images/iedc-main.jpg";
 import badgeImage from "../../assets/images/about-banner.jpg";
 
 const cards = [
@@ -38,6 +38,8 @@ export default function IEDCAbout() {
               src={groupPhoto}
               alt="IEDC"
               className="about-main-image"
+              loading="lazy"
+              decoding="async"
             />
 
             <img
