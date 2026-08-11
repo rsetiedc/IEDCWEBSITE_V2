@@ -28,7 +28,7 @@ export default function HomeAbout() {
           <div className="about-text-card">
             <p>
               At RSET, IEDC and IIC work together to foster a culture of innovation, entrepreneurship, and creativity among students.
-              RSET IEDC nurtures aspiring entrepreneurs by providing a platform to transform ideas into impactful ventures, develop skills, and explore the startup ecosystem with the support of the Kerala Startup Mission.
+              RSET IEDC (Innovation and Entrepreneurship Development Centre) nurtures aspiring entrepreneurs by providing a platform to transform ideas into impactful ventures, develop skills, and explore the startup ecosystem with the support of the Kerala Startup Mission.
             </p>
             <p>
               IIC RSET (Institution’s Innovation Council) complements this vision by encouraging innovation, creative thinking, research, and problem-solving, helping students turn their ideas into meaningful solutions.
