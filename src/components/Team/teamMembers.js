@@ -95,7 +95,7 @@ export const teamMembers = [
   {
     name: "Ayaan Yousuf",
     role: "Media Lead",
-    image: "ayaan.jpg",
+    image: "ayaan.jpeg",
     bio: "Oversees media strategy by capturing, creating, and managing visual content that showcases the impact of IEDC and IIC activities.",
     linkedin: "https://www.linkedin.com/in/ayaan-yousuf-72b192417/"
   },

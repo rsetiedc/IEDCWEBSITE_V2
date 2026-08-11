@@ -4,8 +4,8 @@ import { FaBullseye, FaRocket, FaArrowRight } from "react-icons/fa";
 
 import AboutCard from "./AboutCard";
 
-import mainImage from "../../assets/images/iic_2.jpg";
-import badgeImage from "../../assets/images/iic_1.jpg";
+import mainImage from "../../assets/images/iic-main.jpg";
+import badgeImage from "../../assets/images/about-banner.jpg";
 
 const cards = [
   {
