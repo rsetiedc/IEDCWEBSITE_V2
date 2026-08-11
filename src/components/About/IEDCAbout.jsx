@@ -46,6 +46,8 @@ export default function IEDCAbout() {
               src={badgeImage}
               alt="Badge"
               className="about-badge-image"
+              loading="lazy"
+              decoding="async"
             />
 
           </div>
