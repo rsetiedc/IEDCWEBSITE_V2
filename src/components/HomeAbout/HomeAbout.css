@@ -51,7 +51,11 @@
   color: #a0aec0;
   line-height: 1.8;
   font-size: 1.02rem;
-  margin: 0;
+  margin: 0 0 1rem 0;
+}
+
+.about-text-card p:last-child {
+  margin-bottom: 0;
 }
 
 /* =========================
