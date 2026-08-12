@@ -1,7 +1,7 @@
 .team-card {
   perspective: 1000px;
   width: 100%;
-  height: 420px;
+  height: 440px;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
@@ -54,8 +54,11 @@
 
 .team-image {
   width: 100%;
-  height: 270px;
+  height: 305px;
   object-fit: cover;
+  /* Keep the photo pinned to the top of the card so the member's head
+     (top of the photo) always stays fully visible, while the taller
+     image area reveals more of the photo below the head. */
   object-position: center top;
   /* Portrait photos aren't text — suppress the iOS long-press callout */
   -webkit-touch-callout: none;
