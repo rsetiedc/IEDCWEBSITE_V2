@@ -83,19 +83,20 @@ function App() {
         }}
       >
         <Particles
-  particleColors={["#ffffff", "#ff6b00", "#ffffff"]}
-  particleCount={particleTuning.count}
-  particleSpread={8}
-  speed={0.05}                  /* Very slow, gentle background motion */
-  particleBaseSize={60}         /* Small, subtle background dots */
-  sizeRandomness={1.5}          /* High variance: small background dots + a few larger ones */
-  cameraDistance={12}           /* Pulls camera closer to make particles look larger */
-  moveParticlesOnHover={true}
-  particleHoverFactor={0.3}     /* Mouse only nudges the field slightly */
-  alphaParticles={false}        /* Solid white/orange circles */
-  disableRotation={false}
-  pixelRatio={particleTuning.pixelRatio}
-/>
+          particleColors={["#ffffff", "#ff6b00", "#ffffff"]}
+          particleCount={particleTuning.count}
+          particleSpread={8}
+          speed={0.005}                  /* Nearly static, ultra-calm background motion */
+          particleBaseSize={60}         /* Small, subtle background dots */
+          sizeRandomness={1.5}          /* High variance: small background dots + a few larger ones */
+          opacity={0.8}                 /* Moderately dimmed so particles sit subtly behind content */
+          cameraDistance={12}           /* Pulls camera closer to make particles look larger */
+          moveParticlesOnHover={true}
+          particleHoverFactor={0.07}     /* Mouse only nudges the field slightly */
+          alphaParticles={false}        /* Solid white/orange circles */
+          disableRotation={false}
+          pixelRatio={particleTuning.pixelRatio}
+        />
       </div>
 
       {/* Main Page Content */}
