@@ -24,9 +24,9 @@ export default function Gallery({ showAccordion = true, showMarquee = false, pag
     { value: "200+", label: "Events" },
     { value: "2021", label: "IPL Winners" },
     { value: "2023", label: "IEDC Summit Host" },
-    { value: "2025", label: "IIC Regional Summit" },
+    { value: "2025", label: "IIC Regional Meet Host" },
     { rating: 4, label: "IIC RSET Rating" },
-    { value: "18", label: "Startups incubated under Rajagiri Orbiit" },
+    { value: "18", label: "Startups incubated under Rajagiri ORBIIT" },
   ];
 
   return (
