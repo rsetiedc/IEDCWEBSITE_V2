@@ -102,6 +102,11 @@
   color: transparent;
 }
 
+/* Separator pipes get a little breathing room from the headline words */
+.hero h1 .hero-pipe {
+  margin: 0 0.3em;
+}
+
 .hero p {
   max-width: 650px;
   margin: 0 auto;

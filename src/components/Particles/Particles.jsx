@@ -98,6 +98,7 @@ const fragment = /* glsl */ `
   
   uniform float uTime;
   uniform float uAlphaParticles;
+  uniform float uOpacity;
   varying vec4 vRandom;
   varying vec3 vColor;
   varying float vAlpha;
@@ -114,10 +115,10 @@ const fragment = /* glsl */ `
       // edge (no hard ring); fully opaque small dots keep their crisp edge.
       float soft = smoothstep(0.5, 0.4, d);
       float alpha = mix(vAlpha * soft, vAlpha, step(0.999, vAlpha));
-      gl_FragColor = vec4(vColor + 0.2 * sin(uv.yxx + uTime + vRandom.y * 6.28), alpha);
+      gl_FragColor = vec4(vColor + 0.2 * sin(uv.yxx + uTime + vRandom.y * 6.28), alpha * uOpacity);
     } else {
       float circle = smoothstep(0.5, 0.4, d) * 0.8;
-      gl_FragColor = vec4(vColor + 0.2 * sin(uv.yxx + uTime + vRandom.y * 6.28), circle);
+      gl_FragColor = vec4(vColor + 0.2 * sin(uv.yxx + uTime + vRandom.y * 6.28), circle * uOpacity);
     }
   }
 `;
@@ -135,6 +136,7 @@ export default function Particles({
   cameraDistance = 20,
   disableRotation = false,
   pixelRatio = 1,
+  opacity = 1,
   className = ''
 }) {
   const containerRef = useRef(null);
@@ -229,6 +231,7 @@ export default function Particles({
         uBaseSize: { value: particleBaseSize * pixelRatio },
         uSizeRandomness: { value: sizeRandomness },
         uAlphaParticles: { value: alphaParticles ? 1 : 0 },
+        uOpacity: { value: opacity },
         // Wrap parameters: keep every particle inside the view frustum. uNear is
         // deliberately raised well above the camera near plane: particles that
         // drift extremely close to the camera are what read as large, fast dots.
@@ -294,7 +297,8 @@ export default function Particles({
     sizeRandomness,
     cameraDistance,
     disableRotation,
-    pixelRatio
+    pixelRatio,
+    opacity
   ]);
 
   return <div ref={containerRef} className={`particles-container ${className}`} />;
