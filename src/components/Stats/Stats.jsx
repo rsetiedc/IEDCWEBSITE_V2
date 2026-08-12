@@ -30,7 +30,7 @@ const stats = [
   {
     icon: <FaRocket />,
     target: 2025,
-    label: "IIC Regional Summit",
+    label: "IIC Regional Meet Host",
   },
 ];
 
@@ -56,8 +56,8 @@ export default function Stats() {
             viewport={{ once: true }}
             whileHover={
               typeof window !== "undefined" && window.innerWidth > 768
-              ? { y: -8 }
-              : {}
+                ? { y: -8 }
+                : {}
             }
           >
             <div className="stat-icon">{stat.icon}</div>
