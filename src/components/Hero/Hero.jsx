@@ -75,13 +75,6 @@ export default function Hero() {
           transition={{ duration: 0.6, ease: "easeOut" }}
         >
           <div className="hero-section">
-            <div className="hero-top">
-
-              <span className="hero-tag">
-                Innovation • Entrepreneurship • Technology
-              </span>
-            </div>
-
             <motion.h1 variants={titleVariants} initial="hidden" animate="visible">
               <motion.span variants={wordVariants}>Think</motion.span>
               <motion.span className="hero-pipe" variants={pipeVariants}>{" | "}</motion.span>
