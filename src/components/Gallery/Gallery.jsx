@@ -27,7 +27,7 @@ export default function Gallery({ showAccordion = true, showMarquee = false, pag
     { value: "2025", label: "IIC Regional Meet Host" },
     { rating: 4, label: "IIC RSET Rating" },
     { value: "17", label: "Startups incubated under Rajagiri ORBIIT" },
-    { value: "14", label: "Startups pre-incubated under Rajagiri ORBIIT" },
+    { value: "14", label: "Startups pre-incubated under RSET IEDC AND IIC RSET" },
   ];
 
   return (
