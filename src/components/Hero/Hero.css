@@ -80,6 +80,9 @@
   margin-top: 24px;
   margin-bottom: 1.5rem;
   line-height: 1.1;
+  /* Keeps one line-height of space while the animated words swap,
+     so the text below doesn't jump between sequence steps. */
+  min-height: 1.1em;
 
   font-family: 'Outfit', 'Poppins', system-ui, sans-serif;
   font-weight: 800;
@@ -102,9 +105,19 @@
   color: transparent;
 }
 
-/* Separator pipes get a little breathing room from the headline words */
-.hero h1 .hero-pipe {
+/* Separator dots get a little breathing room from the headline words */
+.hero h1 .hero-separator {
   margin: 0 0.3em;
+}
+
+/* Wrapper around the final combined headline: it only stages the enter/
+   exit motion, so it must not paint its own gradient over the words. */
+.hero h1 .hero-headline-stage {
+  background: none;
+  -webkit-background-clip: initial;
+  background-clip: initial;
+  -webkit-text-fill-color: initial;
+  color: inherit;
 }
 
 .hero p {

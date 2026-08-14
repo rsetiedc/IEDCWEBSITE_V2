@@ -1,36 +1,47 @@
-import { motion, MotionConfig } from "framer-motion";
+import { useEffect, useState } from "react";
+import { AnimatePresence, motion, MotionConfig } from "framer-motion";
 import { FaArrowDown } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import "./Hero.css";
 
 import heroVideo from "../../assets/videos/hero.mp4";
 
-/* Staggered reveal for the hero headline: each word rises, sharpens, and
-   fades in one after another on every visit to the homepage. */
-const titleVariants = {
-  hidden: {},
-  visible: {
-    transition: { staggerChildren: 0.16, delayChildren: 0.15 },
-  },
-};
+/* Hero headline sequence:
+   Think → Innovate → Inspire → "Think . Innovate . Inspire"
+   Each step fades/slides smoothly into the next; the final combined
+   headline stays visible once the sequence completes. */
+const HERO_WORDS = ["Think", "Innovate", "Inspire"];
+const WORD_HOLD_MS = 1400; // how long each single word stays before transitioning
 
-const wordVariants = {
-  hidden: { opacity: 0, y: 28, filter: "blur(10px)" },
-  visible: {
+/* Shared enter/exit motion for every step of the headline sequence */
+const headlineVariants = {
+  initial: { opacity: 0, y: 24, filter: "blur(10px)" },
+  animate: {
     opacity: 1,
     y: 0,
     filter: "blur(0px)",
     transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
   },
-};
-
-/* Separator pipes get a gentler fade so the spotlight stays on the words */
-const pipeVariants = {
-  hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { duration: 0.45, ease: "easeOut" } },
+  exit: {
+    opacity: 0,
+    y: -24,
+    filter: "blur(10px)",
+    transition: { duration: 0.45, ease: "easeIn" },
+  },
 };
 
 export default function Hero() {
+  /* step 0–2 cycles through the words; step 3 locks in the full headline */
+  const [step, setStep] = useState(0);
+
+  useEffect(() => {
+    if (step >= HERO_WORDS.length) return undefined;
+    const timer = setTimeout(() => setStep((s) => s + 1), WORD_HOLD_MS);
+    return () => clearTimeout(timer);
+  }, [step]);
+
+  const showCombined = step >= HERO_WORDS.length;
+
   return (
     <MotionConfig reducedMotion="user">
       <section className="hero" id="home">
@@ -75,13 +86,35 @@ export default function Hero() {
           transition={{ duration: 0.6, ease: "easeOut" }}
         >
           <div className="hero-section">
-            <motion.h1 variants={titleVariants} initial="hidden" animate="visible">
-              <motion.span variants={wordVariants}>Think</motion.span>
-              <motion.span className="hero-pipe" variants={pipeVariants}>{" | "}</motion.span>
-              <motion.span variants={wordVariants}>Innovate</motion.span>
-              <motion.span className="hero-pipe" variants={pipeVariants}>{" | "}</motion.span>
-              <motion.span variants={wordVariants}>Inspire</motion.span>
-            </motion.h1>
+            <h1>
+              <AnimatePresence mode="wait">
+                {showCombined ? (
+                  <motion.span
+                    key="combined-headline"
+                    className="hero-headline-stage"
+                    variants={headlineVariants}
+                    initial="initial"
+                    animate="animate"
+                  >
+                    <span>Think</span>
+                    <span className="hero-separator">{" . "}</span>
+                    <span>Innovate</span>
+                    <span className="hero-separator">{" . "}</span>
+                    <span>Inspire</span>
+                  </motion.span>
+                ) : (
+                  <motion.span
+                    key={HERO_WORDS[step]}
+                    variants={headlineVariants}
+                    initial="initial"
+                    animate="animate"
+                    exit="exit"
+                  >
+                    {HERO_WORDS[step]}
+                  </motion.span>
+                )}
+              </AnimatePresence>
+            </h1>
 
             <p>
               We are RSET IEDC and IIC RSET
